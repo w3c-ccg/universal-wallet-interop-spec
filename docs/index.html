@@ -499,10 +499,103 @@ A digital wallet that supports <a>cryptocurrency</a>, <a>verifiable credential</
     </pre>
   </section>
 
+  <section>
+    <h2>Locked Wallet</h2>
+
+    <p>Also known as a signed encrypted wallet.</p>
+
+    <p>An integrity protected, authenticated and privacy preserving representation of a wallet.</p>
+
+    <pre class="example highlight" title="An encrypted wallet example">
+      {
+        "@context": [
+          "https://www.w3.org/2018/credentials/v1",
+          "https://w3id.org/wallet/v1",
+        ],
+        "id": "http://example.gov/wallet/3732",
+        "type": [
+          "VerifiableCredential",
+          "EncryptedWallet"
+        ],
+        "issuer": "did:example:123",
+        "issuanceDate": "2020-03-10T04:24:12.164Z",
+        "credentialSubject": {
+          "id": "did:example:456",
+          "encryptedWallet": "LCJjcml0IjpbImI2NCJdLCJh..."
+        },
+        "proof": {
+          "type": "JsonWebSignature2020",
+          "created": "2020-03-21T17:51:48Z",
+          "verificationMethod": "did:example:123#_Qq0UL2Fq651Q0Fjd6TvnYE-faHiOpRlPVQcY_-tA4A",
+          "proofPurpose": "assertionMethod",
+          "jws": "eyJiNjQiOmZhbHNlLCJjcml0IjpbImI2NCJdLCJhbGciOiJFZERTQSJ9..OPxskX37SK0FhmYygDk-S4csY_gNhCUgSOAaXFXDTZx86CmI5nU9xkqtLWg-f4cqkigKDdMVdtIqWAvaYx2JBA"
+        }
+      }
+    </pre>
+  </section>
+
+  <section>
+    <h2>Unlocked Wallet</h2>
+
+    <p>Also known as plaintext wallet.</p>
+
+    <p>This representation may be used without ever having a locked representation.</p>
+    <p>Implementations may choose to construct this representation from database entities.</p>
+
+    <pre class="example highlight" title="An unlocked wallet example">
+      {
+        "@context": [
+          "https://www.w3.org/2018/credentials/v1",
+          "https://w3id.org/wallet/v1",
+        ],
+        "id": "http://example.gov/wallet/3732",
+        "type": [
+          "UniversalWallet2020"
+        ],
+        "contents": [
+          // wallet contents
+        ]
+      }
+    </pre>
+  </section>
+
 </section>
 
 <section id="interface" class="normative">
   <h2>Interface</h2>
+
+  <section>
+    <h3>Import</h3>
+  </section>
+
+  <section>
+    <h3>Lock</h3>
+  </section>
+
+  <section>
+    <h3>Unlock</h3>
+  </section>
+
+  <section>
+    <h3>Query</h3>
+  </section>
+
+  <section>
+    <h3>Verify</h3>
+  </section>
+
+  <section>
+    <h3>Issue</h3>
+  </section>
+
+  <section>
+    <h3>Prove</h3>
+  </section>
+
+  <section>
+    <h3>Export</h3>
+  </section>
+
 </section>
 
 <section id="integration" class="informative">
