@@ -412,6 +412,30 @@ A digital wallet that supports <a>cryptocurrency</a>, <a>verifiable credential</
         "publicKeyBase58": "6GwnHZARcEkJio9dxPYy6SC5sAL6PxpZAB6VYwoFjGMU"
       }
     </pre>
+
+    <p>
+      Here is an example of a key which is stored in a remote kms.
+    </p>
+
+    <pre class="example highlight" title="A base58 key example">
+      {
+        "id": "urn:uuid:e8fc7810-9524-11ea-bb37-0242ac130006",
+        "title": "My Test Key 3",
+        "image": "https://via.placeholder.com/150",
+        "description" : "For testing only, totally compromised.",
+        "tags": ["professional", "organization", "compromised"],
+        "correlation": ["4058a72a-9523-11ea-bb37-0242ac130002"],
+        "controller": ["did:key:z6MkjjCpsoQrwnEmqHzLdxWowXk5gjbwor4urC1RPDmGeV8r#z6MkjjCpsoQrwnEmqHzLdxWowXk5gjbwor4urC1RPDmGeV8r"],
+        "type": "Ed25519VerificationKey2018",
+        "publicKeyJwk": {
+          "crv": "Ed25519",
+          "x": "VCpo2LMLhn6iWku8MKvSLg2ZAoC-nlOyPVQaO3FxVeQ",
+          "kty": "OKP",
+          "kid": "_Qq0UL2Fq651Q0Fjd6TvnYE-faHiOpRlPVQcY_-tA4A"
+        },
+        "privateKeyWebKms": "http://example.com/kms/keystores/0/keys/0"
+      }
+    </pre>
   </section>
 
   <section >
@@ -521,7 +545,7 @@ A digital wallet that supports <a>cryptocurrency</a>, <a>verifiable credential</
         "issuanceDate": "2020-03-10T04:24:12.164Z",
         "credentialSubject": {
           "id": "did:example:456",
-          "encryptedWallet": "LCJjcml0IjpbImI2NCJdLCJh..."
+          "jwe": "LCJjcml0IjpbImI2NCJdLCJh..."
         },
         "proof": {
           "type": "JsonWebSignature2020",
@@ -566,34 +590,107 @@ A digital wallet that supports <a>cryptocurrency</a>, <a>verifiable credential</
 
   <section>
     <h3>Import</h3>
-  </section>
-
-  <section>
-    <h3>Lock</h3>
+    <p>
+      Takes a serialized exported wallet representation as input. 
+      Loads the representation into wallet software.
+    </p>
   </section>
 
   <section>
     <h3>Unlock</h3>
+    <p>
+      Transforms one or more wallet contents from ciphertext to plaintext.
+    </p>
+
+    <p>
+      Requires knowledge of the password used to lock the wallet.
+    </p>
+  </section>
+
+  <section>
+    <h3>Lock</h3>
+    <p>
+      Transforms one or more wallet contents from plaintext to ciphertext.
+    </p>
+    <p>
+      Requires knowledge of the password used to lock the wallet.
+    </p>
   </section>
 
   <section>
     <h3>Query</h3>
+
+    <p>
+      Takes a map and reduce functions as input, 
+      and returns a collection of results based on the current wallet contents.
+    </p>
+  </section>
+
+  <section>
+    <h3>SignRaw</h3>
+    <p>
+      Takes a Buffer as input, 
+      and an <code>options</code> object, which contains 
+      at least a <code>verificationMethod</code>, 
+      and may content additonal details such as <code>alg</code> or other JOSE related terms.
+    </p>
+
+    <p>
+      Must support detached signatures.
+    </p>
+  </section>
+
+  <section>
+    <h3>VerifyRaw</h3>
+    <p>
+      Takes a Buffer as input, 
+      and an <code>options</code> object, which contains 
+      at least a <code>verificationMethod</code>, 
+      and may content additonal details such as <code>alg</code> or other JOSE related terms.
+    </p>
+
+    <p>
+      Must support detached signatures.
+    </p>
   </section>
 
   <section>
     <h3>Verify</h3>
+
+    <p>
+      Takes a Verifiable Credential or Verifiable Presentation as input, 
+      returns a boolean <code>verified</code>, and an error object <code>error</code> if <code>verified</code> if false.
+    </p>
   </section>
 
   <section>
     <h3>Issue</h3>
+
+    <p>
+      Takes a Verifiable Credential without a <code>proof</code>, 
+      and an <code>options</code> object, which contains 
+      at least a <code>verificationMethod</code>, and <code>proofPurpose</code>.
+    </p>
   </section>
 
   <section>
     <h3>Prove</h3>
+    <p>
+      Takes an id of a Verifiable Credential, 
+      and an <code>options</code> object, which contains 
+      at least a <code>challenge</code>.
+    </p>
   </section>
 
   <section>
     <h3>Export</h3>
+    <p>
+      Produces a serialized exported wallet representation.
+    </p>
+
+    <p>
+      Only ciphertext wallet contents can be exported.
+    </p>
   </section>
 
 </section>
