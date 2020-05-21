@@ -256,10 +256,20 @@ MAY require the use of a <a>wallet</a>.
 MAY support <a>transfer</a>,<a>issue</a>, <a>prove</a>. 
 </dd>
 
+<dt><dfn>correlation</dfn></dt>
+<dd>
+An identifier used to indicate that external parties have observed how wallet contents are related.
+For example, when a public key is reused in multiple DIDs, it conveys that some common entity is controlling both identifiers.
+Tracking correlation allows for software to warn when some new information might be about to be exposed, for example: 
+"Looks like you are about to send crypo currency, from an account you frequently use to a new account you just created."
+</dd>
+
 <dt><dfn>universal wallet</dfn></dt>
 <dd>
 A digital wallet that supports <a>cryptocurrency</a>, <a>verifiable credential</a>s and <a>card</a>s.
 </dd>
+
+
 
 </dl> 
 </section>
@@ -311,6 +321,23 @@ A digital wallet that supports <a>cryptocurrency</a>, <a>verifiable credential</
     <p>A quantity of currency controlled by one or more <a>Key</a>s.</p>
 
     <p>Here is an example of some ethereum stored on a testnet.</p>
+
+    <pre class="example highlight" title="A currency example">
+      {
+        "id": "https://ropsten.etherscan.io/address/0x74fd35392f1c2a97c6080e0394b1995b0e63c8bf",
+        "type": "Currency",
+        "title": "ETH for Tips",
+        "image": "https://via.placeholder.com/150",
+        "description" : "Ethereum reserved for tipping software developers.",
+        "tags": ["personal"],
+        "quantity": "8.142406194939252896",
+        "unit": "ETH",
+        "controller": ["did:ethr:0x74fd35392f1c2a97c6080e0394b1995b0e63c8bf#key-0"],
+        "correlation": ["4058a72a-9523-11ea-bb37-0242ac130002"]
+      }
+    </pre>
+
+    <p>Here is an example of some ethereum stored on a testnet requiring multisig.</p>
 
     <pre class="example highlight" title="A currency example">
       {
