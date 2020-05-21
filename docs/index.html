@@ -277,6 +277,11 @@ A digital wallet that supports <a>cryptocurrency</a>, <a>verifiable credential</
 <section id="Data Model" class="normative">
   <h2>Data Model</h2>
 
+  <p>
+    Each entity is represented as a JSON Object, 
+    with relationships between entities described using identifiers.
+  </p>
+
   <section >
     <h3>Profile</h3>
 
@@ -571,7 +576,7 @@ A digital wallet that supports <a>cryptocurrency</a>, <a>verifiable credential</
       that they use a mnemonic for manage their ethereum accounts and funds for testing.
     </p>
 
-    <pre class="example highlight" title="A secrete meta data example">
+    <pre class="example highlight" title="A secret meta data example">
       {
         "id": "urn:uuid:2905324a-9524-11ea-bb37-0242ac130002",
         "type": "MetaData",
