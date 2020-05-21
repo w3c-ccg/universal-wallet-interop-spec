@@ -371,8 +371,6 @@ A digital wallet that supports <a>cryptocurrency</a>, <a>verifiable credential</
     </pre>
   </section>
 
-  
-
   <section >
     <h3>Key</h3>
 
@@ -431,7 +429,7 @@ A digital wallet that supports <a>cryptocurrency</a>, <a>verifiable credential</
       Here is an example of a key which is stored in a remote kms.
     </p>
 
-    <pre class="example highlight" title="A base58 key example">
+    <pre class="example highlight" title="A remote key example">
       {
         "id": "urn:uuid:e8fc7810-9524-11ea-bb37-0242ac130006",
         "title": "My Test Key 3",
@@ -448,6 +446,30 @@ A digital wallet that supports <a>cryptocurrency</a>, <a>verifiable credential</
           "kid": "_Qq0UL2Fq651Q0Fjd6TvnYE-faHiOpRlPVQcY_-tA4A"
         },
         "privateKeyWebKms": "http://example.com/kms/keystores/0/keys/0"
+      }
+    </pre>
+
+    <p>
+      Here is an example of a local, hardware isolated key.
+    </p>
+
+    <pre class="example highlight" title="A remote key example">
+      {
+        "id": "urn:uuid:e8fc7810-9524-11ea-bb37-0242ac130006",
+        "title": "My Test Key 3",
+        "image": "https://via.placeholder.com/150",
+        "description" : "For testing only, totally compromised.",
+        "tags": ["professional", "organization", "compromised"],
+        "correlation": ["4058a72a-9523-11ea-bb37-0242ac130002"],
+        "controller": ["did:key:z6MkjjCpsoQrwnEmqHzLdxWowXk5gjbwor4urC1RPDmGeV8r#z6MkjjCpsoQrwnEmqHzLdxWowXk5gjbwor4urC1RPDmGeV8r"],
+        "type": "Ed25519VerificationKey2018",
+        "publicKeyJwk": {
+          "crv": "Ed25519",
+          "x": "VCpo2LMLhn6iWku8MKvSLg2ZAoC-nlOyPVQaO3FxVeQ",
+          "kty": "OKP",
+          "kid": "_Qq0UL2Fq651Q0Fjd6TvnYE-faHiOpRlPVQcY_-tA4A"
+        },
+        "privateKeySecureEnclave": "urn:ios:enclave:uuid:e8fc7810-9524-11ea-bb37-0242ac130789"
       }
     </pre>
   </section>
