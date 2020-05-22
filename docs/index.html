@@ -829,29 +829,43 @@ out in the same tree and use relative links so that they'll work offline,
 {
   "@context": [
     "https://www.w3.org/2018/credentials/v1",
-    "https://w3id.org/wallet/v1",
+    "https://w3id.org/wallet/v1"
   ],
   "id": "http://example.gov/wallet/3732",
-  "type": [
-    "VerifiableCredential",
-    "EncryptedWallet"
-  ],
+  "type": ["VerifiableCredential", "EncryptedWallet"],
   "issuer": "did:example:123",
-  "issuanceDate": "2020-03-10T04:24:12.164Z",
+  "issuanceDate": "2020-05-22T17:38:21.910Z",
   "credentialSubject": {
-    "id": "did:example:456",
+    "id": "did:example:123",
     "contents": [
-      // { id, jwe }
+      {
+        "id": "urn:uuid:e8fc7810-9524-11ea-bb37-0242ac130002",
+        "jwe": {
+          "protected": "eyJlbmMiOiJYQzIwUCJ9",
+          "recipients": [
+            {
+              "header": {
+                "kid": "did:key:z6MkjMSYauuMgx9azEyUnTW5o5jFRkbBu5T83f39uNwnsGmm#z6LSoGtZSrUMZudAagzEfYf7k8jHZcGD79Sox7v4wCkDKNSw",
+                "alg": "ECDH-ES+A256KW",
+                "epk": {
+                  "kty": "OKP",
+                  "crv": "X25519",
+                  "x": "RfXdxTfIzilWBzWWX3ovHBDzgDcLNy0BFJWSxa0dqnw"
+                },
+                "apu": "RfXdxTfIzilWBzWWX3ovHBDzgDcLNy0BFJWSxa0dqnw",
+                "apv": "ZGlkOmtleTp6Nk1rak1TWWF1dU1neDlhekV5VW5UVzVvNWpGUmtiQnU1VDgzZjM5dU53bnNHbW0jejZMU29HdFpTclVNWnVkQWFnekVmWWY3azhqSFpjR0Q3OVNveDd2NHdDa0RLTlN3"
+              },
+              "encrypted_key": "-ABaawsVfTxJKmYVMhC0UWGQRZaYaLr8WdTBlugLOADXxrlOP-5M-A"
+            }
+          ],
+          "iv": "zjJPRrj0TGez9JYkChTrB3iqKoDkiBhn",
+          "ciphertext": "pPqPLiMuJLygwKbsDh-QWw0y5CHmQMINXPc1-qgsKLCFDTJ6ytqoTF35rM5KxSfeVCk74HLtIUIbDvNx53xr2YGqOi9-yDHrT3KurY8CIiBDTYCHkW50wgJq-Ac_gE3lSEEOYT1ZF4izf6GoA1jnI7alxD8ScgOGv2OuWLKEhV5HNEBLUpNz8Di7LDmRLSvAroiWE0rBu-xl7dRrLRH3ZKUzc-R6vrG_X56o-ivjUCfcvrjTnh2pgmVFo27BA34edYbLHIbKcWjMoSBEgmeY30ZuQt_KXK0vDQ6pFmMW5n8oISjPYv8rdicwNPfpCR89x11Vgrde419guqIwEsuOyvCAWidzgFeUu7jeyxjyYcNaIM1r2mq7OXnTODAFBzK4lWqniiDYWy2CLcPTHIXHnhq9YvPOhjqFz6aBbf_XqiFdIQZgOX2oDX6zGHg9fvw4AZc3_N3bCHRbZzKkf-AyvvHxPb9dphU1OdQmnRefYg-xtEQnlwk704J26xZU2qBn7YIJh_nrh9u41KqA0FSlYQsGiyW7SvOf2_LaA9qr17eA7HqY7Lst53_kiYhgWCd7g8hTWiT5G7QVLS_wx89DUpNfz_bxqQU0f17W2L0rLSLCWwaqUjxlLbPlFnpWgokbnxOMOETDvt_8DGUbczRou7Z4NyQ6ZFCOV4TD0AFRCM-RTj-YR6UC_UAAIvEPJep3Uz8elJzkf7xevnWKRSGyFLIUie0tSwZ7hCtjdvP3tOKidwy56jHtOQ_R6wx_9taVc3_5IeoP-4wZ4DNOm_IS9jb6csWmRvyW5GoRx-robqraPCM64SKg9EM",
+          "tag": "h6mJqHn33oCsDd5X57MI-g"
+        }
+      }
     ]
-  },
-  "proof": {
-    "type": "JsonWebSignature2020",
-    "created": "2020-03-21T17:51:48Z",
-    "verificationMethod": "did:example:123#_Qq0UL2Fq651Q0Fjd6TvnYE-faHiOpRlPVQcY_-tA4A",
-    "proofPurpose": "assertionMethod",
-    "jws": "eyJiNjQiOmZhbHNlLCJjcml0IjpbImI2NCJdLCJhbGciOiJFZERTQSJ9..OPxskX37SK0FhmYygDk-S4csY_gNhCUgSOAaXFXDTZx86CmI5nU9xkqtLWg-f4cqkigKDdMVdtIqWAvaYx2JBA"
   }
-}
+}      
 </pre
         >
       </section>
@@ -880,8 +894,23 @@ out in the same tree and use relative links so that they'll work offline,
   "type": [
     "UniversalWallet2020"
   ],
+  "status": "UNLOCKED",
   "contents": [
-    // wallet contents
+    // other wallet content types, ...
+    {
+      "id": "urn:uuid:e8fc7810-9524-11ea-bb37-0242ac130002",
+      "title": "My Test Key 2",
+      "image": "https://via.placeholder.com/150",
+      "description": "For testing only, totally compromised.",
+      "tags": ["professional", "organization", "compromised"],
+      "correlation": ["4058a72a-9523-11ea-bb37-0242ac130002"],
+      "controller": [
+        "did:key:z6MkjjCpsoQrwnEmqHzLdxWowXk5gjbwor4urC1RPDmGeV8r#z6MkjjCpsoQrwnEmqHzLdxWowXk5gjbwor4urC1RPDmGeV8r"
+      ],
+      "type": "Ed25519VerificationKey2018",
+      "privateKeyBase58": "3CQCBKF3Mf1tU5q1FLpHpbxYrNYxLiZk4adDtfyPEfc39Wk6gsTb2qoc1ZtpqzJYdM1rG4gpaD3ZVKdkiDrkLF1p",
+      "publicKeyBase58": "6GwnHZARcEkJio9dxPYy6SC5sAL6PxpZAB6VYwoFjGMU"
+    }
   ]
 }
 </pre
