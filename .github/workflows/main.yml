@@ -3,6 +3,8 @@ on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      working-directory: ./packages/universal-wallet
 
     steps:
       - name: Begin CI...
@@ -15,6 +17,7 @@ jobs:
 
       - name: Use cached node_modules
         uses: actions/cache@v1
+        working-directory: ${{ env.working-directory }}
         with:
           path: node_modules
           key: nodeModules-${{ hashFiles('**/yarn.lock') }}
@@ -22,21 +25,25 @@ jobs:
             nodeModules-
 
       - name: Install dependencies
+        working-directory: ${{ env.working-directory }}
         run: yarn install --frozen-lockfile
         env:
           CI: true
 
       - name: Lint
+        working-directory: ${{ env.working-directory }}
         run: yarn lint
         env:
           CI: true
 
       - name: Test
+        working-directory: ${{ env.working-directory }}
         run: yarn test --ci --coverage --maxWorkers=2
         env:
           CI: true
 
       - name: Build
+        working-directory: ${{ env.working-directory }}
         run: yarn build
         env:
           CI: true
