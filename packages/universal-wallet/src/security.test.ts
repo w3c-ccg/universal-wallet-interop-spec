@@ -4,7 +4,7 @@ describe('security', () => {
   it('seed from password', async () => {
     const password = 'correct horse battery staple';
     const derivedKey: any = await passwordToKey(password);
-    expect(derivedKey.toString('hex')).toBe(
+    expect(Buffer.from(derivedKey).toString('hex')).toBe(
       '8d31bd05e4c731541fee3f2fd069bdb249bb415d833cfad1a231a799da5857b5'
     );
   });
