@@ -3,6 +3,8 @@ on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      working-directory: ./packages/universal-wallet
     steps:
       - name: Begin CI...
         uses: actions/checkout@v2
