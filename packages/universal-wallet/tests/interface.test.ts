@@ -1,10 +1,12 @@
 import { UniversalWallet2020 } from '../src';
 import {
+  password,
   walletContents,
   encryptedWallet,
   credential,
   verifiableCredential,
   verifiablePresentation,
+  derivedContentsFromPassword,
 } from '../fixtures';
 
 jest.setTimeout(10 * 1000);
@@ -13,6 +15,12 @@ describe('Interface', () => {
   it('contructor', () => {
     let wallet = new UniversalWallet2020();
     expect(wallet).toBeDefined();
+  });
+
+  it('generate', async () => {
+    const seed = await UniversalWallet2020.passwordToSeed(password);
+    let wallet = await UniversalWallet2020.generate(seed);
+    expect(wallet.contents).toEqual(derivedContentsFromPassword);
   });
 
   it('add', () => {
@@ -31,35 +39,28 @@ describe('Interface', () => {
   });
 
   it('lock', async () => {
-    let wallet = new UniversalWallet2020();
-    const content = walletContents.key0;
-    wallet.add(content);
-    const password = 'correct horse battery staple';
+    const seed = await UniversalWallet2020.passwordToSeed(password);
+    let wallet = await UniversalWallet2020.generate(seed);
+    expect(wallet.contents).toEqual(derivedContentsFromPassword);
     await wallet.lock(password);
-    expect(wallet.contents[0].id).toBe(content.id);
-    expect(wallet.contents[0].jwe).toBeDefined();
+    expect(wallet.contents.length).toBe(3);
     expect(wallet.status).toBe('LOCKED');
+    // const exported = wallet.export();
+    // console.log(exported);
   });
 
   it('unlock', async () => {
     let wallet = new UniversalWallet2020();
-    const content = walletContents.key0;
-    wallet.add(content);
-    const password = 'correct horse battery staple';
-    await wallet.lock(password);
-    expect(wallet.contents[0].id).toBe(content.id);
-    expect(wallet.contents[0].jwe).toBeDefined();
-    expect(wallet.status).toBe('LOCKED');
+    wallet.import(encryptedWallet);
     await wallet.unlock(password);
     expect(wallet.status).toBe('UNLOCKED');
-    expect(wallet.contents[0]).toEqual(content);
+    expect(wallet.contents.length).toBe(3);
   });
 
   it('export', async () => {
     let wallet = new UniversalWallet2020();
     const content = walletContents.key0;
     wallet.add(content);
-    const password = 'correct horse battery staple';
     await wallet.lock(password);
     const exported = wallet.export();
     const parsed = JSON.parse(exported);
@@ -69,19 +70,13 @@ describe('Interface', () => {
   it('import', async () => {
     let wallet = new UniversalWallet2020();
     wallet.import(encryptedWallet);
-    const password = 'correct horse battery staple';
     await wallet.unlock(password);
     expect(wallet.status).toBe('UNLOCKED');
-    expect(wallet.contents[0].id).toEqual(
-      'urn:uuid:e8fc7810-9524-11ea-bb37-0242ac130002'
-    );
-    expect(wallet.contents[0].type).toEqual('Ed25519VerificationKey2018');
   });
 
   it('query', async () => {
     let wallet = new UniversalWallet2020();
     wallet.import(encryptedWallet);
-    const password = 'correct horse battery staple';
     await wallet.unlock(password);
     // count unique correlations
     const map = (content: any) => {
@@ -99,7 +94,11 @@ describe('Interface', () => {
     };
     const initialValue = {};
     const results = wallet.query(map, reduce, initialValue);
-    expect(results['4058a72a-9523-11ea-bb37-0242ac130002']).toBe(1);
+    expect(
+      results[
+        'urn:digest:e7e086cd30cd177c4de7c20c72a7b37cabffe13e5cf81fff96d770e45cd470fb'
+      ]
+    ).toBe(3);
   });
 
   it.skip('signRaw', async () => {});
@@ -108,11 +107,10 @@ describe('Interface', () => {
   it('issue', async () => {
     let wallet = new UniversalWallet2020();
     wallet.import(encryptedWallet);
-    const password = 'correct horse battery staple';
     await wallet.unlock(password);
     const options = {
       verificationMethod:
-        'did:key:z6MkjjCpsoQrwnEmqHzLdxWowXk5gjbwor4urC1RPDmGeV8r#z6MkjjCpsoQrwnEmqHzLdxWowXk5gjbwor4urC1RPDmGeV8r',
+        'did:key:z6MkqLwp6yd8SCU6bdaGj4JVHuMNNGouFZ6tVgWiAXUt1PZj#z6MkqLwp6yd8SCU6bdaGj4JVHuMNNGouFZ6tVgWiAXUt1PZj',
       proofPurpose: 'assertionMethod',
       created: '2020-04-02T18:48:36Z',
     };
@@ -121,7 +119,7 @@ describe('Interface', () => {
       options,
     });
     expect(verifiableCredential.issuer).toBe(
-      'did:key:z6MkjjCpsoQrwnEmqHzLdxWowXk5gjbwor4urC1RPDmGeV8r'
+      'did:key:z6MkqLwp6yd8SCU6bdaGj4JVHuMNNGouFZ6tVgWiAXUt1PZj'
     );
     expect(verifiableCredential.proof).toBeDefined();
   });
@@ -129,7 +127,6 @@ describe('Interface', () => {
   it('prove', async () => {
     let wallet = new UniversalWallet2020();
     wallet.import(encryptedWallet);
-    const password = 'correct horse battery staple';
     await wallet.unlock(password);
     const verifiablePresentation = await wallet.prove({
       verifiableCredential: [verifiableCredential],
@@ -137,7 +134,7 @@ describe('Interface', () => {
         domain: 'verifier.example.com',
         challenge: '99612b24-63d9-11ea-b99f-4f66f3e4f81a',
         verificationMethod:
-          'did:key:z6MkjjCpsoQrwnEmqHzLdxWowXk5gjbwor4urC1RPDmGeV8r#z6MkjjCpsoQrwnEmqHzLdxWowXk5gjbwor4urC1RPDmGeV8r',
+          'did:key:z6MkqLwp6yd8SCU6bdaGj4JVHuMNNGouFZ6tVgWiAXUt1PZj#z6MkqLwp6yd8SCU6bdaGj4JVHuMNNGouFZ6tVgWiAXUt1PZj',
       },
     });
     // console.log(JSON.stringify(verifiablePresentation));

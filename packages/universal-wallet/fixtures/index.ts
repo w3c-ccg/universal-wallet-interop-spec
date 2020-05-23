@@ -13,6 +13,10 @@ export const encryptedWallet = JSON.stringify(
   2
 );
 
+export const password = 'correct horse battery staple';
+
 export const credential = require('./json/credential.json');
 export const verifiableCredential = require('./json/verifiableCredential.json');
 export const verifiablePresentation = require('./json/verifiablePresentation.json');
+export const derivedContents = require('./json/derivedContents.json');
+export const derivedContentsFromPassword = require('./json/derivedContentsFromPassword.json');

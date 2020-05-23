@@ -1,11 +1,18 @@
-import { passwordToKey, unlockDidKey, lockDidKey } from './security';
+import {
+  passwordToKey,
+  unlockDidKey,
+  lockDidKey,
+  generateDefaultContents,
+} from './security';
+
+const { derivedContents } = require('../fixtures');
 
 describe('security', () => {
   it('seed from password', async () => {
     const password = 'correct horse battery staple';
     const derivedKey: any = await passwordToKey(password);
     expect(Buffer.from(derivedKey).toString('hex')).toBe(
-      '8d31bd05e4c731541fee3f2fd069bdb249bb415d833cfad1a231a799da5857b5'
+      '7052adea8f9823817065456ecad5bf24dcd31a698f7bc9a0b5fc170849af4226'
     );
   });
 
@@ -40,5 +47,14 @@ describe('security', () => {
     lockDidKey(didDocument);
     expect(didDocument.publicKey[0].privateKeyBase58).toBe(undefined);
     expect(didDocument.keyAgreement[0].privateKeyBase58).toBe(undefined);
+  });
+
+  it('generateDefaultContents', async () => {
+    const seed = Buffer.from(
+      '4d3d7da2f70f69952f967110f08a7215beceff4d3690ea62be5824c90c308087',
+      'hex'
+    );
+    const contents = await generateDefaultContents(new Uint8Array(seed));
+    expect(contents).toEqual(derivedContents);
   });
 });

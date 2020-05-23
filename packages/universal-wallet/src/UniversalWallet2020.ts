@@ -1,10 +1,12 @@
 import {
+  passwordToKey,
   lockContents,
   unlockContents,
   issue,
   verifyCredential,
   createVerifiablePresentation,
   verifyPresentation,
+  generateDefaultContents,
 } from './security';
 
 export enum WalletStatus {
@@ -13,20 +15,36 @@ export enum WalletStatus {
 }
 
 export class UniversalWallet2020 {
-  public contents: any[] = [];
   public status: WalletStatus = WalletStatus.Unlocked;
+
+  constructor(public contents: any[] = []) {
+    this.status = WalletStatus.Unlocked;
+  }
+
+  static passwordToSeed = async (password: string) => {
+    return passwordToKey(password);
+  };
+
+  static generate = async (seed: Uint8Array) => {
+    const contents = await generateDefaultContents(seed);
+    const wallet = new UniversalWallet2020(contents);
+    return wallet;
+  };
 
   private _expandVerificationMethod = (options: any) => {
     const map = (content: any) => {
       return content;
     };
     const reduce = (initialValue: any, item: any) => {
-      item.controller.forEach((controller: string) => {
-        if (!initialValue[controller]) {
-          initialValue[controller] = item;
-          initialValue[controller].id = controller;
-        }
-      });
+      if (item.controller) {
+        item.controller.forEach((controller: string) => {
+          if (!initialValue[controller]) {
+            initialValue[controller] = item;
+            initialValue[controller].id = controller;
+          }
+        });
+      }
+
       return initialValue;
     };
     const initialValue = {};
@@ -97,7 +115,7 @@ export class UniversalWallet2020 {
 
   public query = (map: any, reduce?: any, initialValue?: Object): any => {
     if (this.status !== WalletStatus.Unlocked) {
-      throw new Error('You can only query an ulocked wallet.');
+      throw new Error('You can only query an unlocked wallet.');
     }
     let results = this.contents.map(map);
     if (reduce) {

@@ -1,41 +1,56 @@
-import crypto from 'crypto';
 import { Cipher } from 'minimal-cipher';
 
 import documentLoader from './documentLoader';
 
+const crypto = require('isomorphic-webcrypto');
+
 const vcjs = require('vc-js');
 const jsigs = require('jsonld-signatures');
 const { Ed25519Signature2018 } = jsigs.suites;
-// const {
-//   // AssertionMethod,
-//   AuthenticationProofPurpose,
-// } = jsigs.purposes;
+
 const { Ed25519KeyPair } = require('crypto-ld');
 const { keyToDidDoc } = require('did-method-key').driver();
 const { X25519KeyPair } = require('x25519-key-pair');
 
-export const passwordToKey = (
+export const passwordToKey = async (
   password: string,
   salt: string = 'salt',
   iterations: number = 100000,
-  keyLength: number = 32,
-  digest: string = 'sha512'
+  digest: string = 'SHA-256'
 ): Promise<Uint8Array> => {
-  return new Promise((resolve, reject) => {
-    crypto.pbkdf2(
-      password,
-      salt,
-      iterations,
-      keyLength,
-      digest,
-      (err, derivedKey) => {
-        if (err) {
-          return reject(err);
-        }
-        return resolve(new Uint8Array(derivedKey));
-      }
-    );
-  });
+  var saltBuffer = Buffer.from(salt);
+  var passphraseKey = Buffer.from(password);
+  return crypto.subtle
+    .importKey('raw', passphraseKey, { name: 'PBKDF2' }, false, [
+      'deriveBits',
+      'deriveKey',
+    ])
+    .then(function(key: any) {
+      return crypto.subtle.deriveKey(
+        {
+          name: 'PBKDF2',
+          salt: saltBuffer,
+          iterations: iterations,
+          hash: digest,
+        },
+        key,
+        // Note: we don't actually need a cipher suite,
+        // but the api requires that it must be specified.
+        // For AES the length required to be 128 or 256 bits (not bytes)
+        { name: 'AES-CBC', length: 256 },
+        // Whether or not the key is extractable (less secure) or not (more secure)
+        // when false, the key can only be passed as a web crypto object, not inspected
+        true,
+        // this web crypto object will only be allowed for these functions
+        ['encrypt', 'decrypt']
+      );
+    })
+    .then((webKey: any) => {
+      return crypto.subtle.exportKey('raw', webKey);
+    })
+    .then((buffer: any) => {
+      return new Uint8Array(buffer);
+    });
 };
 
 export const unlockDidKey = async (seed: Uint8Array): Promise<any> => {
@@ -94,11 +109,10 @@ export const unlockContent = async ({
   cipher,
   keyAgreementKey,
 }: any) => {
-  const decryptedObject: any = await cipher.decryptObject({
+  return cipher.decryptObject({
     jwe: content.jwe,
     keyAgreementKey: new X25519KeyPair(keyAgreementKey),
   });
-  return decryptedObject;
 };
 
 export const lockContents = async (
@@ -121,9 +135,9 @@ export const lockContents = async (
   return Promise.all(
     contents.map(content => {
       return lockContent({
-        content,
+        content: { ...content },
         cipher,
-        recipients,
+        recipients: [...recipients],
         keyResolver,
       });
     })
@@ -138,15 +152,17 @@ export const unlockContents = async (
   const unlockedDidKey = await unlockDidKey(derivedKey);
   const keyAgreementKey = unlockedDidKey.keyAgreement[0];
   const cipher = new Cipher();
-  return Promise.all(
-    contents.map(content => {
-      return unlockContent({
-        content,
-        cipher,
-        keyAgreementKey,
-      });
-    })
-  );
+  let decryptedContents = [];
+  for (let i = 0; i < contents.length; i++) {
+    const content = contents[i];
+    const decryptedContent = await unlockContent({
+      content,
+      cipher,
+      keyAgreementKey,
+    });
+    decryptedContents.push(decryptedContent);
+  }
+  return decryptedContents;
 };
 
 export const issue = async ({ credential, options }: any) => {
@@ -203,4 +219,45 @@ export const createVerifiablePresentation = ({
     challenge: options.challenge,
     domain: options.domain,
   });
+};
+
+export const seedToId = async (seed: Uint8Array) => {
+  const buffer = await crypto.subtle.digest('SHA-256', seed);
+  return `urn:digest:${Buffer.from(new Int8Array(buffer)).toString('hex')}`;
+};
+
+export const generateDefaultContents = async (seed: Uint8Array) => {
+  const unlockedDID = await unlockDidKey(seed);
+  const seedId = await seedToId(seed);
+  const secret0 = {
+    id: seedId,
+    title: 'My Entropy',
+    image: 'https://via.placeholder.com/150',
+    description: 'For testing only.',
+    tags: ['inception'],
+    correlation: [seedId],
+    type: 'Entropy',
+    seed: Buffer.from(seed).toString('hex'),
+  };
+  let key0 = unlockedDID.publicKey[0];
+  key0 = {
+    ...key0,
+    title: 'My Signing Key',
+    image: 'https://via.placeholder.com/150',
+    description: 'Generated from seed.',
+    tags: ['inception'],
+    correlation: [seedId],
+    controller: [key0.id],
+  };
+  let key1 = unlockedDID.keyAgreement[0];
+  key1 = {
+    ...key1,
+    title: 'My Encryption Key',
+    image: 'https://via.placeholder.com/150',
+    description: 'Generated from seed.',
+    tags: ['inception'],
+    correlation: [seedId],
+    controller: [key1.id],
+  };
+  return [secret0, key0, key1];
 };
