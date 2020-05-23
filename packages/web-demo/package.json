@@ -1,6 +1,6 @@
 {
   "name": "@transmute/universal-wallet-web-demo",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "private": true,
   "homepage": "https://transmute-industries.github.io/universal-wallet/demo",
   "dependencies": {

@@ -2,7 +2,7 @@ import { Cipher } from 'minimal-cipher';
 
 import documentLoader from './documentLoader';
 
-const crypto = require('isomorphic-webcrypto');
+import crypto from 'isomorphic-webcrypto';
 
 const vcjs = require('vc-js');
 const jsigs = require('jsonld-signatures');
