@@ -11,15 +11,15 @@
       "sec": "https://w3id.org/security#",
       "wal": "https://transmute-industries.github.io/universal-wallet/#",
 
-      "Key": "wal:dfn-key",
-      "Secret": "wal:dfn-secret",
-      "Entropy": "wal:dfn-entropy",
-      "Profile": "wal:dfn-profile",
-      "Mnemonic": "wal:dfn-mnemonic",
-      "MetaData": "wal:meta-data",
+      "Key": "wal:Key",
+      "Secret": "wal:Secret",
+      "Entropy": "wal:Entropy",
+      "Profile": "wal:Profile",
+      "Mnemonic": "wal:Mnemonic",
+      "MetaData": "wal:MetaData",
 
-      "correlation": "wal:dfn-correlation",
-      "tags": "wal:dfn-tags",
+      "correlation": "wal:correlation",
+      "tags": "wal:tags",
 
       "Organization": "http://schema.org/Organization",
       "Person": "http://schema.org/Person",
