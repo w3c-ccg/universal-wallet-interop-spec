@@ -11,6 +11,8 @@
       "sec": "https://w3id.org/security#",
       "wal": "https://transmute-industries.github.io/universal-wallet/#",
 
+      "UniversalWallet2020": "wal:UniversalWallet2020",
+
       "Key": "wal:Key",
       "Secret": "wal:Secret",
       "Entropy": "wal:Entropy",

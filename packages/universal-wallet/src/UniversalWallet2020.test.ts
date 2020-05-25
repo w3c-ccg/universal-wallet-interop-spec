@@ -10,8 +10,9 @@ describe('UniversalWallet2020', () => {
         'hex'
       );
       let wallet = await UniversalWallet2020.generate(new Uint8Array(seed));
-      expect(wallet.contents).toEqual(derivedContents);
       // console.log(JSON.stringify(wallet.contents));
+      expect(wallet.contents).toEqual(derivedContents);
+
       // const password = 'correct horse battery staple';
       // await wallet.lock(password);
       // console.log(wallet.export());

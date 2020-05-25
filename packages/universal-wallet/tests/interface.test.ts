@@ -20,6 +20,7 @@ describe('Interface', () => {
   it('generate', async () => {
     const seed = await UniversalWallet2020.passwordToSeed(password);
     let wallet = await UniversalWallet2020.generate(seed);
+    // console.log(JSON.stringify(wallet.contents, null, 2));
     expect(wallet.contents).toEqual(derivedContentsFromPassword);
   });
 

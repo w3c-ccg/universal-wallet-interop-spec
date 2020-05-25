@@ -87,8 +87,7 @@ export class UniversalWallet2020 {
     }
     const encryptedWallet = {
       '@context': [
-        'https://www.w3.org/2018/credentials/v1',
-        'https://w3id.org/wallet/v1',
+        'https://transmute-industries.github.io/universal-wallet/contexts/wallet-v1.json',
       ],
       id: 'http://example.gov/wallet/3732',
       type: ['VerifiableCredential', 'EncryptedWallet'],

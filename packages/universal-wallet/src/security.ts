@@ -230,19 +230,25 @@ export const generateDefaultContents = async (seed: Uint8Array) => {
   const unlockedDID = await unlockDidKey(seed);
   const seedId = await seedToId(seed);
   const secret0 = {
+    '@context': [
+      'https://transmute-industries.github.io/universal-wallet/contexts/wallet-v1.json',
+    ],
     id: seedId,
-    title: 'My Entropy',
+    name: 'My Entropy',
     image: 'https://via.placeholder.com/150',
     description: 'For testing only.',
     tags: ['inception'],
     correlation: [seedId],
     type: 'Entropy',
-    seed: Buffer.from(seed).toString('hex'),
+    value: Buffer.from(seed).toString('hex'),
   };
   let key0 = unlockedDID.publicKey[0];
   key0 = {
     ...key0,
-    title: 'My Signing Key',
+    '@context': [
+      'https://transmute-industries.github.io/universal-wallet/contexts/wallet-v1.json',
+    ],
+    name: 'My Signing Key',
     image: 'https://via.placeholder.com/150',
     description: 'Generated from seed.',
     tags: ['inception'],
@@ -252,7 +258,10 @@ export const generateDefaultContents = async (seed: Uint8Array) => {
   let key1 = unlockedDID.keyAgreement[0];
   key1 = {
     ...key1,
-    title: 'My Encryption Key',
+    '@context': [
+      'https://transmute-industries.github.io/universal-wallet/contexts/wallet-v1.json',
+    ],
+    name: 'My Encryption Key',
     image: 'https://via.placeholder.com/150',
     description: 'Generated from seed.',
     tags: ['inception'],
