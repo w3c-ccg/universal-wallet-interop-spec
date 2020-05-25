@@ -20,6 +20,11 @@
 
       "correlation": "wal:correlation",
       "tags": "wal:tags",
+      "note": "wal:note",
+      "target": "wal:target",
+      "quorum": "wal:quorum",
+      "amount": "https://schema.org/amount",
+      "currency": "https://schema.org/currency",
 
       "Organization": "http://schema.org/Organization",
       "Person": "http://schema.org/Person",

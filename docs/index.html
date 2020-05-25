@@ -327,6 +327,22 @@ out in the same tree and use relative links so that they'll work offline,
           Human friendly text labels for organizing information.
         </dd>
 
+        <dt id="note"><dfn>note</dfn></dt>
+        <dd>
+          Text note about wallet content.
+        </dd>
+
+        <dt id="target"><dfn>target</dfn></dt>
+        <dd>
+          The target of a wallet content. Used for representing directed
+          associations.
+        </dd>
+
+        <dt id="quorum"><dfn>quorum</dfn></dt>
+        <dd>
+          Number of controllers needed to make a valid transaction.
+        </dd>
+
         <dt><dfn>universal wallet</dfn></dt>
         <dd>
           A digital wallet that supports <a>cryptocurrency</a>,
@@ -396,7 +412,7 @@ out in the same tree and use relative links so that they'll work offline,
 
       <section>
         <h3 id="Currency"><dfn>Currency</dfn></h3>
-        <p>A quantity of currency controlled by one or more <a>Key</a>s.</p>
+        <p>An amount of currency controlled by one or more <a>Key</a>s.</p>
 
         <p>Here is an example of some bitcoin stored on a testnet.</p>
 
@@ -409,8 +425,8 @@ out in the same tree and use relative links so that they'll work offline,
   "image": "https://via.placeholder.com/150",
   "description" : "Bitcoin reserved for testing",
   "tags": ["personal"],
-  "quantity": "7.00749119",
-  "unit": "BTC",
+  "amount": "7.00749119",
+  "currency": "BTC",
   "controller": ["mu6vftfsBxJDhnUQVrZfwjzj5BL5WRvLUH"],
   "correlation": ["4058a72a-9523-11ea-bb37-0242ac130002"]
 }
@@ -428,8 +444,8 @@ out in the same tree and use relative links so that they'll work offline,
   "image": "https://via.placeholder.com/150",
   "description" : "Ethereum reserved for tipping software developers.",
   "tags": ["personal"],
-  "quantity": "8.142406194939252896",
-  "unit": "ETH",
+  "amount": "8.142406194939252896",
+  "currency": "ETH",
   "controller": ["did:ethr:0x74fd35392f1c2a97c6080e0394b1995b0e63c8bf#key-0"],
   "correlation": ["4058a72a-9523-11ea-bb37-0242ac130002"]
 }
@@ -449,8 +465,8 @@ out in the same tree and use relative links so that they'll work offline,
   "image": "https://via.placeholder.com/150",
   "description" : "Ethereum reserved for games.",
   "tags": ["personal"],
-  "quantity": "6,271.91386730845876097",
-  "unit": "ETH",
+  "amount": "6,271.91386730845876097",
+  "currency": "ETH",
   "controller": ["did:ethr:0x658e4fe24b34589492b18b1a45294be0601606a9#key-0", "did:ethr:0x658e4fe24b34589492b18b1a45294be0601606a9#key-1"],
   "quorum": 2,
   "correlation": ["4058a72a-9523-11ea-bb37-0242ac130002"]
@@ -845,7 +861,7 @@ out in the same tree and use relative links so that they'll work offline,
   "tags": ["professional", "organization"],
   "correlation": ["urn:uuid:4058a72a-9523-11ea-bb37-0242ac130002"],
   "hdPath": "m’/44’/60’/0’",
-  "seed": "urn:uuid:c410e44a-9525-11ea-bb37-0242ac130002"
+  "target": ["urn:uuid:c410e44a-9525-11ea-bb37-0242ac130002"]
 }
 </pre
         >
