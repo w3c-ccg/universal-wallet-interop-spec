@@ -1,0 +1,29 @@
+{
+  "@context": [
+    {
+      "@version": 1.1
+    },
+    "https://w3id.org/security/v2",
+    {
+      "id": "@id",
+      "type": "@type",
+
+      "sec": "https://w3id.org/security#",
+      "wal": "https://transmute-industries.github.io/universal-wallet/#",
+
+      "Key": "wal:dfn-key",
+      "Secret": "wal:dfn-correlation",
+
+      "correlation": "wal:dfn-correlation",
+      "tags": "wal:dfn-tags",
+
+      "name": "http://schema.org/name",
+      "description": "http://schema.org/description",
+      "identifier": "http://schema.org/identifier",
+      "image": {
+        "@id": "http://schema.org/image",
+        "@type": "@id"
+      }
+    }
+  ]
+}
