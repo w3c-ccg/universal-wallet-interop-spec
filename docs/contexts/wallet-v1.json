@@ -16,6 +16,7 @@
       "Entropy": "wal:dfn-entropy",
       "Profile": "wal:dfn-profile",
       "Mnemonic": "wal:dfn-mnemonic",
+      "MetaData": "wal:meta-data",
 
       "correlation": "wal:dfn-correlation",
       "tags": "wal:dfn-tags",
