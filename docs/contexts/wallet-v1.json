@@ -12,11 +12,16 @@
       "wal": "https://transmute-industries.github.io/universal-wallet/#",
 
       "Key": "wal:dfn-key",
-      "Secret": "wal:dfn-correlation",
+      "Secret": "wal:dfn-secret",
+      "Entropy": "wal:dfn-entropy",
+      "Profile": "wal:dfn-profile",
+      "Mnemonic": "wal:dfn-mnemonic",
 
       "correlation": "wal:dfn-correlation",
       "tags": "wal:dfn-tags",
 
+      "Organization": "http://schema.org/Organization",
+      "Person": "http://schema.org/Person",
       "name": "http://schema.org/name",
       "description": "http://schema.org/description",
       "identifier": "http://schema.org/identifier",

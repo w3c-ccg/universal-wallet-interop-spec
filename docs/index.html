@@ -298,6 +298,20 @@ out in the same tree and use relative links so that they'll work offline,
           <a>wallet</a>. MAY support <a>transfer</a>,<a>issue</a>, <a>prove</a>.
         </dd>
 
+        <dt><dfn>profile</dfn></dt>
+        <dd>
+          A profile is a named bucket for grouping wallet content.
+        </dd>
+
+        <dt><dfn>entropy</dfn></dt>
+        <dd>
+          Unpredictable informtion. Often used as a <a>secret</a> or as input to
+          a <a>key</a> generation algorithm.
+          <a href="https://en.wikipedia.org/wiki/Entropy_(information_theory)"
+            >Entropy_(information_theory)</a
+          >.
+        </dd>
+
         <dt><dfn>correlation</dfn></dt>
         <dd>
           An identifier used to indicate that external parties have observed how
@@ -349,9 +363,10 @@ out in the same tree and use relative links so that they'll work offline,
           title="A profile for a personal identity"
         >
 {
+  "@context": ["https://transmute-industries.github.io/universal-wallet/contexts/wallet-v1.json"],
   "id": "did:example:123456789abcdefghi",
   "type": "Person",
-  "title": "John Smith",
+  "name": "John Smith",
   "image": "https://via.placeholder.com/150",
   "description" : "Professional software developer for Acme Corp.",
   "tags": ["professional", "person"],
@@ -367,9 +382,10 @@ out in the same tree and use relative links so that they'll work offline,
           title="A profile for an organizational identity"
         >
 {
+  "@context": ["https://transmute-industries.github.io/universal-wallet/contexts/wallet-v1.json"],
   "id": "did:example:123456789abcdefghi",
   "type": "Organization",
-  "title": "Acme Corp.",
+  "name": "Acme Corp.",
   "image": "https://via.placeholder.com/150",
   "description" : "A software company.",
   "tags": ["professional", "organization"],
@@ -387,9 +403,10 @@ out in the same tree and use relative links so that they'll work offline,
 
         <pre class="example highlight" title="A bitcoin currency example">
 {
+  "@context": ["https://transmute-industries.github.io/universal-wallet/contexts/wallet-v1.json"],
   "id": "https://live.blockcypher.com/btc-testnet/address/mu6vftfsBxJDhnUQVrZfwjzj5BL5WRvLUH/",
   "type": "Currency",
-  "title": "BTC for Tessting",
+  "name": "BTC for Tessting",
   "image": "https://via.placeholder.com/150",
   "description" : "Bitcoin reserved for testing",
   "tags": ["personal"],
@@ -405,9 +422,10 @@ out in the same tree and use relative links so that they'll work offline,
 
         <pre class="example highlight" title="A currency example">
 {
+  "@context": ["https://transmute-industries.github.io/universal-wallet/contexts/wallet-v1.json"],
   "id": "https://ropsten.etherscan.io/address/0x74fd35392f1c2a97c6080e0394b1995b0e63c8bf",
   "type": "Currency",
-  "title": "ETH for Tips",
+  "name": "ETH for Tips",
   "image": "https://via.placeholder.com/150",
   "description" : "Ethereum reserved for tipping software developers.",
   "tags": ["personal"],
@@ -428,7 +446,7 @@ out in the same tree and use relative links so that they'll work offline,
 {
   "id": "https://ropsten.etherscan.io/address/0x658e4fe24b34589492b18b1a45294be0601606a9",
   "type": "Currency",
-  "title": "ETH for Games",
+  "name": "ETH for Games",
   "image": "https://via.placeholder.com/150",
   "description" : "Ethereum reserved for games.",
   "tags": ["personal"],
@@ -541,7 +559,7 @@ out in the same tree and use relative links so that they'll work offline,
   ],
   "id": "urn:uui:5e2a2cfc-ddee-4b6e-b1df-b25d5c381dd6",
   "type": ["HyperledgerIndyCredentialRequest"],
-  "title": "Request for ZKP of PII",
+  "name": "Request for ZKP of PII",
   "image": "https://via.placeholder.com/150",
   "description": "Some hyperledger indy request",
   "tags": ["personal"],
@@ -583,7 +601,7 @@ out in the same tree and use relative links so that they'll work offline,
   ],
   "id": "urn:uui:5e2a2cfc-ddee-4b6e-b1df-b25d5c381dd6",
   "type": ["HyperledgerIndyCredentialResponse"],
-  "title": "Response with ZKP of PII",
+  "name": "Response with ZKP of PII",
   "image": "https://via.placeholder.com/150",
   "description": "Some hyperledger indy response",
   "tags": ["personal"],
@@ -637,8 +655,9 @@ out in the same tree and use relative links so that they'll work offline,
 
         <pre class="example highlight" title="A jwk key example">
 {
+  "@context": ["https://transmute-industries.github.io/universal-wallet/contexts/wallet-v1.json"],
   "id": "urn:uuid:53d846c8-9525-11ea-bb37-0242ac130002",
-  "title": "My Test Key 1",
+  "name": "My Test Key 1",
   "image": "https://via.placeholder.com/150",
   "description" : "For testing only, totally compromised.",
   "tags": ["professional", "organization", "compromised"],
@@ -668,8 +687,9 @@ out in the same tree and use relative links so that they'll work offline,
 
         <pre class="example highlight" title="A base58 key example">
 {
+  "@context": ["https://transmute-industries.github.io/universal-wallet/contexts/wallet-v1.json"],
   "id": "urn:uuid:e8fc7810-9524-11ea-bb37-0242ac130002",
-  "title": "My Test Key 2",
+  "name": "My Test Key 2",
   "image": "https://via.placeholder.com/150",
   "description" : "For testing only, totally compromised.",
   "tags": ["professional", "organization", "compromised"],
@@ -688,8 +708,9 @@ out in the same tree and use relative links so that they'll work offline,
 
         <pre class="example highlight" title="A remote key example">
 {
+  "@context": ["https://transmute-industries.github.io/universal-wallet/contexts/wallet-v1.json"],
   "id": "urn:uuid:e8fc7810-9524-11ea-bb37-0242ac130006",
-  "title": "My Test Key 3",
+  "name": "My Test Key 3",
   "image": "https://via.placeholder.com/150",
   "description" : "For testing only, totally compromised.",
   "tags": ["professional", "organization", "compromised"],
@@ -713,8 +734,9 @@ out in the same tree and use relative links so that they'll work offline,
 
         <pre class="example highlight" title="A remote key example">
 {
+  "@context": ["https://transmute-industries.github.io/universal-wallet/contexts/wallet-v1.json"],
   "id": "urn:uuid:e8fc7810-9524-11ea-bb37-0242ac130006",
-  "title": "My Test Key 3",
+  "name": "My Test Key 3",
   "image": "https://via.placeholder.com/150",
   "description" : "For testing only, totally compromised.",
   "tags": ["professional", "organization", "compromised"],
@@ -744,8 +766,9 @@ out in the same tree and use relative links so that they'll work offline,
 
         <pre class="example highlight" title="A mnemonic example">
 {
+  "@context": ["https://transmute-industries.github.io/universal-wallet/contexts/wallet-v1.json"],
   "id": "urn:uuid:c410e44a-9525-11ea-bb37-0242ac130002",
-  "title": "My Ropsten Mnemonic 1",
+  "name": "My Ropsten Mnemonic 1",
   "image": "https://via.placeholder.com/150",
   "description" : "For testing only, totally compromised.",
   "tags": ["professional", "organization", "compromised"],
@@ -760,8 +783,9 @@ out in the same tree and use relative links so that they'll work offline,
 
         <pre class="example highlight" title="An entropy example">
 {
+  "@context": ["https://transmute-industries.github.io/universal-wallet/contexts/wallet-v1.json"],
   "id": "urn:uuid:c410e44a-9525-11ea-bb37-0242ac130002",
-  "title": "My Test Entropy 1",
+  "name": "My Test Entropy 1",
   "image": "https://via.placeholder.com/150",
   "description" : "For testing only, totally compromised.",
   "tags": ["professional", "organization", "compromised"],
@@ -786,9 +810,10 @@ out in the same tree and use relative links so that they'll work offline,
 
         <pre class="example highlight" title="A credential meta data example">
 {
+  "@context": ["https://transmute-industries.github.io/universal-wallet/contexts/wallet-v1.json"],
   "id": "urn:uuid:2905324a-9524-11ea-bb37-0242ac130002",
   "type": "MetaData",
-  "title": "Degree Notes",
+  "name": "Degree Notes",
   "image": "https://via.placeholder.com/150",
   "description" : "Personal notes about this degree.",
   "tags": ["professional", "organization"],
@@ -806,9 +831,10 @@ out in the same tree and use relative links so that they'll work offline,
 
         <pre class="example highlight" title="A secret meta data example">
 {
+  "@context": ["https://transmute-industries.github.io/universal-wallet/contexts/wallet-v1.json"],
   "id": "urn:uuid:2905324a-9524-11ea-bb37-0242ac130002",
   "type": "MetaData",
-  "title": "Ropsten Testnet HD Accounts",
+  "name": "Ropsten Testnet HD Accounts",
   "image": "https://via.placeholder.com/150",
   "description" : "My Ethereum TestNet Accounts",
   "tags": ["professional", "organization"],
@@ -834,7 +860,7 @@ out in the same tree and use relative links so that they'll work offline,
 {
   "@context": [
     "https://www.w3.org/2018/credentials/v1",
-    "https://w3id.org/wallet/v1"
+    "https://transmute-industries.github.io/universal-wallet/contexts/wallet-v1.json",
   ],
   "id": "http://example.gov/wallet/3732",
   "type": ["VerifiableCredential", "EncryptedWallet"],
@@ -893,7 +919,7 @@ out in the same tree and use relative links so that they'll work offline,
 {
   "@context": [
     "https://www.w3.org/2018/credentials/v1",
-    "https://w3id.org/wallet/v1",
+    "https://transmute-industries.github.io/universal-wallet/contexts/wallet-v1.json",
   ],
   "id": "http://example.gov/wallet/3732",
   "type": [
