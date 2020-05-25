@@ -8,4 +8,4 @@ A portable, extensible, JSON-LD wallet supporting digital currencies and credent
 
 ### [Reference Implementation](./packages/universal-wallet)
 
-### [Web Demo](https://transmute-industries.github.io/universal-wallet/storybook/)
+### [Web Demo](https://material-did.com/?path=/story/components-universal-wallet-wallet--unlocked)
