@@ -25,8 +25,24 @@
       "note": "wal:note",
       "target": "wal:target",
       "quorum": "wal:quorum",
+      "multibase": "wal:multibase",
+      "hdPath": "wal:hdPath",
+
       "amount": "https://schema.org/amount",
       "currency": "https://schema.org/currency",
+      "value": "https://schema.org/value",
+
+      "publicKeyJwk": {
+        "@id": "sec:publicKeyJwk",
+        "@type": "@json"
+      },
+      "privateKeyJwk": {
+        "@id": "sec:privateKeyJwk",
+        "@type": "@json"
+      },
+      "privateKeyBase58": "sec:privateKeyBase58",
+      "privateKeyWebKms": "sec:privateKeyWebKms",
+      "privateKeySecureEnclave": "sec:privateKeySecureEnclave",
 
       "Organization": "http://schema.org/Organization",
       "Person": "http://schema.org/Person",
