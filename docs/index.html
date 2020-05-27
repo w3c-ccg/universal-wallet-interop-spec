@@ -41,7 +41,11 @@ out in the same tree and use relative links so that they'll work offline,
         localBiblio: ccg.localBiblio,
         doJsonLd: true,
 
-        github: "https://github.com/transmute-industries/universal-wallet/",
+        github: {
+          repoURL: "https://github.com/transmute-industries/universal-wallet/",
+          // Set branch to master (default is gh-pages) to fix the "Commit history link"
+          branch: 'master',
+        },
         includePermalinks: false,
 
         // if there a publicly available Editor's Draft, this is the link
