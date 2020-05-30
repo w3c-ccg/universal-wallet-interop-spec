@@ -320,6 +320,10 @@ out in the same tree and use relative links so that they'll work offline,
           when some new information might be about to be exposed, for example:
           "Looks like you are about to send crypo currency, from an account you
           frequently use to a new account you just created."
+
+          <div class="issue" data-number="7">
+            Representation may need to be refactored for scaling / performance.
+          </div>
         </dd>
 
         <dt id="tags"><dfn>tags</dfn></dt>
@@ -771,6 +775,37 @@ out in the same tree and use relative links so that they'll work offline,
       </section>
 
       <section>
+        <h3 id="Address">Address</h3>
+
+        <p>
+          An identifier, frequently derived from a key. Used for verifying
+          signatures or sending currency.
+        </p>
+
+        <p>
+          Here is an example of storing an EthereumAddress.
+        </p>
+
+        <pre class="example highlight" title="An ethereum address example">
+{
+  "@context": [
+    "https://transmute-industries.github.io/universal-wallet/contexts/wallet-v1.json"
+  ],
+  "id": "did:ethr:0x774477c4cd54718d32d4df393415796b9bfcb63c",
+  "type": "EthereumAddress",
+  "controller": [
+    "did:ethr:0x774477c4cd54718d32d4df393415796b9bfcb63c"
+  ],
+  "name": "MetaMask Account",
+  "image": "https://metamask.io/images/webclip.png",
+  "description": "My ropsten testnet account.",
+  "privateKeyBrowser": "urn:metamask:0x774477c4cd54718d32d4df393415796b9bfcb63c"
+}
+</pre
+        >
+      </section>
+
+      <section>
         <h3 id="Mnemonic">Mnemonic</h3>
         <p>An ordered list of memorable words.</p>
 
@@ -819,9 +854,39 @@ out in the same tree and use relative links so that they'll work offline,
       </section>
 
       <section>
+        <h3>Connection</h3>
+
+        <p>Information about a relationship between identifiers.</p>
+
+        <div class="issue" data-number="4">
+          Need to capture how connections are represented today.
+        </div>
+
+        <pre class="example highlight" title="A connection example">
+{
+  "@context": ["https://transmute-industries.github.io/universal-wallet/contexts/wallet-v1.json"],
+  "id": "urn:uuid:c410e44a-9525-11ea-bb37-0242ac130006",
+  "name": "My Health Record Certifier",
+  "image": "https://via.placeholder.com/150",
+  "description" : "The identifier that issues health record credentials.",
+  "tags": ["professional"],
+  "correlation": ["4058a72a-9523-11ea-bb37-0242ac130002"],
+  "type": "Connection",
+  "peers": ["did:example:123", "did:example:456"],
+}
+</pre
+        >
+      </section>
+
+      <section>
         <h3>Meta Data</h3>
 
         <p>Information about wallet data.</p>
+
+        <div class="issue" data-number="6">
+          Mostly an EDV integration question...Should authorization be
+          remembered in the wallet as meta data?
+        </div>
 
         <p>
           Here is an example where meta data is used to remind the wallet
@@ -973,6 +1038,11 @@ out in the same tree and use relative links so that they'll work offline,
     <section id="interface" class="normative">
       <h2>Interface</h2>
 
+      <p>
+        Interface functions are abstract, they take wallet contents and options
+        as input, and they produce wallet contents and side effects as output.
+      </p>
+
       <section>
         <h3>Import</h3>
         <p>
@@ -1000,6 +1070,11 @@ out in the same tree and use relative links so that they'll work offline,
         <p>
           Requires knowledge of the password used to lock the wallet.
         </p>
+
+        <div class="issue" data-number="5">
+          Mostly a reference implementation issue. Locked representation should
+          indicate a best practice.
+        </div>
       </section>
 
       <section>
@@ -1057,6 +1132,8 @@ out in the same tree and use relative links so that they'll work offline,
           <code>options</code> object, which contains at least a
           <code>verificationMethod</code>, and <code>proofPurpose</code>.
         </p>
+
+        <p>Produces as Verifiable Credential.</p>
       </section>
 
       <section>
@@ -1066,16 +1143,28 @@ out in the same tree and use relative links so that they'll work offline,
           <code>options</code> object, which contains at least a
           <code>challenge</code>.
         </p>
+
+        <p>Produces as Verifiable Presentation.</p>
+      </section>
+
+      <section>
+        <h3>Transfer</h3>
+        <p>
+          Takes a Currency, Key or Address and recipient options as input.
+        </p>
+
+        <p>Produces a Connection, and transaction side effect.</p>
       </section>
 
       <section>
         <h3>Export</h3>
-        <p>
-          Produces a serialized exported wallet representation.
-        </p>
 
         <p>
           Only ciphertext wallet contents can be exported.
+        </p>
+
+        <p>
+          Produces a serialized exported wallet representation.
         </p>
       </section>
     </section>
@@ -1113,6 +1202,18 @@ out in the same tree and use relative links so that they'll work offline,
         <a href="https://tools.ietf.org/html/rfc4880#section-3.6">
           OpenPGP Keyring
         </a>
+
+        <p>
+          Keys can be exported from keyring and imported into wallets. Some
+          transformation may be necessary.
+        </p>
+
+        <pre
+          class="example highlight"
+          title="An example of exporting a gpg key."
+        >
+          gpg --armor --export you@example.com > publicKey.asc
+        </pre>
       </section>
 
       <section>

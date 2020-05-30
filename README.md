@@ -8,4 +8,6 @@ A portable, extensible, JSON-LD wallet supporting digital currencies and credent
 
 ### [Reference Implementation](./packages/universal-wallet)
 
-### [Web Demo](https://material-did.com/?path=/story/components-universal-wallet-wallet--unlocked)
+### [Web Demo](https://nfc.did.ai/nxp?seed=7052adea8f9823817065456ecad5bf24dcd31a698f7bc9a0b5fc170849af4226)
+
+### [React Web Components](https://material-did.com/?path=/story/components-universal-wallet-wallet--unlocked)
