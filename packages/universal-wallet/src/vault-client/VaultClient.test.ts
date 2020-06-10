@@ -4,10 +4,10 @@ import {
   derivedContentsFromPassword,
   verifiableCredential,
   verifiableCredentialMeta,
-} from '../../fixtures';
+} from '../__fixtures__';
 
-describe('client-client', () => {
-  it('init', async () => {
+describe('vault-client', () => {
+  it('fromDerivedContents', async () => {
     const entropy = derivedContentsFromPassword[0];
     const ed25519Key = derivedContentsFromPassword[1];
     ed25519Key.controller = ed25519Key.id.split('#')[0];
@@ -41,6 +41,6 @@ describe('client-client', () => {
     await client.addWalletContent(doc1);
     await client.addWalletContent(doc2);
     const contents = await client.getWalletContents();
-    console.log(contents);
+    expect(contents.length).toBe(2);
   });
 });

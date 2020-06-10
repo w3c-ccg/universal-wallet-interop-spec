@@ -1,6 +1,6 @@
 import { Cipher } from 'minimal-cipher';
 
-import { keyResolver, unlockedDIDs } from '../../fixtures';
+import { keyResolver, unlockedDIDs } from '../__fixtures__';
 
 const { X25519KeyPair } = require('x25519-key-pair');
 

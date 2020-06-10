@@ -7,7 +7,7 @@ import {
   verifiableCredential,
   verifiablePresentation,
   derivedContentsFromPassword,
-} from '../../fixtures';
+} from '../__fixtures__';
 
 // TODO: add document loader caching to make this faster...
 jest.setTimeout(10 * 1000);

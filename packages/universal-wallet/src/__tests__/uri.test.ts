@@ -1,4 +1,4 @@
-import { password, encryptedWallet } from '../../fixtures';
+import { password, encryptedWallet } from '../__fixtures__';
 import { UniversalWallet2020 } from '../UniversalWallet2020';
 
 const pako = require('pako');

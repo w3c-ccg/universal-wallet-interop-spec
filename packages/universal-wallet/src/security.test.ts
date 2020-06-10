@@ -5,7 +5,7 @@ import {
   generateDefaultContents,
 } from './security';
 
-const { derivedContents } = require('../fixtures');
+const { derivedContents } = require('./__fixtures__');
 
 describe('security', () => {
   it('seed from password', async () => {

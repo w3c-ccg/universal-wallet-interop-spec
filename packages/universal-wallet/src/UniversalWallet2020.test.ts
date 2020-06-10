@@ -1,6 +1,6 @@
 import { UniversalWallet2020 } from '.';
 
-const { derivedContents } = require('../fixtures');
+const { derivedContents } = require('./__fixtures__');
 
 describe('UniversalWallet2020', () => {
   describe('generate', () => {
