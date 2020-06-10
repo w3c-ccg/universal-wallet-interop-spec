@@ -1,4 +1,4 @@
-import { UniversalWallet2020 } from '../src';
+import { UniversalWallet2020 } from '..';
 import {
   password,
   walletContents,
@@ -7,8 +7,9 @@ import {
   verifiableCredential,
   verifiablePresentation,
   derivedContentsFromPassword,
-} from '../fixtures';
+} from '../../fixtures';
 
+// TODO: add document loader caching to make this faster...
 jest.setTimeout(10 * 1000);
 
 describe('Interface', () => {

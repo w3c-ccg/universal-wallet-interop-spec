@@ -1,5 +1,5 @@
-import { password, encryptedWallet } from '../fixtures';
-import { UniversalWallet2020 } from '../src/UniversalWallet2020';
+import { password, encryptedWallet } from '../../fixtures';
+import { UniversalWallet2020 } from '../UniversalWallet2020';
 
 const pako = require('pako');
 const bs58 = require('bs58');
