@@ -6,7 +6,7 @@ import {
   verifiableCredentialMeta,
 } from '../__fixtures__';
 
-describe('vault-client', () => {
+describe.skip('vault-client', () => {
   it('fromDerivedContents', async () => {
     const entropy = derivedContentsFromPassword[0];
     const ed25519Key = derivedContentsFromPassword[1];
