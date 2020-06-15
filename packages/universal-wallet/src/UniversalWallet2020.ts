@@ -37,12 +37,17 @@ export class UniversalWallet2020 {
     };
     const reduce = (initialValue: any, item: any) => {
       if (item.controller) {
-        item.controller.forEach((controller: string) => {
-          if (!initialValue[controller]) {
-            initialValue[controller] = item;
-            initialValue[controller].id = controller;
-          }
-        });
+        if (Array.isArray(item.controller)) {
+          item.controller.forEach((controller: string) => {
+            if (!initialValue[controller]) {
+              initialValue[controller] = item;
+              initialValue[controller].id = controller;
+            }
+          });
+        } else {
+          initialValue[item.controller] = item;
+          initialValue[item.controller].id = item.controller;
+        }
       }
 
       return initialValue;

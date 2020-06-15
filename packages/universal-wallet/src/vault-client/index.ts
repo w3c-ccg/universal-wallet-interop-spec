@@ -1,2 +1,1 @@
-import { VaultClient } from './VaultClient';
-export default VaultClient;
+export * from './VaultClient';
