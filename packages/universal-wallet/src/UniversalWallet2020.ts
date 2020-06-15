@@ -31,12 +31,15 @@ export class UniversalWallet2020 {
     return wallet;
   };
 
+  // this function builds an index of all keys by "kid",
+  // then returns a options used for issuance or proving
   private _expandVerificationMethod = (options: any) => {
     const map = (content: any) => {
       return content;
     };
     const reduce = (initialValue: any, item: any) => {
       if (item.controller) {
+        // assume that the controller, if its an array, is an array of kid's
         if (Array.isArray(item.controller)) {
           item.controller.forEach((controller: string) => {
             if (!initialValue[controller]) {
@@ -45,8 +48,10 @@ export class UniversalWallet2020 {
             }
           });
         } else {
-          initialValue[item.controller] = item;
-          initialValue[item.controller].id = item.controller;
+          if (!initialValue[item.id]) {
+            // assume that the controller, is not a kid, but a true LDKeyPair controller.
+            initialValue[item.id] = item;
+          }
         }
       }
 
