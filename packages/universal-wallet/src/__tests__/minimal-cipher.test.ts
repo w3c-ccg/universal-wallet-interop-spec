@@ -1,8 +1,6 @@
 import { Cipher } from 'minimal-cipher';
-
+import { X25519KeyPair } from '@transmute/did-key-x25519';
 import { keyResolver, unlockedDIDs } from '../__fixtures__';
-
-const { X25519KeyPair } = require('x25519-key-pair');
 
 const cipher = new Cipher();
 
