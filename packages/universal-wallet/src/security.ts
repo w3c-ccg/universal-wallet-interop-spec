@@ -8,11 +8,8 @@ import { Ed25519KeyPair, driver } from '@transmute/did-key-ed25519';
 
 import { ld } from '@transmute/vc.js';
 
-// TODO: replace with ...
-// import { Ed25519Signature2018 } from '@transmute/ed25519-signature-2018';
-// current implementation is bugged
-const jsigs = require('jsonld-signatures');
-const { Ed25519Signature2018 } = jsigs.suites;
+import { Ed25519Signature2018 } from '@transmute/ed25519-signature-2018';
+
 const vcjs = ld;
 
 export const passwordToKey = async (

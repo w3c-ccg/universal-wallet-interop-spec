@@ -1,8 +1,8 @@
-import { default as unlockedDIDs } from './unlockedDIDs';
+import { unlockedDids } from '../__fixtures__';
 
 export const keyResolver = ({ id }: any) => {
   let keyAgreementKey =
-    unlockedDIDs['did:key:z6MktGVfipjBkipFvdE3qGBPQe9heMSuWpgdNVStAfjUsmXV']
+    unlockedDids['did:key:z6MktGVfipjBkipFvdE3qGBPQe9heMSuWpgdNVStAfjUsmXV']
       .keyAgreement[0];
   if (keyAgreementKey.id === id) {
     return keyAgreementKey;

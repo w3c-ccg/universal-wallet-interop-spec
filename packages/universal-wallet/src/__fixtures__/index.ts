@@ -1,5 +1,4 @@
-export { default as unlockedDIDs } from './unlockedDIDs';
-
+export * from './did-docs';
 export * from './documentLoader';
 export * from './keyResolver';
 
