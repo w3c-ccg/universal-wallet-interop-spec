@@ -6,9 +6,14 @@ import crypto from 'isomorphic-webcrypto';
 import { X25519KeyPair } from '@transmute/did-key-x25519';
 import { Ed25519KeyPair, driver } from '@transmute/did-key-ed25519';
 
-const vcjs = require('vc-js');
+// TODO: replace with ...
+// import { Ed25519Signature2018 } from '@transmute/ed25519-signature-2018';
+// current implementation is bugged
 const jsigs = require('jsonld-signatures');
 const { Ed25519Signature2018 } = jsigs.suites;
+
+import { ld } from '@transmute/vc.js';
+const vcjs = ld;
 
 export const passwordToKey = async (
   password: string,
@@ -219,6 +224,7 @@ export const createVerifiablePresentation = ({
     suite,
     challenge: options.challenge,
     domain: options.domain,
+    documentLoader,
   });
 };
 

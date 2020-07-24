@@ -1,7 +1,7 @@
-const didKeyDriver = require('did-method-key').driver();
+import { driver } from '@transmute/did-key-ed25519';
 
 const resolve = async (did: string) => {
-  const didDocument = await didKeyDriver.get({
+  const didDocument = await driver.get({
     did,
   });
   return didDocument;
