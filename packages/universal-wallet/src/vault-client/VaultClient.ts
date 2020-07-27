@@ -1,5 +1,5 @@
-import { Ed25519KeyPair } from 'crypto-ld';
-import { X25519KeyPair } from 'x25519-key-pair';
+import { Ed25519KeyPair } from '@transmute/did-key-ed25519';
+import { X25519KeyPair } from '@transmute/did-key-x25519';
 
 import Hmac from './Hmac';
 import KeyAgreementKey from './KeyAgreementKey';

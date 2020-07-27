@@ -3,14 +3,14 @@ import { Cipher } from 'minimal-cipher';
 import documentLoader from './documentLoader';
 
 import crypto from 'isomorphic-webcrypto';
+import { X25519KeyPair } from '@transmute/did-key-x25519';
+import { Ed25519KeyPair, driver } from '@transmute/did-key-ed25519';
 
-const vcjs = require('vc-js');
-const jsigs = require('jsonld-signatures');
-const { Ed25519Signature2018 } = jsigs.suites;
+import { ld } from '@transmute/vc.js';
 
-const { Ed25519KeyPair } = require('crypto-ld');
-const { keyToDidDoc } = require('did-method-key').driver();
-const { X25519KeyPair } = require('x25519-key-pair');
+import { Ed25519Signature2018 } from '@transmute/ed25519-signature-2018';
+
+const vcjs = ld;
 
 export const passwordToKey = async (
   password: string,
@@ -57,7 +57,7 @@ export const unlockDidKey = async (seed: Uint8Array): Promise<any> => {
   const ed25519Key = await Ed25519KeyPair.generate({
     seed,
   });
-  const didDocument = keyToDidDoc(ed25519Key);
+  const didDocument: any = driver.keyToDidDoc(ed25519Key);
   const unlockedDIDDocument = {
     ...didDocument,
   };
@@ -151,6 +151,9 @@ export const unlockContents = async (
   const derivedKey = await passwordToKey(password);
   const unlockedDidKey = await unlockDidKey(derivedKey);
   const keyAgreementKey = unlockedDidKey.keyAgreement[0];
+  // TODO: refactor to fragment when we address controller / frame?
+  // https://github.com/transmute-industries/universal-wallet/issues/11
+  keyAgreementKey.id = keyAgreementKey.controller + keyAgreementKey.id;
   const cipher = new Cipher();
   let decryptedContents = [];
   for (let i = 0; i < contents.length; i++) {
@@ -218,6 +221,7 @@ export const createVerifiablePresentation = ({
     suite,
     challenge: options.challenge,
     domain: options.domain,
+    documentLoader,
   });
 };
 
@@ -243,6 +247,9 @@ export const generateDefaultContents = async (seed: Uint8Array) => {
     value: Buffer.from(seed).toString('hex'),
   };
   let key0 = unlockedDID.publicKey[0];
+  // TODO: refactor to fragment when we address controller
+  // https://github.com/transmute-industries/universal-wallet/issues/11
+  key0.id = key0.controller + key0.id;
   key0 = {
     ...key0,
     '@context': [
@@ -256,6 +263,9 @@ export const generateDefaultContents = async (seed: Uint8Array) => {
     controller: [key0.id],
   };
   let key1 = unlockedDID.keyAgreement[0];
+  // TODO: refactor to fragment when we address controller
+  // https://github.com/transmute-industries/universal-wallet/issues/11
+  key1.id = key1.controller + key1.id;
   key1 = {
     ...key1,
     '@context': [

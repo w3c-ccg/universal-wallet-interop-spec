@@ -1,13 +1,11 @@
 import { Cipher } from 'minimal-cipher';
-
-import { keyResolver, unlockedDIDs } from '../__fixtures__';
-
-const { X25519KeyPair } = require('x25519-key-pair');
+import { X25519KeyPair } from '@transmute/did-key-x25519';
+import { keyResolver, unlockedDids } from '../__fixtures__';
 
 const cipher = new Cipher();
 
 const keyAgreementKey = new X25519KeyPair(
-  unlockedDIDs[
+  unlockedDids[
     'did:key:z6MktGVfipjBkipFvdE3qGBPQe9heMSuWpgdNVStAfjUsmXV'
   ].keyAgreement[0]
 );
