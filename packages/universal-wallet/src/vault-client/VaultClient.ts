@@ -116,11 +116,11 @@ export class VaultClient {
   }
 
   async getWalletContents() {
-    const docs = await this.vault.find({
+    const { documents } = await this.vault.find({
       invocationSigner: this.invocationSigner,
       equals: { 'content.schema': 'https://schema.org/UniversalWallet' },
     });
-    return docs.map((d: any) => {
+    return documents.map((d: any) => {
       return d.content.data;
     });
   }
