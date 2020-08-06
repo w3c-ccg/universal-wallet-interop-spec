@@ -1,6 +1,8 @@
 import crypto from 'isomorphic-webcrypto';
 import base64url from 'base64url-universal';
 
+import { seedToId } from '../security';
+
 export default class Hmac {
   public id: string;
   public type: string;
@@ -15,7 +17,7 @@ export default class Hmac {
   }
 
   static async create(data: Buffer) {
-    const id = 'urn:mockhmac:1';
+    const id = await seedToId(new Uint8Array(data));
     const type = 'Sha256HmacKey2019';
     const algorithm = 'HS256';
     const extractable = true;
