@@ -1,4 +1,4 @@
-## universal-wallet-interop-spec
+## Universal Wallet Interoperability Spec
 
 ![Build](https://github.com/w3c-ccg/universal-wallet-interop-spec/workflows/Build/badge.svg)
 
