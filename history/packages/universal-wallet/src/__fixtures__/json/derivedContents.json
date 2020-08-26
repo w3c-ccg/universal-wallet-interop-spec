@@ -1,0 +1,55 @@
+[
+  {
+    "@context": [
+      "https://transmute-industries.github.io/universal-wallet/contexts/wallet-v1.json"
+    ],
+    "id": "urn:digest:e7e086cd30cd177c4de7c20c72a7b37cabffe13e5cf81fff96d770e45cd470fb",
+    "name": "My Entropy",
+    "image": "https://via.placeholder.com/150",
+    "description": "For testing only.",
+    "tags": ["inception"],
+    "correlation": [
+      "urn:digest:e7e086cd30cd177c4de7c20c72a7b37cabffe13e5cf81fff96d770e45cd470fb"
+    ],
+    "type": "Entropy",
+    "value": "4d3d7da2f70f69952f967110f08a7215beceff4d3690ea62be5824c90c308087"
+  },
+  {
+    "id": "did:key:z6MkqLwp6yd8SCU6bdaGj4JVHuMNNGouFZ6tVgWiAXUt1PZj#z6MkqLwp6yd8SCU6bdaGj4JVHuMNNGouFZ6tVgWiAXUt1PZj",
+    "type": "Ed25519VerificationKey2018",
+    "controller": [
+      "did:key:z6MkqLwp6yd8SCU6bdaGj4JVHuMNNGouFZ6tVgWiAXUt1PZj#z6MkqLwp6yd8SCU6bdaGj4JVHuMNNGouFZ6tVgWiAXUt1PZj"
+    ],
+    "publicKeyBase58": "BtgmWjNh6eydV8ja3VLeSooNYhY3qfrXofbnLFWs6AnM",
+    "privateKeyBase58": "2YZxMgwWJgcKa63QX7EW8iro4vgAkLyvG95g3bJx6QNVfrSDkdAdR7KGUaTpC3UQs5sqpmrYPrT1fgAVVQ9qtZiH",
+    "@context": [
+      "https://transmute-industries.github.io/universal-wallet/contexts/wallet-v1.json"
+    ],
+    "name": "My Signing Key",
+    "image": "https://via.placeholder.com/150",
+    "description": "Generated from seed.",
+    "tags": ["inception"],
+    "correlation": [
+      "urn:digest:e7e086cd30cd177c4de7c20c72a7b37cabffe13e5cf81fff96d770e45cd470fb"
+    ]
+  },
+  {
+    "id": "did:key:z6MkqLwp6yd8SCU6bdaGj4JVHuMNNGouFZ6tVgWiAXUt1PZj#z6LSievj2mGEZuyp3DojftC2Dq4MFRjVMWXNkY5P2ajRzfxY",
+    "type": "X25519KeyAgreementKey2019",
+    "controller": [
+      "did:key:z6MkqLwp6yd8SCU6bdaGj4JVHuMNNGouFZ6tVgWiAXUt1PZj#z6LSievj2mGEZuyp3DojftC2Dq4MFRjVMWXNkY5P2ajRzfxY"
+    ],
+    "publicKeyBase58": "7ykZWTTNUTG4wqRy9Eg4uEqsQHCNeuMDsZMhY85uHJBn",
+    "privateKeyBase58": "6vjexFeciGSxyV71F44vFWdagJ8KddQUSHpocZpA7dm4",
+    "@context": [
+      "https://transmute-industries.github.io/universal-wallet/contexts/wallet-v1.json"
+    ],
+    "name": "My Encryption Key",
+    "image": "https://via.placeholder.com/150",
+    "description": "Generated from seed.",
+    "tags": ["inception"],
+    "correlation": [
+      "urn:digest:e7e086cd30cd177c4de7c20c72a7b37cabffe13e5cf81fff96d770e45cd470fb"
+    ]
+  }
+]

@@ -1,0 +1,1355 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Universal Wallet 2020</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <!--
+=== NOTA BENE ===
+For the three scripts below, if your spec resides on dev.w3 you can check them
+out in the same tree and use relative links so that they'll work offline,
+-->
+    <script
+      src="https://www.w3.org/Tools/respec/respec-w3c-common"
+      class="remove"
+    ></script>
+    <script src="./common.js" class="remove"></script>
+    <script type="text/javascript" class="remove">
+      var respecConfig = {
+        // specification status (e.g., WD, LCWD, NOTE, etc.). If in doubt use ED.
+        specStatus: "ED",
+
+        // the specification's short name, as in http://www.w3.org/TR/short-name/
+        shortName: "universal-wallet-2020",
+
+        // subtitle for the spec
+        subtitle:
+          "This specification describes a portable, extensible, JSON-LD wallet representation, supporting digital currencies and credentials.",
+
+        // if you wish the publication date to be other than today, set this
+        //publishDate: "2019-03-26",
+        //crEnd: "2019-04-23",
+        //implementationReportURI: "https://w3c.github.io/sdh-test-suite",
+        previousMaturity: "UNOFFICIAL",
+        previousPublishDate: "2020-03-25",
+
+        // if there is a previously published draft, uncomment this and set its YYYY-MM-DD date
+        // and its maturity status
+        // previousPublishDate:  "1977-03-15",
+        // previousMaturity:  "WD",
+
+        // extend the bibliography entries
+        localBiblio: ccg.localBiblio,
+        doJsonLd: true,
+
+        github: {
+          repoURL: "https://github.com/transmute-industries/universal-wallet/",
+          // Set branch to master (default is gh-pages) to fix the "Commit history link"
+          branch: "master",
+        },
+        includePermalinks: false,
+
+        // if there a publicly available Editor's Draft, this is the link
+        edDraftURI: "https://transmute-industries.github.io/universal-wallet/",
+
+        // if this is a LCWD, uncomment and set the end of its review period
+        // lcEnd: "2009-08-05",
+
+        // editors, add as many as you like
+        // only "name" is required
+        editors: [
+          {
+            name: "Orie Steele",
+            url: "https://www.linkedin.com/in/or13b/",
+            company: "Transmute",
+            companyURL: "https://transmute.industries/",
+          },
+        ],
+        // authors, add as many as you like.
+        // This is optional, uncomment if you have authors as well as editors.
+        // only "name" is required. Same format as editors.
+        authors: [
+          {
+            name: "Orie Steele",
+            url: "https://www.linkedin.com/in/or13b/",
+            company: "Transmute",
+            companyURL: "https://transmute.industries/",
+          },
+          {
+            name: "Margo Johnson",
+            url: "https://www.linkedin.com/in/margojohnson/",
+            company: "Transmute",
+            companyURL: "https://transmute.industries/",
+          },
+          {
+            name: "Guillaume Dardelet",
+            url: "https://www.linkedin.com/in/guillaume-dardelet/",
+            company: "Transmute",
+            companyURL: "https://transmute.industries/",
+          },
+        ],
+        // name of the WG
+        wg: "Credentials Community Group",
+
+        // URI of the public WG page
+        wgURI: "https://www.w3.org/community/credentials/",
+
+        // name (with the @w3c.org) of the public mailing to which comments are due
+        wgPublicList: "public-credentials",
+
+        // URI of the patent status for this WG, for Rec-track documents
+        // !!!! IMPORTANT !!!!
+        // This is important for Rec-track documents, do not copy a patent URI from a random
+        // document unless you know what you're doing. If in doubt ask your friendly neighborhood
+        // Team Contact.
+        //wgPatentURI:  "https://www.w3.org/2004/01/pp-impl/98922/status",
+        maxTocLevel: 2,
+        inlineCSS: true,
+      };
+    </script>
+    <style>
+      pre .highlight {
+        font-weight: bold;
+        color: green;
+      }
+      pre .comment {
+        font-weight: bold;
+        color: Gray;
+      }
+      .color-text {
+        font-weight: bold;
+        text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+      }
+      ol.algorithm {
+        counter-reset: numsection;
+        list-style-type: none;
+      }
+      ol.algorithm li {
+        margin: 0.5em 0;
+      }
+      ol.algorithm li:before {
+        font-weight: bold;
+        counter-increment: numsection;
+        content: counters(numsection, ".") ") ";
+      }
+    </style>
+  </head>
+  <body>
+    <section id="abstract">
+      <p>
+        This specification describes a portable, extensible, JSON-LD wallet,
+        supporting digital currencies and credentials.
+      </p>
+    </section>
+
+    <section id="sotd">
+      <p>
+        This document is experimental and is undergoing heavy development. It is
+        inadvisable to implement the specification in its current form. An
+        <a
+          href="https://github.com/transmute-industries/universal-wallet/tree/master/packages/universal-wallet"
+          >experimental implementation</a
+        >
+        is available.
+      </p>
+    </section>
+
+    <section class="informative">
+      <h2>Introduction</h2>
+      <p>
+        Traditional physical wallets are used to store a variety of personal
+        assets such as cash, credit cards, driver license, health insurance, and
+        business cards. Today we also have a wide variety of digital wallets to
+        store and access digital versions of these same assets, with more
+        options coming into the market every day. However, each wallet
+        represents data and capabilities differently, sometimes intentionally to
+        facilitate vendor lock in.
+      </p>
+
+      <p>
+        Imagine you had to carry a dozen different wallets with you at all
+        times, and to use each one independently based on the situation. The
+        wallets are disconnected, and the burden is on either the holder or the
+        verifier to request all required information for each transaction. The
+        result is a cumbersome user experience (not dissimilar to account and
+        password management today) and expensive business implementation to
+        support different wallets. What is missing is a standardized structure -
+        a universal wallet - that can effectively point to and comprehend each
+        digital asset in its current location. This universal wallet not only
+        offers a convenient access point for people and machines to organize
+        their assets (akin to a traditional physical wallet), but it also
+        enables awareness and relationships between those assets as needed for
+        real-world use.
+      </p>
+
+      <p>
+        The purpose of this specification is to design an abstract data model
+        and set of interfaces that approximate a physical wallet system and its
+        common uses.
+      </p>
+
+      <p>
+        There are many existing software systems which manage subsets or
+        supersets of the information represented in digital wallets. This
+        specification aims to be compatible with those systems, by allowing them
+        to continue to manage the information and inferfaces, so long as they
+        can be adequately described at both a data model, and interface level.
+      </p>
+
+      <p>
+        The property of representing data and interfaces as they exist, where
+        they exist today, is a critical component of this specification. We
+        fully expect this specification to live or die by its ability to achieve
+        this property.
+      </p>
+    </section>
+
+    <section id="terms" class="normative">
+      <h2>Terminology</h2>
+
+      <p>
+        The following terms are used to describe concepts involved in the
+        <a>universal wallet</a>.
+      </p>
+
+      <dl>
+        <dt><dfn>wallet</dfn></dt>
+        <dd>
+          A wallet is a small, flat case that can be used to carry such small
+          personal items as paper currency, credit cards, and identification
+          documents. See
+          <a href="https://en.wikipedia.org/wiki/Wallet">Wallet</a>.
+        </dd>
+
+        <dt><dfn>cryptocurrency</dfn></dt>
+        <dd>
+          A digital asset designed to work as a medium of exchange wherein
+          individual coin ownership records are stored in a digital ledger or
+          computerized database using strong cryptography to secure transaction
+          record entries, to control the creation of additional digital coin
+          records. See
+          <a href="https://en.wikipedia.org/wiki/Cryptocurrency"
+            >Cryptocurrency</a
+          >.
+        </dd>
+
+        <dt><dfn>verifiable credential</dfn></dt>
+        <dd>
+          A data model for conveying claims made by an issuer about a subject.
+          See [[vc-data-model]].
+        </dd>
+
+        <dt><dfn>secret</dfn></dt>
+        <dd>
+          Information controlled by an <a>identity</a>. MAY be used to derive
+          <a>key</a>s.
+        </dd>
+
+        <dt><dfn>key</dfn></dt>
+        <dd>
+          A mechanism for granting or restricing access to something. MAY be
+          used to <a>issue</a> and <a>prove</a> <a>verifiable credentials</a>.
+          MAY be used to transfer and controll <a>cryptocurrency</a>. See
+          <a href="https://en.wikipedia.org/wiki/Key_(cryptography)"
+            >Key_(cryptography)</a
+          >.
+        </dd>
+
+        <dt><dfn>card</dfn></dt>
+        <dd>
+          A thin rectangular object used to store information graphically or
+          digitally. MAY be used to represent any wallet content type.
+        </dd>
+
+        <dt><dfn>meta data</dfn></dt>
+        <dd>
+          Information about other information. MAY be used to describe the
+          context in which information is used, or attributes of other
+          information.
+        </dd>
+
+        <dt><dfn>identity</dfn></dt>
+        <dd>
+          A unique entity. Typically represented with a unique identifier.
+        </dd>
+
+        <dt><dfn>controller</dfn></dt>
+        <dd>
+          The entity that has the ability to make changes to an <a>identity</a>,
+          <a>cryptocurrency</a> or <a>verifiable credential</a>. See
+          <a
+            href="https://w3c.github.io/did-core/#dfn-did-controllers"
+            target="_blank"
+            >DID controller</a
+          >, [[vc-data-model]].
+        </dd>
+
+        <dt><dfn>issue</dfn></dt>
+        <dd>
+          The process of creating a <a>verifiable credential</a>. MAY require
+          the use of a <a>key</a>. See [[vc-data-model]].
+        </dd>
+
+        <dt><dfn>prove</dfn></dt>
+        <dd>
+          The process of presenting a <a>verifiable credential</a>. MAY require
+          the use of a <a>key</a>. See [[vc-data-model]].
+        </dd>
+
+        <dt><dfn>transfer</dfn></dt>
+        <dd>
+          The process of changing the <a>controller</a> of a
+          <a>cryptocurrency</a>, <a>identity</a> or
+          <a>verifiable credential</a>. MAY require the use of a <a>key</a>.
+        </dd>
+
+        <dt><dfn>agent</dfn></dt>
+        <dd>
+          A representative for an <a>identity</a>. MAY require the use of a
+          <a>wallet</a>. MAY support <a>transfer</a>,<a>issue</a>, <a>prove</a>.
+        </dd>
+
+        <dt><dfn>profile</dfn></dt>
+        <dd>
+          A profile is a named bucket for grouping wallet content.
+        </dd>
+
+        <dt><dfn>entropy</dfn></dt>
+        <dd>
+          Unpredictable information. Often used as a <a>secret</a> or as input
+          to a <a>key</a> generation algorithm.
+          <a href="https://en.wikipedia.org/wiki/Entropy_(information_theory)"
+            >Entropy_(information_theory)</a
+          >.
+        </dd>
+
+        <dt id="correlation"><dfn>correlation</dfn></dt>
+        <dd>
+          An identifier used to indicate that external parties have observed how
+          wallet contents are related. For example, when a public key is reused
+          in multiple DIDs, it conveys that some common entity is controlling
+          both identifiers. Tracking correlation allows for software to warn
+          when some new information might be about to be exposed, for example:
+          "Looks like you are about to send crypo currency, from an account you
+          frequently use to a new account you just created."
+
+          <div class="issue" data-number="7">
+            Representation may need to be refactored for scaling / performance.
+          </div>
+        </dd>
+
+        <dt id="tags"><dfn>tags</dfn></dt>
+        <dd>
+          Human friendly text labels for organizing information.
+        </dd>
+
+        <dt id="note"><dfn>note</dfn></dt>
+        <dd>
+          Text note about wallet content.
+        </dd>
+
+        <dt id="target"><dfn>target</dfn></dt>
+        <dd>
+          The target of a wallet content. Used for representing directed
+          associations.
+        </dd>
+
+        <dt id="quorum"><dfn>quorum</dfn></dt>
+        <dd>
+          Number of controllers needed to make a valid transaction.
+        </dd>
+
+        <dt id="UniversalWallet2020"><dfn>universal wallet</dfn></dt>
+        <dd>
+          A digital wallet that supports <a>cryptocurrency</a>,
+          <a>verifiable credential</a>s and <a>card</a>s.
+        </dd>
+
+        <dt id="multibase"><dfn>multibase</dfn></dt>
+        <dd>
+          <a href="https://github.com/multiformats/multibase">Multibase</a> is a
+          protocol for disambiguating the encoding of base-encoded (e.g.,
+          base32, base36, base64, base58, etc.) binary appearing in text.
+        </dd>
+
+        <dt id="hdPath"><dfn>hdPath</dfn></dt>
+        <dd>
+          A standard way of pointing to a key generated by a single
+          <a href="#Mnemonic">mnemonic</a>. See
+        </dd>
+      </dl>
+    </section>
+
+    <section id="Data Model" class="normative">
+      <h2>Data Model</h2>
+
+      <p>
+        Each entity is represented as a JSON Object, with relationships between
+        entities described using identifiers.
+      </p>
+
+      <section>
+        <h3 id="Profile">Profile</h3>
+
+        <p>A profile is a named bucket for grouping wallet content.</p>
+        <p>
+          A profile MAY be used to group all correlatable wallet items together.
+        </p>
+        <p>
+          A profile MAY be used to manage separate external personal, or
+          organizational identities and their associated data.
+        </p>
+
+        <p>Here is an example of a personal profile.</p>
+
+        <pre
+          class="example highlight"
+          title="A profile for a personal identity"
+        >
+{
+  "@context": ["https://transmute-industries.github.io/universal-wallet/contexts/wallet-v1.json"],
+  "id": "did:example:123456789abcdefghi",
+  "type": "Person",
+  "name": "John Smith",
+  "image": "https://via.placeholder.com/150",
+  "description" : "Professional software developer for Acme Corp.",
+  "tags": ["professional", "person"],
+  "correlation": ["4058a72a-9523-11ea-bb37-0242ac130002"]
+}
+</pre
+        >
+
+        <p>Here is an example of an organization profile.</p>
+
+        <pre
+          class="example highlight"
+          title="A profile for an organizational identity"
+        >
+{
+  "@context": ["https://transmute-industries.github.io/universal-wallet/contexts/wallet-v1.json"],
+  "id": "did:example:123456789abcdefghi",
+  "type": "Organization",
+  "name": "Acme Corp.",
+  "image": "https://via.placeholder.com/150",
+  "description" : "A software company.",
+  "tags": ["professional", "organization"],
+  "correlation": ["4058a72a-9523-11ea-bb37-0242ac130002"]
+}
+</pre
+        >
+      </section>
+
+      <section>
+        <h3 id="CachedDIDDocument">Cached DID Document</h3>
+
+        <p>
+          A cached result of DID Resolution. Useful when device connectivity is
+          intermitent, or offline support is required.
+        </p>
+
+        <p>Here is an example of a cached did document.</p>
+
+        <pre class="example highlight" title="A cached did document">
+{
+  "@context": [
+    "https://transmute-industries.github.io/universal-wallet/contexts/wallet-v1.json"
+  ],
+  "id": "did:example:123",
+  "type": ["CachedDIDDocument"],
+  "name": "Farming Sensor DID Document",
+  "image": "https://via.placeholder.com/150",
+  "description": "An IoT device in the middle of a corn field.",
+  "tags": ["professional"],
+  "correlation": ["4058a72a-9523-11ea-bb37-0242ac130002"],
+  "created": "2017-06-18T21:19:10Z",
+  "expires": "2026-06-18T21:19:10Z",
+  "didDocument": {
+    "@context": "https://w3id.org/did/v0.11",
+    "id": "did:example:123",
+    "assertionMethod": [
+      "did:example:123#z6MksHh7qHWvybLg5QTPPdG2DgEjjduBDArV9EF9mRiRzMBN"
+    ],
+    "authentication": [
+      "did:example:123#z6MksHh7qHWvybLg5QTPPdG2DgEjjduBDArV9EF9mRiRzMBN"
+    ],
+    "capabilityDelegation": [
+      "did:example:123#z6MksHh7qHWvybLg5QTPPdG2DgEjjduBDArV9EF9mRiRzMBN"
+    ],
+    "capabilityInvocation": [
+      "did:example:123#z6MksHh7qHWvybLg5QTPPdG2DgEjjduBDArV9EF9mRiRzMBN"
+    ],
+    "keyAgreement": [
+      {
+        "id": "did:example:123#zC5iai1sL93gQxn8LKh1i42fTbpfar65dVx4NYznYfG3Y5",
+        "type": "X25519KeyAgreementKey2019",
+        "controller": "did:example:123",
+        "publicKeyBase58": "6DrzegWwfw8Xg5MsHX95sVnJaPmtXP214B5X9hkG9oRs"
+      }
+    ],
+    "publicKey": [
+      {
+        "id": "did:example:123#z6MksHh7qHWvybLg5QTPPdG2DgEjjduBDArV9EF9mRiRzMBN",
+        "type": "Ed25519VerificationKey2018",
+        "controller": "did:example:123",
+        "publicKeyBase58": "DqS5F3GVe3rCxucgi4JBNagjv4dKoHc8TDLDw9kR58Pz"
+      }
+    ]
+  }
+}
+          
+</pre
+        >
+      </section>
+
+      <section>
+        <h3 id="Currency"><dfn>Currency</dfn></h3>
+        <p>An amount of currency controlled by one or more <a>Key</a>s.</p>
+
+        <p>Here is an example of some bitcoin stored on a testnet.</p>
+
+        <pre class="example highlight" title="A bitcoin currency example">
+{
+  "@context": ["https://transmute-industries.github.io/universal-wallet/contexts/wallet-v1.json"],
+  "id": "https://live.blockcypher.com/btc-testnet/address/mu6vftfsBxJDhnUQVrZfwjzj5BL5WRvLUH/",
+  "type": "Currency",
+  "name": "BTC for Testing",
+  "image": "https://via.placeholder.com/150",
+  "description" : "Bitcoin reserved for testing",
+  "tags": ["personal"],
+  "amount": "7.00749119",
+  "currency": "BTC",
+  "controller": ["did:example:123"],
+  "correlation": ["4058a72a-9523-11ea-bb37-0242ac130002"]
+}
+</pre
+        >
+
+        <p>Here is an example of some ethereum stored on a testnet.</p>
+
+        <pre class="example highlight" title="A currency example">
+{
+  "@context": ["https://transmute-industries.github.io/universal-wallet/contexts/wallet-v1.json"],
+  "id": "https://ropsten.etherscan.io/address/0x74fd35392f1c2a97c6080e0394b1995b0e63c8bf",
+  "type": "Currency",
+  "name": "ETH for Tips",
+  "image": "https://via.placeholder.com/150",
+  "description" : "Ethereum reserved for tipping software developers.",
+  "tags": ["personal"],
+  "amount": "8.142406194939252896",
+  "currency": "ETH",
+  "controller": ["did:ethr:0x74fd35392f1c2a97c6080e0394b1995b0e63c8bf#key-0"],
+  "correlation": ["4058a72a-9523-11ea-bb37-0242ac130002"]
+}
+</pre
+        >
+
+        <p>
+          Here is an example of some ethereum stored on a testnet requiring
+          multisig.
+        </p>
+
+        <pre class="example highlight" title="A currency example">
+{
+  "id": "https://ropsten.etherscan.io/address/0x658e4fe24b34589492b18b1a45294be0601606a9",
+  "type": "Currency",
+  "name": "ETH for Games",
+  "image": "https://via.placeholder.com/150",
+  "description" : "Ethereum reserved for games.",
+  "tags": ["personal"],
+  "amount": "6,271.91386730845876097",
+  "currency": "ETH",
+  "controller": ["did:ethr:0x658e4fe24b34589492b18b1a45294be0601606a9#key-0", "did:ethr:0x658e4fe24b34589492b18b1a45294be0601606a9#key-1"],
+  "quorum": 2,
+  "correlation": ["4058a72a-9523-11ea-bb37-0242ac130002"]
+}
+</pre
+        >
+      </section>
+
+      <section>
+        <h3 id="Credential"><dfn>Credential</dfn></h3>
+
+        <p>A set of claims about a subject.</p>
+
+        <p>MAY be presented with one or more <a>Key</a>s.</p>
+
+        <p>
+          Here is an example of a University Degree represented using the
+          [[vc-data-model]].
+        </p>
+
+        <pre class="example highlight" title="A verifiable credential example">
+{
+  "@context": [
+    "https://www.w3.org/2018/credentials/v1",
+    "https://www.w3.org/2018/credentials/examples/v1"
+  ],
+  "id": "http://example.gov/credentials/3732",
+  "type": [
+    "VerifiableCredential",
+    "UniversityDegreeCredential"
+  ],
+  "issuer": {
+    "id": "did:example:123456789abcdefghi"
+  },
+  "issuanceDate": "2020-03-10T04:24:12.164Z",
+  "credentialSubject": {
+    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+    "degree": {
+      "type": "BachelorDegree",
+      "name": "Bachelor of Science and Arts"
+    }
+  },
+  "proof": {
+    "type": "JsonWebSignature2020",
+    "created": "2020-03-21T17:51:48Z",
+    "verificationMethod": "did:example:123456789abcdefghi#_Qq0UL2Fq651Q0Fjd6TvnYE-faHiOpRlPVQcY_-tA4A",
+    "proofPurpose": "assertionMethod",
+    "jws": "eyJiNjQiOmZhbHNlLCJjcml0IjpbImI2NCJdLCJhbGciOiJFZERTQSJ9..OPxskX37SK0FhmYygDk-S4csY_gNhCUgSOAaXFXDTZx86CmI5nU9xkqtLWg-f4cqkigKDdMVdtIqWAvaYx2JBA"
+  }
+}
+</pre
+        >
+
+        <p>Here is an example of an JWT Credential.</p>
+
+        <pre class="example highlight" title="An example of a JWT Credential">
+{
+  "protected": {
+    "kid": "did:web:identity.foundation#_Qq0UL2Fq651Q0Fjd6TvnYE-faHiOpRlPVQcY_-tA4A",
+    "alg": "EdDSA"
+  },
+  "payload": {
+    "sub": "did:web:identity.foundation",
+    "iss": "did:web:identity.foundation",
+    "nbf": 1586814292,
+    "exp": 1589406292,
+    "vc": {
+      "@context": [
+        "https://www.w3.org/2018/credentials/v1",
+        "https://identity.foundation/.well-known/contexts/did-configuration-v0.0.jsonld"
+      ],
+      "issuer": "did:web:identity.foundation",
+      "issuanceDate": "2020-04-13T16:44:52-05:00",
+      "expirationDate": "2020-05-13T16:44:52-05:00",
+      "type": [
+        "VerifiableCredential",
+        "DomainLinkageCredential"
+      ],
+      "credentialSubject": {
+        "id": "did:web:identity.foundation",
+        "domain": "identity.foundation"
+      }
+    }
+  },
+  "signature": "qEV-lat1Wc8qKU_OLbTd07fx7tkW12QhkyiB912OsHi4FmkTWr_qMAFyW8IZxaQAsXg1E4yCRe8VsfGYaePfCg"
+}
+</pre
+        >
+
+        <p>Here is an example of an Indy Credential.</p>
+
+        <p>
+          Proposing to wrap Hyperledger Indy Credentials with useful meta data,
+          and provide a JSON-LD context for them.
+        </p>
+
+        <pre
+          class="example highlight"
+          title="An example of a Hyperledger Indy Credential Request"
+        >
+{
+  "@context": [
+    "https://www.w3.org/2018/credentials/v1",
+    "https://example.com/hyperledger/indy/v1"
+  ],
+  "id": "urn:uui:5e2a2cfc-ddee-4b6e-b1df-b25d5c381dd6",
+  "type": ["HyperledgerIndyCredentialRequest"],
+  "name": "Request for ZKP of PII",
+  "image": "https://via.placeholder.com/150",
+  "description": "Some hyperledger indy request",
+  "tags": ["personal"],
+  "controller": ["did:example:123"],
+  "correlation": ["4058a72a-9523-11ea-bb37-0242ac130002"],
+  "request": {
+    "blinded_ms": {
+      "committed_attributes": {},
+      "hidden_attributes": ["master_secret"],
+      "u": "65831452313882581230262709313640398502180121409437456701285942297697220273020651832867867646867694104285264882901784486060003798041322783654882887801338491262118680258721202637330550769869214264954742835710055875494951347903964659726990419477041411071293939395959337387632115898651722739118077413287212136124581126858655228247591827039715635869509104285523508350517189259095099031335038010813127434575838122472539671883003577935935805849721520698913035313700463716817299972399222663463531626690265819737278764702201558856023597942255295546958215228209847949123140888705477748125028989834201043317313234794999670960309",
+      "ur": null
+    },
+    "blinded_ms_correctness_proof": {
+      "c": "109860678073076085235251415455172114757447490048716300713084480862613855161594",
+      "m_caps": {
+        "master_secret": "26283368873168710647823575287384506775329371134097934071944480688608740447086822076157945371978097759120680279871932367038315961209475528490588458124513336494442045082962002632630"
+      },
+      "r_caps": {},
+      "v_dash_cap": "2280251997303109215440229941746203124645437910879700880787994443943315426654016847375797993806524993944624797926394628097776282593677641139413080324847861793144967254410329241135241448735975536630491881499127637586742389241597839730305081627234920106253837671010874865272721731993787096927927219667907076510252353984721949818101724187470187212834753509683017877231098388634684162763868165666439930098806964029632419913797905735247261174021083829716744013146112407108188748399721262104236090674581750516219214189074147796588753301588559493169281419642497122075637138527711629397854490786655717000499533957790924731039896458915259618414177079172716906654070782024546965289973737179244936586584621455129955294625933138084"
+    },
+    "cred_def_id": "97RDzn8aDviHUQQKPXg96e:3:CL:1:cred_def_tag",
+    "nonce": "787732518675896939298806",
+    "prover_did": "VsKV7grR1BUE29mG2Fm2kX"
+  }
+}
+</pre
+        >
+
+        <p>Here is an example of an Indy Credential Response.</p>
+
+        <pre
+          class="example highlight"
+          title="An example of a Hyperledger Indy Credential Response"
+        >
+{
+  "@context": [
+    "https://www.w3.org/2018/credentials/v1",
+    "https://example.com/hyperledger/indy/v1"
+  ],
+  "id": "urn:uui:5e2a2cfc-ddee-4b6e-b1df-b25d5c381dd6",
+  "type": ["HyperledgerIndyCredentialResponse"],
+  "name": "Response with ZKP of PII",
+  "image": "https://via.placeholder.com/150",
+  "description": "Some hyperledger indy response",
+  "tags": ["personal"],
+  "controller": ["did:example:123"],
+  "correlation": ["4058a72a-9523-11ea-bb37-0242ac130002"],
+  "response": {
+    "cred_def_id": "97RDzn8aDviHUQQKPXg96e:3:CL:1:cred_def_tag",
+    "rev_reg": null,
+    "rev_reg_id": null,
+    "schema_id": "1",
+    "signature": {
+    "p_credential": {
+      "a": "95353830375173330011563360059148264672898064240769511250683274343595259814385881580652435846242305610602775955153225949828351822615582300818164568659759210654812158114909671116500854641792747538502940562299939329775539393907208674840307912497761924491759626001631051978385141797844740405389371307810867892266393402889311183432317570029074621797181653694420095514029762818719468632709966063515795023890061161695773247748450608404761004379958193940141773792823139355492617241722063652768459827450028875759363009052805727635793672494079344330863114982873831106116041797167251966936936806424711883143669500689657231135606",
+      "e": "259344723055062059907025491480697571938277889515152306249728583105665800713306759149981690559193987143012367913206299323899696942213235956742930148508371517214363847909185411372253",
+      "m_2": "87933324484247736755432182254530234578539725681347360397600269871642228431291",
+      "v": "9980048782698213650029707306155459223351306678221752614666406496131317042580709639463968555501635926971838913872812808348795802668959822338264694189410327519660902443001438239011481179716268316444260971946516885083303128874909099593395255544689704182390571217148562533306555613083811625224310294070840596291508202160863034924955239229626686346699964038203572055526536874808785883442434204203578065957249420787817929622802282705534703609382585731044976967091334711355681718119910796427448184020435027328010716618250816760780193851507746646202423419420085349209268468391222040632949331381277174716781756370851681892517534221307517998851557466372447869765146986972380453630642444945932431258454568836958535197445982382692900624253982717831288480544351529597240580788825685640983253528750762130639934973110889811748482529784"
+    },
+    "r_credential": null
+    },
+    "signature_correctness_proof": {
+      "c": "111039946245998422293228198882690698427961176580797991507430891006675146356597",
+      "se": "22605964272161668401729392750124222261476956426739374858535661640179592757898860024832882984205300374191737843804934686452004477429402832292629718216663316164939570354876583921389754652453753209439712424429741656877542117083074742649581822964695267610947419213636358675100501109665802628234428907141311421109128613552987278370127477282566942966334173257609909151324991747736857761765991353008203982871999513346493415736923977797669183887730008747615226061509085005490533206472742385316192550536165419027378783950304188984918698568811667562161240994301427542320560168961460242425150722543163690905028839780636297387853"
+    },
+    "values": {
+      "age": { "encoded": "28", "raw": "28" },
+      "height": { "encoded": "175", "raw": "175" },
+      "name": {
+        "encoded": "1139481716457488690172217916278103335",
+        "raw": "Alex"
+      },
+      "sex": {
+        "encoded": "5944657099558967239210949258394887428692050081607692519917050011144233115103",
+        "raw": "male"
+      }
+    },
+    "witness": null
+  }
+}
+</pre
+        >
+      </section>
+
+      <section>
+        <h3 id="Key">Key</h3>
+
+        <p>A cryptographic key. Used for signing, encrypting or hashing.</p>
+
+        <p>
+          Here is an example of storing an Ed25519 key using JWK.
+        </p>
+
+        <pre class="example highlight" title="A jwk key example">
+{
+  "@context": ["https://transmute-industries.github.io/universal-wallet/contexts/wallet-v1.json"],
+  "id": "urn:uuid:53d846c8-9525-11ea-bb37-0242ac130002",
+  "name": "My Test Key 1",
+  "image": "https://via.placeholder.com/150",
+  "description" : "For testing only, totally compromised.",
+  "tags": ["professional", "organization", "compromised"],
+  "correlation": ["4058a72a-9523-11ea-bb37-0242ac130002"],
+  "controller": ["did:example:123#_Qq0UL2Fq651Q0Fjd6TvnYE-faHiOpRlPVQcY_-tA4A"],
+  "type": "Ed25519VerificationKey2018",
+  "publicKeyJwk": {
+    "crv": "Ed25519",
+    "x": "VCpo2LMLhn6iWku8MKvSLg2ZAoC-nlOyPVQaO3FxVeQ",
+    "kty": "OKP",
+    "kid": "_Qq0UL2Fq651Q0Fjd6TvnYE-faHiOpRlPVQcY_-tA4A"
+  },
+  "privateKeyJwk": {
+    "crv": "Ed25519",
+    "x": "VCpo2LMLhn6iWku8MKvSLg2ZAoC-nlOyPVQaO3FxVeQ",
+    "d": "tP7VWE16yMQWUO2G250yvoevfbfxY25GjHglTP3ZOyU",
+    "kty": "OKP",
+    "kid": "_Qq0UL2Fq651Q0Fjd6TvnYE-faHiOpRlPVQcY_-tA4A"
+  }
+}
+</pre
+        >
+
+        <p>
+          Here is an example of storing an Ed25519 key using base58.
+        </p>
+
+        <pre class="example highlight" title="A base58 key example">
+{
+  "@context": ["https://transmute-industries.github.io/universal-wallet/contexts/wallet-v1.json"],
+  "id": "urn:uuid:e8fc7810-9524-11ea-bb37-0242ac130002",
+  "name": "My Test Key 2",
+  "image": "https://via.placeholder.com/150",
+  "description" : "For testing only, totally compromised.",
+  "tags": ["professional", "organization", "compromised"],
+  "correlation": ["4058a72a-9523-11ea-bb37-0242ac130002"],
+  "controller": ["did:key:z6MkjjCpsoQrwnEmqHzLdxWowXk5gjbwor4urC1RPDmGeV8r#z6MkjjCpsoQrwnEmqHzLdxWowXk5gjbwor4urC1RPDmGeV8r"],
+  "type": "Ed25519VerificationKey2018",
+  "privateKeyBase58": "3CQCBKF3Mf1tU5q1FLpHpbxYrNYxLiZk4adDtfyPEfc39Wk6gsTb2qoc1ZtpqzJYdM1rG4gpaD3ZVKdkiDrkLF1p",
+  "publicKeyBase58": "6GwnHZARcEkJio9dxPYy6SC5sAL6PxpZAB6VYwoFjGMU"
+}
+</pre
+        >
+
+        <p>
+          Here is an example of a key which is stored in a remote kms.
+        </p>
+
+        <pre class="example highlight" title="A remote key example">
+{
+  "@context": ["https://transmute-industries.github.io/universal-wallet/contexts/wallet-v1.json"],
+  "id": "urn:uuid:e8fc7810-9524-11ea-bb37-0242ac130006",
+  "name": "My Test Key 3",
+  "image": "https://via.placeholder.com/150",
+  "description" : "For testing only, totally compromised.",
+  "tags": ["professional", "organization", "compromised"],
+  "correlation": ["4058a72a-9523-11ea-bb37-0242ac130002"],
+  "controller": ["did:key:z6MkjjCpsoQrwnEmqHzLdxWowXk5gjbwor4urC1RPDmGeV8r#z6MkjjCpsoQrwnEmqHzLdxWowXk5gjbwor4urC1RPDmGeV8r"],
+  "type": "Ed25519VerificationKey2018",
+  "publicKeyJwk": {
+    "crv": "Ed25519",
+    "x": "VCpo2LMLhn6iWku8MKvSLg2ZAoC-nlOyPVQaO3FxVeQ",
+    "kty": "OKP",
+    "kid": "_Qq0UL2Fq651Q0Fjd6TvnYE-faHiOpRlPVQcY_-tA4A"
+  },
+  "privateKeyWebKms": "http://example.com/kms/keystores/0/keys/0"
+}
+</pre
+        >
+
+        <p>
+          Here is an example of a local, hardware isolated key.
+        </p>
+
+        <pre class="example highlight" title="A remote key example">
+{
+  "@context": ["https://transmute-industries.github.io/universal-wallet/contexts/wallet-v1.json"],
+  "id": "urn:uuid:e8fc7810-9524-11ea-bb37-0242ac130006",
+  "name": "My Test Key 3",
+  "image": "https://via.placeholder.com/150",
+  "description" : "For testing only, totally compromised.",
+  "tags": ["professional", "organization", "compromised"],
+  "correlation": ["4058a72a-9523-11ea-bb37-0242ac130002"],
+  "controller": ["did:key:z6MkjjCpsoQrwnEmqHzLdxWowXk5gjbwor4urC1RPDmGeV8r#z6MkjjCpsoQrwnEmqHzLdxWowXk5gjbwor4urC1RPDmGeV8r"],
+  "type": "Ed25519VerificationKey2018",
+  "publicKeyJwk": {
+    "crv": "Ed25519",
+    "x": "VCpo2LMLhn6iWku8MKvSLg2ZAoC-nlOyPVQaO3FxVeQ",
+    "kty": "OKP",
+    "kid": "_Qq0UL2Fq651Q0Fjd6TvnYE-faHiOpRlPVQcY_-tA4A"
+  },
+  "privateKeySecureEnclave": "urn:ios:enclave:uuid:e8fc7810-9524-11ea-bb37-0242ac130789"
+}
+</pre
+        >
+      </section>
+
+      <section>
+        <h3 id="Address">Address</h3>
+
+        <p>
+          An identifier, frequently derived from a key. Used for verifying
+          signatures or sending currency.
+        </p>
+
+        <p>
+          Here is an example of storing an EthereumAddress.
+        </p>
+
+        <pre class="example highlight" title="An ethereum address example">
+{
+  "@context": [
+    "https://transmute-industries.github.io/universal-wallet/contexts/wallet-v1.json"
+  ],
+  "id": "did:ethr:0x774477c4cd54718d32d4df393415796b9bfcb63c",
+  "type": "EthereumAddress",
+  "controller": [
+    "did:ethr:0x774477c4cd54718d32d4df393415796b9bfcb63c"
+  ],
+  "name": "MetaMask Account",
+  "image": "https://metamask.io/images/webclip.png",
+  "description": "My ropsten testnet account.",
+  "privateKeyBrowser": "urn:metamask:0x774477c4cd54718d32d4df393415796b9bfcb63c"
+}
+</pre
+        >
+      </section>
+
+      <section>
+        <h3 id="Mnemonic">Mnemonic</h3>
+        <p>An ordered list of memorable words.</p>
+
+        <p>MAY be used as a source of memorable <a>Entropy</a>.</p>
+        <p>
+          MAY be used as input to a
+          <a href="https://en.wikipedia.org/wiki/Key_derivation_function">KDF</a
+          >.
+        </p>
+
+        <p>Here is an example of storing a mnemonic as a <a>Secret</a>.</p>
+
+        <pre class="example highlight" title="A mnemonic example">
+{
+  "@context": ["https://transmute-industries.github.io/universal-wallet/contexts/wallet-v1.json"],
+  "id": "urn:uuid:c410e44a-9525-11ea-bb37-0242ac130002",
+  "name": "My Ropsten Mnemonic 1",
+  "image": "https://via.placeholder.com/150",
+  "description" : "For testing only, totally compromised.",
+  "tags": ["professional", "organization", "compromised"],
+  "correlation": ["4058a72a-9523-11ea-bb37-0242ac130002"],
+  "type": "Mnemonic",
+  "value": "humble piece toy mimic miss hurdle smile awkward patch drama hurry mixture"
+}
+</pre
+        >
+      </section>
+
+      <section>
+        <h3 id="Entropy">Entropy</h3>
+
+        <p>
+          MAY be used as input to a
+          <a href="https://en.wikipedia.org/wiki/Key_derivation_function">KDF</a
+          >.
+        </p>
+
+        <p>Here is an example of storing entropy as a <a>Secret</a>.</p>
+
+        <pre class="example highlight" title="An entropy example">
+{
+  "@context": ["https://transmute-industries.github.io/universal-wallet/contexts/wallet-v1.json"],
+  "id": "urn:uuid:c410e44a-9525-11ea-bb37-0242ac130002",
+  "name": "My Test Entropy 1",
+  "image": "https://via.placeholder.com/150",
+  "description" : "For testing only, totally compromised.",
+  "tags": ["professional", "organization", "compromised"],
+  "correlation": ["4058a72a-9523-11ea-bb37-0242ac130002"],
+  "type": "Entropy",
+  "multibase": "z6MkuVZVSKLUNHRjXBXcEwvG5yiNHLhzBeXRjAkwmgSYensE"
+}
+</pre
+        >
+      </section>
+
+      <section>
+        <h3>Connection</h3>
+
+        <p>Information about a relationship between identifiers.</p>
+
+        <div class="issue" data-number="4">
+          Need to capture how connections are represented today.
+        </div>
+
+        <pre class="example highlight" title="A connection example">
+{
+  "@context": ["https://transmute-industries.github.io/universal-wallet/contexts/wallet-v1.json"],
+  "id": "urn:uuid:c410e44a-9525-11ea-bb37-0242ac130006",
+  "name": "My Health Record Certifier",
+  "image": "https://via.placeholder.com/150",
+  "description" : "The identifier that issues health record credentials.",
+  "tags": ["professional"],
+  "correlation": ["4058a72a-9523-11ea-bb37-0242ac130002"],
+  "type": "Connection",
+  "connection": {
+    "created_at": "2020-06-01 14:05:54.150111Z",
+    "their_did": "SkL2sdiv3RrPk3QtjT3Mjs",
+    "routing_state": "none",
+    "invitation_key": "EGsWeE95ANRp9GRNR3fjaWyB1tRqhaBuc69iMg7zBFij",
+    "accept": "auto",
+    "their_label": "Alice.Agent",
+    "my_did": "4zRzv8DtEaZqSreoNb2dpJ",
+    "state": "active",
+    "initiator": "self",
+    "connection_id": "3b6e568d-1cee-4327-915c-0e9d39ef2e88",
+    "invitation_mode": "once",
+    "updated_at": "2020-06-01 14:06:58.610756Z"
+  },
+}
+</pre
+        >
+      </section>
+
+      <section>
+        <h3>Meta Data</h3>
+
+        <p>Information about wallet data.</p>
+
+        <div class="issue" data-number="6">
+          Mostly an EDV integration question...Should authorization be
+          remembered in the wallet as meta data?
+        </div>
+
+        <p>
+          Here is an example where meta data is used to remind the wallet
+          controller that a credential has likely be exposed because of a breach
+          notification.
+        </p>
+
+        <pre class="example highlight" title="A credential meta data example">
+{
+  "@context": ["https://transmute-industries.github.io/universal-wallet/contexts/wallet-v1.json"],
+  "id": "urn:uuid:2905324a-9524-11ea-bb37-0242ac130002",
+  "type": "MetaData",
+  "name": "Degree Notes",
+  "image": "https://via.placeholder.com/150",
+  "description" : "Personal notes about this degree.",
+  "tags": ["professional", "organization"],
+  "correlation": ["urn:uuid:4058a72a-9523-11ea-bb37-0242ac130002"],
+  "note": "I've shared this degree, with many websites that have been breached. It should be considered public information at this point :("
+}
+</pre
+        >
+
+        <p>
+          Here is an example where meta data is used to remind the wallet
+          controller that they use a mnemonic for manage their ethereum accounts
+          and funds for testing.
+        </p>
+
+        <pre class="example highlight" title="A secret meta data example">
+{
+  "@context": ["https://transmute-industries.github.io/universal-wallet/contexts/wallet-v1.json"],
+  "id": "urn:uuid:2905324a-9524-11ea-bb37-0242ac130002",
+  "type": "MetaData",
+  "name": "Ropsten Testnet HD Accounts",
+  "image": "https://via.placeholder.com/150",
+  "description" : "My Ethereum TestNet Accounts",
+  "tags": ["professional", "organization"],
+  "correlation": ["urn:uuid:4058a72a-9523-11ea-bb37-0242ac130002"],
+  "hdPath": "m’/44’/60’/0’",
+  "target": ["urn:uuid:c410e44a-9525-11ea-bb37-0242ac130002"]
+}
+</pre
+        >
+      </section>
+
+      <section>
+        <h2>Locked Wallet</h2>
+
+        <p>Also known as a signed encrypted wallet.</p>
+
+        <p>
+          An integrity protected, authenticated and privacy preserving
+          representation of a wallet.
+        </p>
+
+        <pre class="example highlight" title="An encrypted wallet example">
+{
+  "@context": [
+    "https://www.w3.org/2018/credentials/v1",
+    "https://transmute-industries.github.io/universal-wallet/contexts/wallet-v1.json",
+  ],
+  "id": "http://example.gov/wallet/3732",
+  "type": ["VerifiableCredential", "EncryptedWallet"],
+  "issuer": "did:example:123",
+  "issuanceDate": "2020-05-22T17:38:21.910Z",
+  "credentialSubject": {
+    "id": "did:example:123",
+    "contents": [
+      {
+        "id": "urn:uuid:e8fc7810-9524-11ea-bb37-0242ac130002",
+        "jwe": {
+          "protected": "eyJlbmMiOiJYQzIwUCJ9",
+          "recipients": [
+            {
+              "header": {
+                "kid": "did:key:z6MkjMSYauuMgx9azEyUnTW5o5jFRkbBu5T83f39uNwnsGmm#z6LSoGtZSrUMZudAagzEfYf7k8jHZcGD79Sox7v4wCkDKNSw",
+                "alg": "ECDH-ES+A256KW",
+                "epk": {
+                  "kty": "OKP",
+                  "crv": "X25519",
+                  "x": "RfXdxTfIzilWBzWWX3ovHBDzgDcLNy0BFJWSxa0dqnw"
+                },
+                "apu": "RfXdxTfIzilWBzWWX3ovHBDzgDcLNy0BFJWSxa0dqnw",
+                "apv": "ZGlkOmtleTp6Nk1rak1TWWF1dU1neDlhekV5VW5UVzVvNWpGUmtiQnU1VDgzZjM5dU53bnNHbW0jejZMU29HdFpTclVNWnVkQWFnekVmWWY3azhqSFpjR0Q3OVNveDd2NHdDa0RLTlN3"
+              },
+              "encrypted_key": "-ABaawsVfTxJKmYVMhC0UWGQRZaYaLr8WdTBlugLOADXxrlOP-5M-A"
+            }
+          ],
+          "iv": "zjJPRrj0TGez9JYkChTrB3iqKoDkiBhn",
+          "ciphertext": "pPqPLiMuJLygwKbsDh-QWw0y5CHmQMINXPc1-qgsKLCFDTJ6ytqoTF35rM5KxSfeVCk74HLtIUIbDvNx53xr2YGqOi9-yDHrT3KurY8CIiBDTYCHkW50wgJq-Ac_gE3lSEEOYT1ZF4izf6GoA1jnI7alxD8ScgOGv2OuWLKEhV5HNEBLUpNz8Di7LDmRLSvAroiWE0rBu-xl7dRrLRH3ZKUzc-R6vrG_X56o-ivjUCfcvrjTnh2pgmVFo27BA34edYbLHIbKcWjMoSBEgmeY30ZuQt_KXK0vDQ6pFmMW5n8oISjPYv8rdicwNPfpCR89x11Vgrde419guqIwEsuOyvCAWidzgFeUu7jeyxjyYcNaIM1r2mq7OXnTODAFBzK4lWqniiDYWy2CLcPTHIXHnhq9YvPOhjqFz6aBbf_XqiFdIQZgOX2oDX6zGHg9fvw4AZc3_N3bCHRbZzKkf-AyvvHxPb9dphU1OdQmnRefYg-xtEQnlwk704J26xZU2qBn7YIJh_nrh9u41KqA0FSlYQsGiyW7SvOf2_LaA9qr17eA7HqY7Lst53_kiYhgWCd7g8hTWiT5G7QVLS_wx89DUpNfz_bxqQU0f17W2L0rLSLCWwaqUjxlLbPlFnpWgokbnxOMOETDvt_8DGUbczRou7Z4NyQ6ZFCOV4TD0AFRCM-RTj-YR6UC_UAAIvEPJep3Uz8elJzkf7xevnWKRSGyFLIUie0tSwZ7hCtjdvP3tOKidwy56jHtOQ_R6wx_9taVc3_5IeoP-4wZ4DNOm_IS9jb6csWmRvyW5GoRx-robqraPCM64SKg9EM",
+          "tag": "h6mJqHn33oCsDd5X57MI-g"
+        }
+      }
+    ]
+  }
+}
+</pre
+        >
+      </section>
+
+      <section>
+        <h2>Unlocked Wallet</h2>
+
+        <p>Also known as plaintext wallet.</p>
+
+        <p>
+          This representation may be used without ever having a locked
+          representation.
+        </p>
+        <p>
+          Implementations may choose to construct this representation from
+          database entities.
+        </p>
+
+        <pre class="example highlight" title="An unlocked wallet example">
+{
+  "@context": [
+    "https://www.w3.org/2018/credentials/v1",
+    "https://transmute-industries.github.io/universal-wallet/contexts/wallet-v1.json",
+  ],
+  "id": "http://example.gov/wallet/3732",
+  "type": [
+    "UniversalWallet2020"
+  ],
+  "status": "UNLOCKED",
+  "contents": [
+    // other wallet content types, ...
+    {
+      "id": "urn:uuid:e8fc7810-9524-11ea-bb37-0242ac130002",
+      "title": "My Test Key 2",
+      "image": "https://via.placeholder.com/150",
+      "description": "For testing only, totally compromised.",
+      "tags": ["professional", "organization", "compromised"],
+      "correlation": ["4058a72a-9523-11ea-bb37-0242ac130002"],
+      "controller": [
+        "did:key:z6MkjjCpsoQrwnEmqHzLdxWowXk5gjbwor4urC1RPDmGeV8r#z6MkjjCpsoQrwnEmqHzLdxWowXk5gjbwor4urC1RPDmGeV8r"
+      ],
+      "type": "Ed25519VerificationKey2018",
+      "privateKeyBase58": "3CQCBKF3Mf1tU5q1FLpHpbxYrNYxLiZk4adDtfyPEfc39Wk6gsTb2qoc1ZtpqzJYdM1rG4gpaD3ZVKdkiDrkLF1p",
+      "publicKeyBase58": "6GwnHZARcEkJio9dxPYy6SC5sAL6PxpZAB6VYwoFjGMU"
+    }
+  ]
+}
+</pre
+        >
+      </section>
+    </section>
+
+    <section id="interface" class="normative">
+      <h2>Interface</h2>
+
+      <p>
+        Interface functions are abstract, they take wallet contents and options
+        as input, and they produce wallet contents and side effects as output.
+      </p>
+
+      <section>
+        <h3>Import</h3>
+        <p>
+          Takes a serialized exported wallet representation as input. Loads the
+          representation into wallet software.
+        </p>
+      </section>
+
+      <section>
+        <h3>Unlock</h3>
+        <p>
+          Transforms one or more wallet contents from ciphertext to plaintext.
+        </p>
+
+        <p>
+          Requires knowledge of the password used to lock the wallet.
+        </p>
+      </section>
+
+      <section>
+        <h3>Lock</h3>
+        <p>
+          Transforms one or more wallet contents from plaintext to ciphertext.
+        </p>
+        <p>
+          Requires knowledge of the password used to lock the wallet.
+        </p>
+
+        <div class="issue" data-number="5">
+          Mostly a reference implementation issue. Locked representation should
+          indicate a best practice.
+        </div>
+      </section>
+
+      <section>
+        <h3>Query</h3>
+
+        <p>
+          Takes a map and reduce functions as input, and returns a collection of
+          results based on the current wallet contents.
+        </p>
+      </section>
+
+      <section>
+        <h3>SignRaw</h3>
+        <p>
+          Takes a Buffer as input, and an <code>options</code> object, which
+          contains at least a <code>verificationMethod</code>, and may content
+          additonal details such as <code>alg</code> or other JOSE related
+          terms.
+        </p>
+
+        <p>
+          Must support detached signatures.
+        </p>
+      </section>
+
+      <section>
+        <h3>VerifyRaw</h3>
+        <p>
+          Takes a Buffer as input, and an <code>options</code> object, which
+          contains at least a <code>verificationMethod</code>, and may content
+          additonal details such as <code>alg</code> or other JOSE related
+          terms.
+        </p>
+
+        <p>
+          Must support detached signatures.
+        </p>
+      </section>
+
+      <section>
+        <h3>Verify</h3>
+
+        <p>
+          Takes a Verifiable Credential or Verifiable Presentation as input,
+          returns a boolean <code>verified</code>, and an error object
+          <code>error</code> if <code>verified</code> if false.
+        </p>
+      </section>
+
+      <section>
+        <h3>Issue</h3>
+
+        <p>
+          Takes a Verifiable Credential without a <code>proof</code>, and an
+          <code>options</code> object, which contains at least a
+          <code>verificationMethod</code>, and <code>proofPurpose</code>.
+        </p>
+
+        <p>Produces as Verifiable Credential.</p>
+      </section>
+
+      <section>
+        <h3>Prove</h3>
+        <p>
+          Takes an id of a Verifiable Credential, and an
+          <code>options</code> object, which contains at least a
+          <code>challenge</code>.
+        </p>
+
+        <p>Produces as Verifiable Presentation.</p>
+      </section>
+
+      <section>
+        <h3>Transfer</h3>
+        <p>
+          Takes a Currency, Key or Address and recipient options as input.
+        </p>
+
+        <p>Produces a Connection, and transaction side effect.</p>
+      </section>
+
+      <section>
+        <h3>Export</h3>
+
+        <p>
+          Only ciphertext wallet contents can be exported.
+        </p>
+
+        <p>
+          Produces a serialized exported wallet representation.
+        </p>
+      </section>
+    </section>
+
+    <section id="integration" class="informative">
+      <h2>Integration</h2>
+
+      <p>
+        The following sections describe how a wallet <a>controller</a>
+        can define relationships with external systems.
+      </p>
+
+      <section>
+        <h3>HD Wallets</h3>
+
+        <p>
+          HD Wallets are a popular mechanism for managing many keys, addresess
+          and accounts across multiple crypto currency ledgers.
+        </p>
+
+        <p>
+          Using a <a>Meta Data</a> object applied to a <a>Secret</a>, a user
+          instruct an application to discover <a>cryptocurrency</a> that is
+          controlled by a <a>Secret</a>.
+        </p>
+
+        <p>
+          See <a href="https://github.com/ethereum/EIPs/issues/84">EIP84</a>
+          for examples of how this is done in the ethereum community.
+        </p>
+      </section>
+
+      <section>
+        <h3>OpenPGP Keyring</h3>
+        <a href="https://tools.ietf.org/html/rfc4880#section-3.6">
+          OpenPGP Keyring
+        </a>
+
+        <p>
+          Keys can be exported from keyring and imported into wallets. Some
+          transformation may be necessary.
+        </p>
+
+        <pre
+          class="example highlight"
+          title="An example of exporting a gpg key."
+        >
+          gpg --armor --export you@example.com > publicKey.asc
+        </pre>
+      </section>
+
+      <section>
+        <h3>Mobile Wallets</h3>
+
+        <h3>Android Keychain</h3>
+        <a
+          href="https://developer.android.com/reference/android/security/KeyChain"
+        >
+          KeyChain
+        </a>
+        <a href="https://developer.android.com/training/articles/keystore"
+          >keystore
+        </a>
+
+        <h4>Apple Wallet</h4>
+        <a href="https://support.apple.com/guide/keychain-access/welcome/mac"
+          >Keychain Acccess
+        </a>
+        <a href="https://wallet.apple.com/">wallet.apple.com</a>
+
+        <h4>Google Wallet</h4>
+        <a href="https://wallet.google.com/">wallet.google.com</a>
+
+        <h3>Microsoft Wallet</h3>
+        <a href="http://wallet.microsoft.com/">wallet.microsoft.com</a>
+      </section>
+    </section>
+
+    <section id="conformance" class="normative"></section>
+  </body>
+</html>

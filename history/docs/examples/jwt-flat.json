@@ -1,0 +1,30 @@
+{
+  "protected": {
+    "kid": "did:web:identity.foundation#_Qq0UL2Fq651Q0Fjd6TvnYE-faHiOpRlPVQcY_-tA4A",
+    "alg": "EdDSA"
+  },
+  "payload": {
+    "sub": "did:web:identity.foundation",
+    "iss": "did:web:identity.foundation",
+    "nbf": 1586814292,
+    "exp": 1589406292,
+    "vc": {
+      "@context": [
+        "https://www.w3.org/2018/credentials/v1",
+        "https://identity.foundation/.well-known/contexts/did-configuration-v0.0.jsonld"
+      ],
+      "issuer": "did:web:identity.foundation",
+      "issuanceDate": "2020-04-13T16:44:52-05:00",
+      "expirationDate": "2020-05-13T16:44:52-05:00",
+      "type": [
+        "VerifiableCredential",
+        "DomainLinkageCredential"
+      ],
+      "credentialSubject": {
+        "id": "did:web:identity.foundation",
+        "domain": "identity.foundation"
+      }
+    }
+  },
+  "signature": "qEV-lat1Wc8qKU_OLbTd07fx7tkW12QhkyiB912OsHi4FmkTWr_qMAFyW8IZxaQAsXg1E4yCRe8VsfGYaePfCg"
+}
