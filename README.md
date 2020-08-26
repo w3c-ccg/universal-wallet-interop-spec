@@ -20,3 +20,7 @@ and Pull Requests in the GitHub repository, discussions often occur
 on the
 [public-credentials](http://lists.w3.org/Archives/Public/public-credentials/)
 mailing list as well.
+
+### References
+
+- [Orignal W3C CCG Work Item Proposal](https://lists.w3.org/Archives/Public/public-credentials/2020Jun/0158.html)
