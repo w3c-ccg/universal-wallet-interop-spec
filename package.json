@@ -2,6 +2,7 @@
   "name": "root",
   "private": true,
   "scripts": {
+    "postinstall": "lerna bootstrap",
     "shove": "git add -A; git commit -m 'chore(ci): test'; git push origin master"
   },
   "devDependencies": {
