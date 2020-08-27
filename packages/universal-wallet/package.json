@@ -27,11 +27,6 @@
     "@transmute/vc.js": "^0.1.1-unstable.1",
     "edv-client": "^4.0.1"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run lint"
-    }
-  },
   "prettier": {
     "printWidth": 80,
     "semi": true,
