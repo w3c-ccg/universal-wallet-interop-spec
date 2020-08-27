@@ -68,6 +68,12 @@ export class UniversalWallet2020 {
     options.verificationMethod = results[verificationMethod];
     return options;
   };
+
+  public registerPlugin = (plugin: any) => {
+    const pluginMethods = plugin();
+
+    console.log(pluginMethods);
+  };
   public add = (content: any) => {
     this.contents.push(content);
     return content;
