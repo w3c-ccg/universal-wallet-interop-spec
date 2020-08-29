@@ -10,6 +10,9 @@
     "dist",
     "src"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/w3c-ccg/universal-wallet-interop-spec.git"
@@ -53,5 +56,6 @@
     "@transmute/did-key-x25519": "^0.2.1-unstable.13",
     "factory.ts": "^0.5.1",
     "isomorphic-webcrypto": "^2.3.6"
-  }
+  },
+  "gitHead": "1909fc17a2853a4696693cef5d527779b6b7c83a"
 }
