@@ -11,7 +11,7 @@ import { Ed25519Signature2018 } from '@transmute/ed25519-signature-2018';
 
 import * as fixtures from '@transmute/universal-wallet-test-vectors';
 
-import { Wallet, walletFactory, walletDefaults } from '../walletFactory';
+import { Wallet, walletFactory, walletDefaults } from '../../walletFactory';
 
 const keypair = {
   ...fixtures.content[1],

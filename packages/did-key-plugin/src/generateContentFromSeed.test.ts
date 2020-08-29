@@ -1,6 +1,6 @@
 import * as fixtures from '@transmute/universal-wallet-test-vectors';
 
-import { plugin } from '../index';
+import { plugin } from './index';
 
 it('should generate content from seed', async () => {
   const content = await plugin.generateContentFromSeed(

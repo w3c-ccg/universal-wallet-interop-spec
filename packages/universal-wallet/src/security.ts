@@ -90,10 +90,7 @@ export const lockContent = async ({
     recipients,
     keyResolver,
   });
-  return {
-    id: content.id,
-    jwe,
-  };
+  return jwe;
 };
 
 export const unlockContent = async ({
@@ -102,7 +99,7 @@ export const unlockContent = async ({
   keyAgreementKey,
 }: any) => {
   return cipher.decryptObject({
-    jwe: content.jwe,
+    jwe: content,
     keyAgreementKey: new X25519KeyPair(keyAgreementKey),
   });
 };
@@ -115,6 +112,9 @@ export const lockContents = async (
   const unlockedDidKey = await unlockDidKey(derivedKey);
   const lockedDidKey = lockDidKey(unlockedDidKey);
   const keyAgreementKey = lockedDidKey.keyAgreement[0];
+  if (keyAgreementKey.id.indexOf('#') === 0) {
+    keyAgreementKey.id = keyAgreementKey.controller + keyAgreementKey.id;
+  }
   const recipient = {
     header: {
       kid: keyAgreementKey.id,
@@ -143,9 +143,9 @@ export const unlockContents = async (
   const derivedKey = await passwordToKey(password);
   const unlockedDidKey = await unlockDidKey(derivedKey);
   const keyAgreementKey = unlockedDidKey.keyAgreement[0];
-  // TODO: refactor to fragment when we address controller / frame?
-  // https://github.com/transmute-industries/universal-wallet/issues/11
-  keyAgreementKey.id = keyAgreementKey.controller + keyAgreementKey.id;
+  if (keyAgreementKey.id.indexOf('#') === 0) {
+    keyAgreementKey.id = keyAgreementKey.controller + keyAgreementKey.id;
+  }
   const cipher = new Cipher();
   let decryptedContents = [];
   for (let i = 0; i < contents.length; i++) {
@@ -158,60 +158,4 @@ export const unlockContents = async (
     decryptedContents.push(decryptedContent);
   }
   return decryptedContents;
-};
-
-export const seedToId = async (seed: Uint8Array) => {
-  const buffer = await crypto.subtle.digest('SHA-256', seed);
-  return `urn:digest:${Buffer.from(new Int8Array(buffer)).toString('hex')}`;
-};
-
-export const generateDefaultContents = async (seed: Uint8Array) => {
-  const unlockedDID = await unlockDidKey(seed);
-  const seedId = await seedToId(seed);
-  const secret0 = {
-    '@context': [
-      'https://transmute-industries.github.io/universal-wallet/contexts/wallet-v1.json',
-    ],
-    id: seedId,
-    name: 'My Entropy',
-    image: 'https://via.placeholder.com/150',
-    description: 'For testing only.',
-    tags: ['inception'],
-    correlation: [seedId],
-    type: 'Entropy',
-    value: Buffer.from(seed).toString('hex'),
-  };
-  let key0 = unlockedDID.publicKey[0];
-  // TODO: refactor to fragment when we address controller
-  // https://github.com/transmute-industries/universal-wallet/issues/11
-  key0.id = key0.controller + key0.id;
-  key0 = {
-    ...key0,
-    '@context': [
-      'https://transmute-industries.github.io/universal-wallet/contexts/wallet-v1.json',
-    ],
-    name: 'My Signing Key',
-    image: 'https://via.placeholder.com/150',
-    description: 'Generated from seed.',
-    tags: ['inception'],
-    correlation: [seedId],
-    controller: [key0.id],
-  };
-  let key1 = unlockedDID.keyAgreement[0];
-  // TODO: refactor to fragment when we address controller
-  // https://github.com/transmute-industries/universal-wallet/issues/11
-  key1.id = key1.controller + key1.id;
-  key1 = {
-    ...key1,
-    '@context': [
-      'https://transmute-industries.github.io/universal-wallet/contexts/wallet-v1.json',
-    ],
-    name: 'My Encryption Key',
-    image: 'https://via.placeholder.com/150',
-    description: 'Generated from seed.',
-    tags: ['inception'],
-    correlation: [seedId],
-    controller: [key1.id],
-  };
-  return [secret0, key0, key1];
 };

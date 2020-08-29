@@ -1,19 +1,14 @@
-export interface IssueCredential {
-  credential: any;
-  options: any;
+export interface VaultClient {
+  vault_endpoint: string;
+  keys: any;
+  invocationSigner: any;
+  keyResolver: any;
+  vault: any;
 }
 
-export interface VerifyCredential {
-  credential: any;
-  options: any;
-}
-
-export interface PresentCredentials {
-  verifiableCredential: any;
-  options: any;
-}
-
-export interface VerifyPresentation {
-  presentation: any;
-  options: any;
+export interface VaultClientConfig {
+  vault_endpoint: string;
+  ed25519Key: any;
+  x25519Key: any;
+  hmacSecret: Buffer;
 }

@@ -3,6 +3,10 @@ import * as path from 'path';
 import { documentLoader } from './documentLoader';
 import issuers from './issuers';
 
+const password = fs
+  .readFileSync(path.resolve(__dirname, './wallet/password.txt'))
+  .toString();
+
 const seed = fs
   .readFileSync(path.resolve(__dirname, './wallet/seed.txt'))
   .toString();
@@ -29,12 +33,22 @@ const ldp_vp = JSON.parse(
     .toString()
 );
 
+const ldp_encrypted_wallet_vc = JSON.parse(
+  fs
+    .readFileSync(
+      path.resolve(__dirname, './wallet/ldp_encrypted_wallet_vc.json')
+    )
+    .toString()
+);
+
 export {
   issuers,
+  password,
   seed,
   content,
   ldp_vc_template,
   ldp_vc,
   ldp_vp,
+  ldp_encrypted_wallet_vc,
   documentLoader,
 };

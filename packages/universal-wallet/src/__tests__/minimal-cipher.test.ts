@@ -35,7 +35,7 @@ describe('minimal-cipher', () => {
     const contents = [{ key: 'v0' }, { key: 'v1' }, { key: 'v2' }];
     let encryptedContents = [];
     for (let i = 0; i < contents.length; i++) {
-      // be carefult because encryptObject mutates arguments...
+      // be careful because encryptObject mutates arguments...
       const jwe = await cipher.encryptObject({
         obj: { ...contents[i] },
         recipients: [...recipients],

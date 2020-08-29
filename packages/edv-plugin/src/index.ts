@@ -1,34 +1,29 @@
 import * as Factory from 'factory.ts';
 
-import {
-  IssueCredential,
-  VerifyCredential,
-  PresentCredentials,
-  VerifyPresentation,
-} from './types';
+import { VaultClientConfig } from './types';
+import { VaultClient } from './vault-client';
 
-import { issue } from './issue';
-
-import { verifyCredential } from './verifyCredential';
-import { createVerifiablePresentation } from './createVerifiablePresentation';
-import { verifyPresentation } from './verifyPresentation';
-
-interface VcPlugin {
-  issue: (config: IssueCredential) => Promise<any>;
-  verifyCredential: (config: VerifyCredential) => Promise<any>;
-  createVerifiablePresentation: (config: PresentCredentials) => Promise<any>;
-  verifyPresentation: (config: VerifyPresentation) => Promise<any>;
+interface EdvPlugin {
+  vaultClientFromDerivedContents: (
+    config: VaultClientConfig
+  ) => Promise<VaultClient>;
 }
 
 const factoryDefaults = {
-  issue,
-  verifyCredential,
-  createVerifiablePresentation,
-  verifyPresentation,
+  vaultClientFromDerivedContents: (
+    config: VaultClientConfig
+  ): Promise<VaultClient> => {
+    return VaultClient.fromDerivedContents(
+      config.vault_endpoint,
+      config.ed25519Key,
+      config.x25519Key,
+      config.hmacSecret
+    );
+  },
 };
 
-const pluginFactory = Factory.Sync.makeFactory<VcPlugin>(factoryDefaults);
+const pluginFactory = Factory.Sync.makeFactory<EdvPlugin>(factoryDefaults);
 
 const plugin = pluginFactory.build();
 
-export { VcPlugin, pluginFactory, factoryDefaults, plugin };
+export { EdvPlugin, pluginFactory, factoryDefaults, plugin };
