@@ -17,6 +17,7 @@
     "@transmute/universal-wallet": "0.0.10",
     "@transmute/universal-wallet-did-key-plugin": "0.0.0",
     "@transmute/universal-wallet-vc-plugin": "0.0.0",
+    "@transmute/universal-wallet-edv-plugin": "0.0.0",
     "factory.ts": "^0.5.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",

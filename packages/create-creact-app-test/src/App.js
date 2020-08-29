@@ -44,6 +44,15 @@ function App() {
 
       console.log({ credential });
 
+      console.log("You will need to uncomment stuff in App.js to test edvs");
+      // const vaultClient = await wallet.vaultClientFromDerivedContents({
+      //   vault_endpoint: "https://localhost:8080/edvs",
+      //   ed25519Key: content[1],
+      //   x25519Key: content[2],
+      //   hmacSecret: Buffer.from(content[0].value, "hex"),
+      // });
+      // console.log({ vaultClient });
+
       setState({ ...credential });
     })();
   }, []);
