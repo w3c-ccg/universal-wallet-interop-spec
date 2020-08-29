@@ -55,5 +55,5 @@
     "@transmute/did-key.js": "^0.2.1-unstable.13",
     "@transmute/jsonld-document-loader": "^0.1.3"
   },
-  "gitHead": "1909fc17a2853a4696693cef5d527779b6b7c83a"
+  "gitHead": "bf8d22a92e84304f26719188adc3c1c9f14aa9d1"
 }

@@ -57,5 +57,5 @@
     "factory.ts": "^0.5.1",
     "isomorphic-webcrypto": "^2.3.6"
   },
-  "gitHead": "1909fc17a2853a4696693cef5d527779b6b7c83a"
+  "gitHead": "bf8d22a92e84304f26719188adc3c1c9f14aa9d1"
 }
