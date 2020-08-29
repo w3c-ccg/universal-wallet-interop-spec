@@ -2,10 +2,6 @@ import {
   passwordToKey,
   lockContents,
   unlockContents,
-  issue,
-  verifyCredential,
-  createVerifiablePresentation,
-  verifyPresentation,
   generateDefaultContents,
 } from './security';
 
@@ -29,44 +25,6 @@ export class UniversalWallet2020 {
     const contents = await generateDefaultContents(seed);
     const wallet = new UniversalWallet2020(contents);
     return wallet;
-  };
-
-  // this function builds an index of all keys by "kid",
-  // then returns a options used for issuance or proving
-  private _expandVerificationMethod = (options: any) => {
-    const map = (content: any) => {
-      return content;
-    };
-    const reduce = (initialValue: any, item: any) => {
-      if (item.controller) {
-        // assume that the controller, if its an array, is an array of kid's
-        if (Array.isArray(item.controller)) {
-          item.controller.forEach((controller: string) => {
-            if (!initialValue[controller]) {
-              initialValue[controller] = item;
-              initialValue[controller].id = controller;
-            }
-          });
-        } else {
-          if (!initialValue[item.id]) {
-            // assume that the controller, is not a kid, but a true LDKeyPair controller.
-            initialValue[item.id] = item;
-          }
-        }
-      }
-
-      return initialValue;
-    };
-    const initialValue = {};
-    const results = this.query(map, reduce, initialValue);
-    const { verificationMethod } = options;
-    if (!results[verificationMethod]) {
-      throw new Error(
-        'Wallet does not contain verificationMethod ' + verificationMethod
-      );
-    }
-    options.verificationMethod = results[verificationMethod];
-    return options;
   };
 
   public registerPlugin = (plugin: any) => {
@@ -137,28 +95,5 @@ export class UniversalWallet2020 {
       return results.reduce(reduce, initialValue);
     }
     return results;
-  };
-
-  public issue = async ({ credential, options }: any): Promise<any> => {
-    const _options = this._expandVerificationMethod(options);
-    return issue({ credential, options: _options });
-  };
-
-  public verify = async ({ credential, presentation, options }: any) => {
-    if (credential) {
-      return verifyCredential({ credential });
-    }
-    if (presentation) {
-      return verifyPresentation({ presentation, options });
-    }
-  };
-
-  public prove = async ({ verifiableCredential, options }: any) => {
-    const _options = this._expandVerificationMethod(options);
-    _options.holder = options.verificationMethod.id.split('#')[0];
-    return createVerifiablePresentation({
-      verifiableCredential,
-      options: _options,
-    });
   };
 }

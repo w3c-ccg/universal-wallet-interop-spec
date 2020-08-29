@@ -10,7 +10,7 @@ import * as fixtures from '@transmute/universal-wallet-test-vectors';
 
 import { Wallet, walletFactory, walletDefaults } from '../walletFactory';
 
-it('can build wallet with plugin', async () => {
+it('can build wallet with did key plugin', async () => {
   interface DidKeyWallet extends Wallet, DidKeyPlugin {}
 
   const didKeyWalletFactory = Factory.Sync.makeFactory<DidKeyWallet>({

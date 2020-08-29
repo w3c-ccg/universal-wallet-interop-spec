@@ -1,16 +1,8 @@
 import { Cipher } from 'minimal-cipher';
 
-import documentLoader from './documentLoader';
-
 import crypto from 'isomorphic-webcrypto';
 import { X25519KeyPair } from '@transmute/did-key-x25519';
 import { Ed25519KeyPair, driver } from '@transmute/did-key-ed25519';
-
-import { ld } from '@transmute/vc.js';
-
-import { Ed25519Signature2018 } from '@transmute/ed25519-signature-2018';
-
-const vcjs = ld;
 
 export const passwordToKey = async (
   password: string,
@@ -25,7 +17,7 @@ export const passwordToKey = async (
       'deriveBits',
       'deriveKey',
     ])
-    .then(function(key: any) {
+    .then(function (key: any) {
       return crypto.subtle.deriveKey(
         {
           name: 'PBKDF2',
@@ -133,7 +125,7 @@ export const lockContents = async (
   const keyResolver = getKeyResolver(lockedDidKey);
   const cipher = new Cipher();
   return Promise.all(
-    contents.map(content => {
+    contents.map((content) => {
       return lockContent({
         content: { ...content },
         cipher,
@@ -166,63 +158,6 @@ export const unlockContents = async (
     decryptedContents.push(decryptedContent);
   }
   return decryptedContents;
-};
-
-export const issue = async ({ credential, options }: any) => {
-  const suite = new Ed25519Signature2018({
-    key: new Ed25519KeyPair(options.verificationMethod),
-  });
-  const signedVC = await vcjs.issue({
-    credential: {
-      ...credential,
-      issuer: options.verificationMethod.id.split('#')[0],
-      issuanceDate: credential.issuanceDate || options.created,
-    },
-    suite,
-    documentLoader,
-  });
-  return signedVC;
-};
-
-export const verifyCredential = ({ credential }: any) => {
-  const suite = new Ed25519Signature2018();
-  return vcjs.verifyCredential({
-    credential,
-    suite,
-    documentLoader,
-  });
-};
-
-export const verifyPresentation = ({ presentation, options }: any) => {
-  const suite = new Ed25519Signature2018();
-  return vcjs.verify({
-    presentation,
-    ...options,
-    suite,
-    documentLoader,
-  });
-};
-
-export const createVerifiablePresentation = ({
-  verifiableCredential,
-  options,
-}: any) => {
-  const presentation = {
-    '@context': ['https://www.w3.org/2018/credentials/v1'],
-    type: ['VerifiablePresentation'],
-    holder: options.holder,
-    verifiableCredential,
-  };
-  const suite = new Ed25519Signature2018({
-    key: new Ed25519KeyPair(options.verificationMethod),
-  });
-  return vcjs.signPresentation({
-    presentation,
-    suite,
-    challenge: options.challenge,
-    domain: options.domain,
-    documentLoader,
-  });
 };
 
 export const seedToId = async (seed: Uint8Array) => {
