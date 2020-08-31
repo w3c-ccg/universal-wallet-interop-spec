@@ -2,9 +2,29 @@
   "name": "root",
   "private": true,
   "scripts": {
+    "postinstall": "lerna bootstrap",
+    "lint": "lerna run lint --stream",
     "shove": "git add -A; git commit -m 'chore(ci): test'; git push origin master"
   },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+      "pre-push": "lerna run lint --since origin/master --exclude-dependents"
+    }
+  },
   "devDependencies": {
-    "lerna": "^3.20.2"
+    "@commitlint/cli": "^9.0.1",
+    "@commitlint/config-conventional": "^9.0.1",
+    "@types/jest": "^25.2.3",
+    "@typescript-eslint/eslint-plugin": "^3.1.0",
+    "@typescript-eslint/parser": "^3.1.0",
+    "eslint": "^7.1.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-jest": "^23.13.2",
+    "eslint-plugin-prettier": "^3.1.3",
+    "husky": "^4.2.5",
+    "lerna": "^3.20.2",
+    "prettier": "^2.0.5",
+    "typescript": "^3.8.3"
   }
 }

@@ -1,3 +1,3 @@
+export { Wallet, walletFactory, walletDefaults } from './walletFactory';
+
 export * from './security';
-export * from './vault-client';
-export * from './UniversalWallet2020';

@@ -1,16 +1,8 @@
 import { Cipher } from 'minimal-cipher';
 
-import documentLoader from './documentLoader';
-
 import crypto from 'isomorphic-webcrypto';
 import { X25519KeyPair } from '@transmute/did-key-x25519';
 import { Ed25519KeyPair, driver } from '@transmute/did-key-ed25519';
-
-import { ld } from '@transmute/vc.js';
-
-import { Ed25519Signature2018 } from '@transmute/ed25519-signature-2018';
-
-const vcjs = ld;
 
 export const passwordToKey = async (
   password: string,
@@ -25,7 +17,7 @@ export const passwordToKey = async (
       'deriveBits',
       'deriveKey',
     ])
-    .then(function(key: any) {
+    .then(function (key: any) {
       return crypto.subtle.deriveKey(
         {
           name: 'PBKDF2',
@@ -98,10 +90,7 @@ export const lockContent = async ({
     recipients,
     keyResolver,
   });
-  return {
-    id: content.id,
-    jwe,
-  };
+  return jwe;
 };
 
 export const unlockContent = async ({
@@ -110,7 +99,7 @@ export const unlockContent = async ({
   keyAgreementKey,
 }: any) => {
   return cipher.decryptObject({
-    jwe: content.jwe,
+    jwe: content,
     keyAgreementKey: new X25519KeyPair(keyAgreementKey),
   });
 };
@@ -123,6 +112,9 @@ export const lockContents = async (
   const unlockedDidKey = await unlockDidKey(derivedKey);
   const lockedDidKey = lockDidKey(unlockedDidKey);
   const keyAgreementKey = lockedDidKey.keyAgreement[0];
+  if (keyAgreementKey.id.indexOf('#') === 0) {
+    keyAgreementKey.id = keyAgreementKey.controller + keyAgreementKey.id;
+  }
   const recipient = {
     header: {
       kid: keyAgreementKey.id,
@@ -133,7 +125,7 @@ export const lockContents = async (
   const keyResolver = getKeyResolver(lockedDidKey);
   const cipher = new Cipher();
   return Promise.all(
-    contents.map(content => {
+    contents.map((content) => {
       return lockContent({
         content: { ...content },
         cipher,
@@ -151,9 +143,9 @@ export const unlockContents = async (
   const derivedKey = await passwordToKey(password);
   const unlockedDidKey = await unlockDidKey(derivedKey);
   const keyAgreementKey = unlockedDidKey.keyAgreement[0];
-  // TODO: refactor to fragment when we address controller / frame?
-  // https://github.com/transmute-industries/universal-wallet/issues/11
-  keyAgreementKey.id = keyAgreementKey.controller + keyAgreementKey.id;
+  if (keyAgreementKey.id.indexOf('#') === 0) {
+    keyAgreementKey.id = keyAgreementKey.controller + keyAgreementKey.id;
+  }
   const cipher = new Cipher();
   let decryptedContents = [];
   for (let i = 0; i < contents.length; i++) {
@@ -166,117 +158,4 @@ export const unlockContents = async (
     decryptedContents.push(decryptedContent);
   }
   return decryptedContents;
-};
-
-export const issue = async ({ credential, options }: any) => {
-  const suite = new Ed25519Signature2018({
-    key: new Ed25519KeyPair(options.verificationMethod),
-  });
-  const signedVC = await vcjs.issue({
-    credential: {
-      ...credential,
-      issuer: options.verificationMethod.id.split('#')[0],
-      issuanceDate: credential.issuanceDate || options.created,
-    },
-    suite,
-    documentLoader,
-  });
-  return signedVC;
-};
-
-export const verifyCredential = ({ credential }: any) => {
-  const suite = new Ed25519Signature2018();
-  return vcjs.verifyCredential({
-    credential,
-    suite,
-    documentLoader,
-  });
-};
-
-export const verifyPresentation = ({ presentation, options }: any) => {
-  const suite = new Ed25519Signature2018();
-  return vcjs.verify({
-    presentation,
-    ...options,
-    suite,
-    documentLoader,
-  });
-};
-
-export const createVerifiablePresentation = ({
-  verifiableCredential,
-  options,
-}: any) => {
-  const presentation = {
-    '@context': ['https://www.w3.org/2018/credentials/v1'],
-    type: ['VerifiablePresentation'],
-    holder: options.holder,
-    verifiableCredential,
-  };
-  const suite = new Ed25519Signature2018({
-    key: new Ed25519KeyPair(options.verificationMethod),
-  });
-  return vcjs.signPresentation({
-    presentation,
-    suite,
-    challenge: options.challenge,
-    domain: options.domain,
-    documentLoader,
-  });
-};
-
-export const seedToId = async (seed: Uint8Array) => {
-  const buffer = await crypto.subtle.digest('SHA-256', seed);
-  return `urn:digest:${Buffer.from(new Int8Array(buffer)).toString('hex')}`;
-};
-
-export const generateDefaultContents = async (seed: Uint8Array) => {
-  const unlockedDID = await unlockDidKey(seed);
-  const seedId = await seedToId(seed);
-  const secret0 = {
-    '@context': [
-      'https://transmute-industries.github.io/universal-wallet/contexts/wallet-v1.json',
-    ],
-    id: seedId,
-    name: 'My Entropy',
-    image: 'https://via.placeholder.com/150',
-    description: 'For testing only.',
-    tags: ['inception'],
-    correlation: [seedId],
-    type: 'Entropy',
-    value: Buffer.from(seed).toString('hex'),
-  };
-  let key0 = unlockedDID.publicKey[0];
-  // TODO: refactor to fragment when we address controller
-  // https://github.com/transmute-industries/universal-wallet/issues/11
-  key0.id = key0.controller + key0.id;
-  key0 = {
-    ...key0,
-    '@context': [
-      'https://transmute-industries.github.io/universal-wallet/contexts/wallet-v1.json',
-    ],
-    name: 'My Signing Key',
-    image: 'https://via.placeholder.com/150',
-    description: 'Generated from seed.',
-    tags: ['inception'],
-    correlation: [seedId],
-    controller: [key0.id],
-  };
-  let key1 = unlockedDID.keyAgreement[0];
-  // TODO: refactor to fragment when we address controller
-  // https://github.com/transmute-industries/universal-wallet/issues/11
-  key1.id = key1.controller + key1.id;
-  key1 = {
-    ...key1,
-    '@context': [
-      'https://transmute-industries.github.io/universal-wallet/contexts/wallet-v1.json',
-    ],
-    name: 'My Encryption Key',
-    image: 'https://via.placeholder.com/150',
-    description: 'Generated from seed.',
-    tags: ['inception'],
-    correlation: [seedId],
-    controller: [key1.id],
-  };
-  return [secret0, key0, key1];
 };

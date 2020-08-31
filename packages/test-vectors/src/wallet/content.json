@@ -1,0 +1,48 @@
+[
+  {
+    "@context": [
+      "https://w3c-ccg.github.io/universal-wallet-interop-spec/contexts/wallet-v1.json"
+    ],
+    "id": "urn:digest:9468ad3dcb7c87cd994b9013f980569af9c81823b1bfd1ffdb7c3fc72abb652a",
+    "name": "DID Key Secret",
+    "image": "https://via.placeholder.com/150",
+    "description": "Used to generate a DID with a signing and encryption key.",
+    "tags": ["inception"],
+    "type": "Entropy",
+    "value": "7052adea8f9823817065456ecad5bf24dcd31a698f7bc9a0b5fc170849af4226"
+  },
+  {
+    "id": "did:key:z6MkwJSaEMnE4u6LiqrZV1BJHSkc9x8S4mTm3ArNL1m19BZR#z6MkwJSaEMnE4u6LiqrZV1BJHSkc9x8S4mTm3ArNL1m19BZR",
+    "type": "Ed25519VerificationKey2018",
+    "controller": "did:key:z6MkwJSaEMnE4u6LiqrZV1BJHSkc9x8S4mTm3ArNL1m19BZR",
+    "publicKeyBase58": "HrBXe7XnjMbscM1roSDTSMCcLNraetDQM9wSVjnzDxn3",
+    "privateKeyBase58": "3FFXDEFub6DPDX9CEZugQKAFikm1rfnNFwdycUGksAWhrs6BNca6USdttMcyx6oAdKmtnFBQijgisU58r26JfXJF",
+    "@context": [
+      "https://w3c-ccg.github.io/universal-wallet-interop-spec/contexts/wallet-v1.json"
+    ],
+    "name": "Signing Key",
+    "image": "https://via.placeholder.com/150",
+    "description": "Used to produce digital signatures.",
+    "tags": ["inception"],
+    "generatedFrom": [
+      "urn:digest:9468ad3dcb7c87cd994b9013f980569af9c81823b1bfd1ffdb7c3fc72abb652a"
+    ]
+  },
+  {
+    "id": "did:key:z6MkwJSaEMnE4u6LiqrZV1BJHSkc9x8S4mTm3ArNL1m19BZR#z6LSnHCakA8zvH61bCXv7goaT2MyVf8PjfW7XjeKTEGCgG9N",
+    "type": "X25519KeyAgreementKey2019",
+    "controller": "did:key:z6MkwJSaEMnE4u6LiqrZV1BJHSkc9x8S4mTm3ArNL1m19BZR",
+    "publicKeyBase58": "Bc2RDrL8ppNGVpA9b3Hd8S9VeWbH34KxekvdxmcfxtNc",
+    "privateKeyBase58": "1Tkx9xhgiPBAbvWmsKKWW3sPwA29YbMf2wKDhAKD2p8",
+    "@context": [
+      "https://w3c-ccg.github.io/universal-wallet-interop-spec/contexts/wallet-v1.json"
+    ],
+    "name": "Encryption Key",
+    "image": "https://via.placeholder.com/150",
+    "description": "Used to derive symmetric keys for encryption.",
+    "tags": ["inception"],
+    "generatedFrom": [
+      "urn:digest:9468ad3dcb7c87cd994b9013f980569af9c81823b1bfd1ffdb7c3fc72abb652a"
+    ]
+  }
+]

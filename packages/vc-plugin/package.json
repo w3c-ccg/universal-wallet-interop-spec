@@ -1,0 +1,63 @@
+{
+  "name": "@transmute/universal-wallet-vc-plugin",
+  "author": "Orie Steele",
+  "module": "dist/universal-wallet-vc-plugin.esm.js",
+  "version": "0.1.2-alpha.0",
+  "license": "Apache-2.0",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/w3c-ccg/universal-wallet-interop-spec.git"
+  },
+  "engines": {
+    "node": ">=10"
+  },
+  "scripts": {
+    "start": "tsdx watch",
+    "build": "tsdx build",
+    "test": "tsdx test",
+    "lint": "tsdx lint src --fix",
+    "prepare": "tsdx build"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint"
+    }
+  },
+  "prettier": {
+    "printWidth": 80,
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "es5"
+  },
+  "resolutions": {
+    "yargs-parser": "^13.1.2",
+    "serialize-javascript": ">=3.1.0"
+  },
+  "devDependencies": {
+    "@transmute/universal-wallet-test-vectors": "^0.1.2-alpha.0",
+    "husky": "^4.2.5",
+    "serialize-javascript": ">=3.1.0",
+    "tsdx": "^0.13.3",
+    "tslib": "^2.0.0",
+    "typescript": "^3.9.3",
+    "yargs-parser": "^19.0.1"
+  },
+  "dependencies": {
+    "@transmute/did-key-ed25519": "^0.2.1-unstable.13",
+    "@transmute/did-key-x25519": "^0.2.1-unstable.13",
+    "@transmute/ed25519-signature-2018": "^0.1.1-unstable.4",
+    "@transmute/vc.js": "^0.1.1-unstable.4",
+    "factory.ts": "^0.5.1",
+    "isomorphic-webcrypto": "^2.3.6"
+  },
+  "gitHead": "bf8d22a92e84304f26719188adc3c1c9f14aa9d1"
+}
