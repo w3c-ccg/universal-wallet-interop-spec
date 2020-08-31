@@ -22,8 +22,7 @@
   },
   "scripts": {
     "start": "tsdx watch",
-    "copy:dist": "cp -r ./src/credentials ./dist/credentials && cp -r ./src/issuers ./dist/issuers && cp -r ./src/wallet ./dist/wallet",
-    "build": "tsdx build && npm run copy:dist",
+    "build": "tsdx build",
     "test": "tsdx test",
     "lint": "tsdx lint src --fix",
     "prepare": "npm run build"

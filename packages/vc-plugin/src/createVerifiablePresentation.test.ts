@@ -17,7 +17,7 @@ const suite = new Ed25519Signature2018({
 
 it('should createVerifiablePresentation', async () => {
   const vp = await plugin.createVerifiablePresentation({
-    verifiableCredential: [fixtures.ldp_vc],
+    verifiableCredential: [fixtures.credentials.ldp_vc],
     options: {
       challenge: 'nonce-123',
       domain: 'example.com',
@@ -25,5 +25,5 @@ it('should createVerifiablePresentation', async () => {
       documentLoader: fixtures.documentLoader,
     },
   });
-  expect(vp).toEqual(fixtures.ldp_vp);
+  expect(vp).toEqual(fixtures.credentials.ldp_vp);
 });

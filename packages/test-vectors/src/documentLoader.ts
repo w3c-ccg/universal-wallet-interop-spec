@@ -3,7 +3,7 @@ import {
   IDocumentLoaderResponse,
 } from '@transmute/jsonld-document-loader';
 
-import issuers from './issuers';
+import { issuers } from './data/issuers.json';
 
 const documentLoader = (uri: string): Promise<IDocumentLoaderResponse> => {
   // uncomment to see url's that re resolved as part of context processing.

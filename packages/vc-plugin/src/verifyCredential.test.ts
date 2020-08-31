@@ -17,7 +17,7 @@ const suite = new Ed25519Signature2018({
 
 it('should verifyCredential', async () => {
   const verification = await plugin.verifyCredential({
-    credential: fixtures.ldp_vc,
+    credential: fixtures.credentials.ldp_vc,
     options: {
       suite,
       documentLoader: fixtures.documentLoader,
