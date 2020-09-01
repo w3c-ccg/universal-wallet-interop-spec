@@ -125,7 +125,7 @@ it('lock / unlock', async () => {
 });
 
 // count items by generatedFrom
-it.only('query', async () => {
+it('query', async () => {
   const walletForQuery = didKeyWalletFactory.build();
   const seed = await walletForQuery.passwordToKey(fixtures.password);
   const contents = await walletForQuery.generateContentFromSeed(seed);

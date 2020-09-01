@@ -6,6 +6,7 @@ import {
   lockContents,
   unlockContents,
   passwordToKey,
+  seedToId,
   unlockDidKey,
 } from './security';
 
@@ -13,6 +14,7 @@ interface Wallet {
   status: WalletStatus;
   contents: any[];
   passwordToKey: (password: string) => Promise<Uint8Array>;
+  seedToId: (seed: Uint8Array) => Promise<string>;
   add: (content: any) => Wallet;
   remove: (contentId: string) => Wallet;
   lock: (password: string) => Promise<Wallet>;
@@ -26,6 +28,7 @@ const walletDefaults = {
   status: WalletStatus.Unlocked,
   contents: [],
   passwordToKey,
+  seedToId,
   add: function (content: any): Wallet {
     (this as Wallet).contents.push(content);
     return this;

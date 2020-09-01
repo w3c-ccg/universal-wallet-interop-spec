@@ -4,6 +4,11 @@ import crypto from 'isomorphic-webcrypto';
 import { X25519KeyPair } from '@transmute/did-key-x25519';
 import { Ed25519KeyPair, driver } from '@transmute/did-key-ed25519';
 
+export const seedToId = async (seed: Uint8Array) => {
+  const buffer = await crypto.subtle.digest('SHA-256', seed);
+  return `urn:digest:${Buffer.from(new Int8Array(buffer)).toString('hex')}`;
+};
+
 export const passwordToKey = async (
   password: string,
   salt: string = 'salt',
