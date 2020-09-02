@@ -24,7 +24,7 @@ describe.skip('vault-client', () => {
       id: await EdvClient.generateId(),
       content: {
         schema: 'https://schema.org/UniversalWallet',
-        data: fixtures.ldp_vc,
+        data: fixtures.credentials.ldp_vc,
       },
     };
 

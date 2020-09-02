@@ -17,7 +17,7 @@ const suite = new Ed25519Signature2018({
 
 it('should verifyPresentation', async () => {
   const verification = await plugin.verifyPresentation({
-    presentation: fixtures.ldp_vp,
+    presentation: fixtures.credentials.ldp_vp,
     options: {
       challenge: 'nonce-123',
       domain: 'example.com',

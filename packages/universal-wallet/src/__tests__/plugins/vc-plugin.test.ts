@@ -25,7 +25,7 @@ const suite = new Ed25519Signature2018({
 });
 
 const credential = {
-  ...fixtures.ldp_vc_template,
+  ...fixtures.credentials.vc_template,
   issuer: 'http://example.com/issuer/123',
   issuanceDate: '2020-03-10T04:24:12.164Z',
 };
@@ -48,5 +48,15 @@ it('can build wallet with vc plugin', async () => {
       documentLoader: fixtures.documentLoader,
     },
   });
-  expect(vc).toEqual(fixtures.ldp_vc);
+  expect(vc).toEqual(fixtures.credentials.ldp_vc);
+
+  const verification = await wallet.verifyCredential({
+    credential: vc,
+    options: {
+      suite: new Ed25519Signature2018({}),
+      documentLoader: fixtures.documentLoader,
+    },
+  });
+
+  expect(verification.verified).toBe(true);
 });

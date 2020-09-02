@@ -68,9 +68,9 @@ it('can use password as seed for default did key content', async () => {
 });
 
 it('add / remove', () => {
-  wallet.add(fixtures.ldp_vc);
-  expect(wallet.contents[0]).toEqual(fixtures.ldp_vc);
-  wallet.remove(fixtures.ldp_vc.id);
+  wallet.add(fixtures.credentials.ldp_vc);
+  expect(wallet.contents[0]).toEqual(fixtures.credentials.ldp_vc);
+  wallet.remove(fixtures.credentials.ldp_vc.id);
   expect(wallet.contents).toEqual([]);
 });
 
@@ -78,7 +78,7 @@ it('export / issue', async () => {
   const walletToBeExported = didKeyWalletFactory.build();
   const seed = await walletToBeExported.passwordToKey(fixtures.password);
   const contents = await walletToBeExported.generateContentFromSeed(seed);
-  contents.forEach((content) => {
+  contents.forEach(content => {
     walletToBeExported.add(content);
   });
   expect(walletToBeExported.status).toBe('UNLOCKED');
@@ -99,7 +99,7 @@ it('export / issue', async () => {
 it('verify / import', async () => {
   const walletForImport = didKeyWalletFactory.build();
   const verification = await walletForImport.verifyCredential({
-    credential: fixtures.ldp_encrypted_wallet_vc,
+    credential: fixtures.credentials.ldp_encrypted_wallet_vc,
     options: {
       // verification uses document loader to get key material
       suite: new Ed25519Signature2018({}),
@@ -108,7 +108,7 @@ it('verify / import', async () => {
   });
   expect(verification.verified).toBe(true);
   await walletForImport.import(
-    fixtures.ldp_encrypted_wallet_vc,
+    fixtures.credentials.ldp_encrypted_wallet_vc,
     fixtures.password
   );
   expect(walletForImport.contents).toEqual(fixtures.content);
@@ -116,20 +116,20 @@ it('verify / import', async () => {
 
 it('lock / unlock', async () => {
   const walletForLock = didKeyWalletFactory.build();
-  walletForLock.add(fixtures.ldp_vc);
+  walletForLock.add(fixtures.credentials.ldp_vc);
   expect(walletForLock.status).toBe('UNLOCKED');
-  expect(walletForLock.contents).toEqual([fixtures.ldp_vc]);
+  expect(walletForLock.contents).toEqual([fixtures.credentials.ldp_vc]);
   await walletForLock.lock(fixtures.password);
   expect(walletForLock.status).toBe('LOCKED');
   expect(walletForLock.contents[0].ciphertext).toBeDefined();
 });
 
 // count items by generatedFrom
-it.only('query', async () => {
+it('query', async () => {
   const walletForQuery = didKeyWalletFactory.build();
   const seed = await walletForQuery.passwordToKey(fixtures.password);
   const contents = await walletForQuery.generateContentFromSeed(seed);
-  contents.forEach((content) => {
+  contents.forEach(content => {
     walletForQuery.add(content);
   });
   const map = (content: any) => {

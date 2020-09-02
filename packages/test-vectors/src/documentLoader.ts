@@ -1,23 +1,33 @@
 import {
-  production,
-  IDocumentLoaderResponse,
+  documentLoaderFactory,
+  contexts,
 } from '@transmute/jsonld-document-loader';
 
-import issuers from './issuers';
+import { issuers } from './data/issuers.json';
 
-const documentLoader = (uri: string): Promise<IDocumentLoaderResponse> => {
-  // uncomment to see url's that re resolved as part of context processing.
-  // console.log(uri);
-  const _uriWithoutFragment = uri.split('#')[0];
-  if ((issuers as any)[_uriWithoutFragment]) {
-    return Promise.resolve({
-      contextUrl: null,
-      documentUrl: uri,
-      document: JSON.stringify((issuers as any)[_uriWithoutFragment]),
-    });
-  }
-  // use the safe defaults provided
-  return production.documentLoader(uri);
-};
+import wallet_v1 from './data/wallet-v1.json';
+
+let golem = documentLoaderFactory.pluginFactory.build({
+  contexts: {
+    ...contexts.W3C_Decentralized_Identifiers,
+    ...contexts.W3C_Verifiable_Credentials,
+    ...contexts.W3ID_Security_Vocabulary,
+    'https://w3c-ccg.github.io/universal-wallet-interop-spec/contexts/wallet-v1.json': wallet_v1,
+  } as any,
+});
+
+// add a resolver to each issuer... and no others.
+Object.keys(issuers).forEach(issuer => {
+  golem.addResolver({
+    [issuer]: {
+      resolve: (uri: string) => {
+        const document = (issuers as any)[uri.split('#')[0]];
+        return Promise.resolve(document);
+      },
+    },
+  });
+});
+
+const documentLoader = golem.buildDocumentLoader();
 
 export { documentLoader };

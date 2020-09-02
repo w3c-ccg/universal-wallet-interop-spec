@@ -6,6 +6,7 @@ import {
   lockContents,
   unlockContents,
   passwordToKey,
+  seedToId,
   unlockDidKey,
 } from './security';
 
@@ -13,6 +14,7 @@ interface Wallet {
   status: WalletStatus;
   contents: any[];
   passwordToKey: (password: string) => Promise<Uint8Array>;
+  seedToId: (seed: Uint8Array) => Promise<string>;
   add: (content: any) => Wallet;
   remove: (contentId: string) => Wallet;
   lock: (password: string) => Promise<Wallet>;
@@ -26,16 +28,21 @@ const walletDefaults = {
   status: WalletStatus.Unlocked,
   contents: [],
   passwordToKey,
+  seedToId,
   add: function (content: any): Wallet {
     (this as Wallet).contents.push(content);
     return this;
   },
   remove: function (contentId: string): any {
-    let index = (this as Wallet).contents.findIndex((c: any) => {
+    let contents = JSON.parse(JSON.stringify(this.contents));
+    let index = contents.findIndex((c: any) => {
       return c.id === contentId;
     });
-    let content = (this as Wallet).contents[index];
-    (this as Wallet).contents = (this as Wallet).contents.splice(index, index);
+    let content = contents[index];
+    this.contents = contents.filter((i: any) => {
+      return i.id !== content.id;
+    });
+
     return content;
   },
   lock: async function (password: string): Promise<Wallet> {

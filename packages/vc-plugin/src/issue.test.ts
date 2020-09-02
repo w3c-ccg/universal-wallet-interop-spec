@@ -16,7 +16,7 @@ const suite = new Ed25519Signature2018({
 });
 
 const credential = {
-  ...fixtures.ldp_vc_template,
+  ...fixtures.credentials.vc_template,
   issuer: 'http://example.com/issuer/123',
   issuanceDate: '2020-03-10T04:24:12.164Z',
 };
@@ -29,5 +29,5 @@ it('should issue credential', async () => {
       documentLoader: fixtures.documentLoader,
     },
   });
-  expect(vc).toEqual(fixtures.ldp_vc);
+  expect(vc).toEqual(fixtures.credentials.ldp_vc);
 });

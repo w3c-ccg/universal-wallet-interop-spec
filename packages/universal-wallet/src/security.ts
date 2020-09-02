@@ -4,6 +4,11 @@ import crypto from 'isomorphic-webcrypto';
 import { X25519KeyPair } from '@transmute/did-key-x25519';
 import { Ed25519KeyPair, driver } from '@transmute/did-key-ed25519';
 
+export const seedToId = async (seed: Uint8Array) => {
+  const buffer = await crypto.subtle.digest('SHA-256', seed);
+  return `urn:digest:${Buffer.from(new Int8Array(buffer)).toString('hex')}`;
+};
+
 export const passwordToKey = async (
   password: string,
   salt: string = 'salt',
@@ -17,7 +22,7 @@ export const passwordToKey = async (
       'deriveBits',
       'deriveKey',
     ])
-    .then(function (key: any) {
+    .then(function(key: any) {
       return crypto.subtle.deriveKey(
         {
           name: 'PBKDF2',
@@ -125,7 +130,7 @@ export const lockContents = async (
   const keyResolver = getKeyResolver(lockedDidKey);
   const cipher = new Cipher();
   return Promise.all(
-    contents.map((content) => {
+    contents.map(content => {
       return lockContent({
         content: { ...content },
         cipher,
