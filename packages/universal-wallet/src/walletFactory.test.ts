@@ -15,7 +15,7 @@ it('can build test wallet factory', async () => {
   expect(wallet.contents).toEqual([]);
 });
 
-it.only('can add and remove', async () => {
+it('can add and remove', async () => {
   const wallet = testWalletFactory.build({
     contents: [...fixtures.content],
   });

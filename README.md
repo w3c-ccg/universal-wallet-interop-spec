@@ -10,7 +10,7 @@ A portable, extensible, JSON-LD wallet supporting digital currencies and credent
 
 ### [Experimental Implementation](./packages/universal-wallet)
 
-### [Experimental Web Components](https://material-did.com/?path=/story/components-universal-wallet-wallet--unlocked)
+### [Experimental Demo](https://w3c-ccg.github.io/universal-wallet-interop-spec/storybook/?path=/story/cards-wallet--unlocked)
 
 ### Contributing
 
