@@ -13,6 +13,9 @@
   "engines": {
     "node": ">=10"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "start": "tsdx watch",
     "build": "tsdx build",
@@ -73,5 +76,6 @@
     "tsdx": "^0.13.3",
     "tslib": "^2.0.1",
     "typescript": "^4.0.2"
-  }
+  },
+  "gitHead": "f987b871245fcf117da477bac5cb2fd99adf70be"
 }
