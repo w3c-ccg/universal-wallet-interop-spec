@@ -21,7 +21,7 @@
     "prepare": "tsdx build",
     "storybook": "start-storybook -p 6006",
     "storybook:build": "build-storybook && npm run move:stories",
-    "move:stories": "mv ./storybook-static ../../docs/storybook"
+    "move:stories": "rm -rf ../../docs/storybook/; mv ./storybook-static/ ../../docs/storybook/"
   },
   "peerDependencies": {
     "react": ">=16",

@@ -34,6 +34,8 @@ import { Explore } from '../../Dialogs/Explore';
 
 import { download } from '../../utils';
 
+import { walletImage } from '../../images';
+
 export default {
   title: 'Cards/Wallet',
 };
@@ -55,9 +57,6 @@ export const Unlocked = (props?: Partial<WalletProps>) => {
   if (!state.wallet) {
     return 'Loading...';
   }
-
-  const image =
-    'https://cdn.pixabay.com/photo/2017/08/22/11/08/wallet-2668577_1280.jpg';
 
   let wallet: any = state.wallet;
 
@@ -381,7 +380,12 @@ export const Unlocked = (props?: Partial<WalletProps>) => {
 
   return (
     <div>
-      <Wallet image={image} wallet={state.wallet} menu={menu} {...props} />
+      <Wallet
+        image={walletImage}
+        wallet={state.wallet}
+        menu={menu}
+        {...props}
+      />
       <pre>{JSON.stringify(wallet, null, 2)}</pre>
     </div>
   );
