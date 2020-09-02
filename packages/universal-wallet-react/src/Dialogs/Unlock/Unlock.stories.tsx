@@ -1,6 +1,6 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
-import { Unlock, IUnlockProps } from '.';
+import { Unlock, FullscreenDialog } from '../../index';
 
 import * as fixtures from '@transmute/universal-wallet-test-vectors';
 

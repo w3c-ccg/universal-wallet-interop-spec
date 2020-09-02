@@ -3,13 +3,7 @@ import React from 'react';
 import { Fullscreen } from '../Fullscreen';
 import { DialogContent } from './DialogContent';
 
-export interface IPresentProps {
-  trigger: any;
-  dialogTitle: any;
-  dialogSubmitTitle: any;
-  handleCancel: any;
-  handleSubmit: any;
-}
+import { FullscreenDialog } from '../../types';
 
 export const Present = ({
   trigger,
@@ -18,7 +12,7 @@ export const Present = ({
   handleCancel,
   handleSubmit,
   wallet,
-}: any) => {
+}: FullscreenDialog) => {
   const [dialogState, setDialogState] = React.useState({
     editorValue: '',
     verificationMethod: '',

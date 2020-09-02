@@ -3,13 +3,7 @@ import React from 'react';
 import { Fullscreen } from '../Fullscreen';
 import { DialogContent } from './DialogContent';
 
-export interface IAddProps {
-  trigger: any;
-  dialogTitle: any;
-  dialogSubmitTitle: any;
-  handleCancel: any;
-  handleSubmit: any;
-}
+import { FullscreenDialog } from '../../types';
 
 export const Add = ({
   trigger,
@@ -17,7 +11,7 @@ export const Add = ({
   dialogSubmitTitle,
   handleCancel,
   handleSubmit,
-}: any) => {
+}: FullscreenDialog) => {
   const [dialogState, setDialogState] = React.useState({
     editorValue: '',
   });

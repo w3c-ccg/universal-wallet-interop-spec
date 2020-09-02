@@ -3,13 +3,7 @@ import React from 'react';
 import { Fullscreen } from '../Fullscreen';
 import { DialogContent } from './DialogContent';
 
-export interface IImportProps {
-  trigger: any;
-  dialogTitle: any;
-  dialogSubmitTitle: any;
-  handleCancel: any;
-  handleSubmit: any;
-}
+import { FullscreenDialog } from '../../types';
 
 export const Import = ({
   trigger,
@@ -17,9 +11,8 @@ export const Import = ({
   dialogSubmitTitle,
   handleCancel,
   handleSubmit,
-  passwordToKey,
-  seedToId,
-}: any) => {
+  wallet,
+}: FullscreenDialog) => {
   const [dialogState, setDialogState] = React.useState({
     editorValue: '',
     seedId: '',
@@ -39,8 +32,7 @@ export const Import = ({
         <DialogContent
           dialogState={dialogState}
           setDialogState={setDialogState}
-          passwordToKey={passwordToKey}
-          seedToId={seedToId}
+          wallet={wallet}
         />
       </Fullscreen>
     </div>

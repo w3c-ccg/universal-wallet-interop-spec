@@ -6,7 +6,7 @@ import { Ed25519KeyPair } from '@transmute/did-key-ed25519';
 
 import { testWalletFactory } from '../../__fixtures__';
 
-import { Wallet, WalletProps } from '../../index';
+import { Wallet, WalletProps, WalletInterfaceMenuItem } from '../../index';
 
 import CreateNewFolderIcon from '@material-ui/icons/CreateNewFolder';
 import LockIcon from '@material-ui/icons/Lock';
@@ -61,7 +61,7 @@ export const Unlocked = (props?: Partial<WalletProps>) => {
 
   let wallet: any = state.wallet;
 
-  const menu = [
+  const menu: WalletInterfaceMenuItem[] = [
     {
       title: 'Generate',
       disabledWhen: () => {
@@ -73,8 +73,7 @@ export const Unlocked = (props?: Partial<WalletProps>) => {
       dialogProps: {
         dialogTitle: 'Generate',
         dialogSubmitTitle: 'Generate',
-        seedToId: wallet.seedToId,
-        passwordToKey: wallet.passwordToKey,
+        wallet: wallet,
         handleSubmit: async (args: any) => {
           const seed = await wallet.passwordToKey(args.password);
           const content = await wallet.generateContentFromSeed(seed);
@@ -82,6 +81,26 @@ export const Unlocked = (props?: Partial<WalletProps>) => {
             wallet.add(content);
           });
           setState({ wallet });
+        },
+        handleCancel: async () => {
+          console.log('storybook  handleCancel...');
+        },
+      },
+    },
+    {
+      title: 'Explore',
+      disabledWhen: () => {
+        return wallet.status === 'LOCKED' || wallet.contents.length === 0;
+      },
+      icon: ExploreIcon,
+      iconProps: {},
+      dialog: Explore,
+      dialogProps: {
+        wallet: wallet,
+        dialogTitle: 'Explore',
+        dialogSubmitTitle: 'Close',
+        handleSubmit: async (_args: any) => {
+          console.log('storybook  handleSubmit...');
         },
         handleCancel: async () => {
           console.log('storybook  handleCancel...');
@@ -99,8 +118,7 @@ export const Unlocked = (props?: Partial<WalletProps>) => {
       dialogProps: {
         dialogTitle: 'Lock Wallet',
         dialogSubmitTitle: 'Lock',
-        seedToId: wallet.seedToId,
-        passwordToKey: wallet.passwordToKey,
+        wallet: wallet,
         handleSubmit: async (args: any) => {
           await wallet.lock(args.password);
           setState({ wallet });
@@ -121,8 +139,7 @@ export const Unlocked = (props?: Partial<WalletProps>) => {
       dialogProps: {
         dialogTitle: 'Unlock Wallet',
         dialogSubmitTitle: 'Unlock',
-        seedToId: wallet.seedToId,
-        passwordToKey: wallet.passwordToKey,
+        wallet: wallet,
         handleSubmit: async (args: any) => {
           await wallet.unlock(args.password);
           setState({ wallet });
@@ -141,6 +158,7 @@ export const Unlocked = (props?: Partial<WalletProps>) => {
       iconProps: {},
       dialog: Add,
       dialogProps: {
+        wallet: wallet,
         dialogTitle: 'Add Content',
         dialogSubmitTitle: 'Add',
         handleSubmit: async (args: any) => {
@@ -184,8 +202,7 @@ export const Unlocked = (props?: Partial<WalletProps>) => {
       iconProps: {},
       dialog: Export,
       dialogProps: {
-        seedToId: wallet.seedToId,
-        passwordToKey: wallet.passwordToKey,
+        wallet: wallet,
         dialogTitle: 'Export Content',
         dialogSubmitTitle: 'Export',
         handleSubmit: async (args: any) => {
@@ -197,7 +214,6 @@ export const Unlocked = (props?: Partial<WalletProps>) => {
         },
       },
     },
-
     {
       title: 'Import',
       disabledWhen: () => {
@@ -207,8 +223,7 @@ export const Unlocked = (props?: Partial<WalletProps>) => {
       iconProps: {},
       dialog: Import,
       dialogProps: {
-        seedToId: wallet.seedToId,
-        passwordToKey: wallet.passwordToKey,
+        wallet: wallet,
         dialogTitle: 'Import Content',
         dialogSubmitTitle: 'Import',
         handleSubmit: async (args: any) => {
@@ -216,38 +231,6 @@ export const Unlocked = (props?: Partial<WalletProps>) => {
           const password = args.password;
           console.log(password);
           await wallet.import(content, password);
-          setState({ wallet });
-        },
-        handleCancel: async () => {
-          console.log('storybook  handleCancel...');
-        },
-      },
-    },
-    {
-      title: 'Verify',
-      disabledWhen: () => {
-        return wallet.status === 'LOCKED';
-      },
-      icon: VerifiedUserIcon,
-      iconProps: {},
-      dialog: Verify,
-      dialogProps: {
-        dialogTitle: 'Verify Content',
-        dialogSubmitTitle: 'Verify',
-        handleSubmit: async (args: any) => {
-          const content = JSON.parse(args.editorValue);
-          const verification = await wallet.verifyCredential({
-            credential: content,
-            options: {
-              // verification uses document loader to get key material
-              suite: new Ed25519Signature2018({}),
-              documentLoader: fixtures.documentLoader,
-            },
-          });
-
-          if (verification.verified) {
-            wallet.add(content);
-          }
           setState({ wallet });
         },
         handleCancel: async () => {
@@ -343,21 +326,33 @@ export const Unlocked = (props?: Partial<WalletProps>) => {
         },
       },
     },
-
     {
-      title: 'Explore',
+      title: 'Verify',
       disabledWhen: () => {
-        return wallet.status === 'LOCKED' || wallet.contents.length === 0;
+        return wallet.status === 'LOCKED';
       },
-      icon: ExploreIcon,
+      icon: VerifiedUserIcon,
       iconProps: {},
-      dialog: Explore,
+      dialog: Verify,
       dialogProps: {
         wallet: wallet,
-        dialogTitle: 'Explore',
-        dialogSubmitTitle: 'Close',
-        handleSubmit: async (_args: any) => {
-          console.log('storybook  handleSubmit...');
+        dialogTitle: 'Verify Content',
+        dialogSubmitTitle: 'Verify',
+        handleSubmit: async (args: any) => {
+          const content = JSON.parse(args.editorValue);
+          const verification = await wallet.verifyCredential({
+            credential: content,
+            options: {
+              // verification uses document loader to get key material
+              suite: new Ed25519Signature2018({}),
+              documentLoader: fixtures.documentLoader,
+            },
+          });
+
+          if (verification.verified) {
+            wallet.add(content);
+          }
+          setState({ wallet });
         },
         handleCancel: async () => {
           console.log('storybook  handleCancel...');

@@ -1,6 +1,6 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
-import { Add, IAddProps } from '.';
+import { Add, FullscreenDialog } from '../../index';
 
 import * as fixtures from '@transmute/universal-wallet-test-vectors';
 
@@ -13,11 +13,13 @@ export default {
 
 const wallet = testWalletFactory.build();
 
-export const _Add = (props?: Partial<IAddProps>) => {
+export const _Add = (props?: Partial<FullscreenDialog>) => {
   const [state, setState] = React.useState({
     wallet,
   });
-  const dialogProps = {
+
+  const dialogProps: FullscreenDialog = {
+    wallet,
     trigger: (
       <Button variant="outlined" color="primary">
         Open Add Dialog

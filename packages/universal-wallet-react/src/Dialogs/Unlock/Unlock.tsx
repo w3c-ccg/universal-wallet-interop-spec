@@ -3,13 +3,7 @@ import React from 'react';
 import { Fullscreen } from '../Fullscreen';
 import { DialogContent } from './DialogContent';
 
-export interface IUnlockProps {
-  trigger: any;
-  dialogTitle: any;
-  dialogSubmitTitle: any;
-  handleCancel: any;
-  handleSubmit: any;
-}
+import { FullscreenDialog } from '../../types';
 
 export const Unlock = ({
   trigger,
@@ -17,9 +11,8 @@ export const Unlock = ({
   dialogSubmitTitle,
   handleCancel,
   handleSubmit,
-  passwordToKey,
-  seedToId,
-}: any) => {
+  wallet,
+}: FullscreenDialog) => {
   const [dialogState, setDialogState] = React.useState({
     password: '',
     seed: '',
@@ -39,8 +32,7 @@ export const Unlock = ({
         <DialogContent
           dialogState={dialogState}
           setDialogState={setDialogState}
-          passwordToKey={passwordToKey}
-          seedToId={seedToId}
+          wallet={wallet}
         />
       </Fullscreen>
     </div>

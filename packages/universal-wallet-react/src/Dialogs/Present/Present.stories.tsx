@@ -4,12 +4,11 @@ import Button from '@material-ui/core/Button';
 import { Ed25519Signature2018 } from '@transmute/ed25519-signature-2018';
 import { Ed25519KeyPair } from '@transmute/did-key-ed25519';
 
-import { Present, IPresentProps } from '.';
+import { Present, FullscreenDialog } from '../../index';
 
 import * as fixtures from '@transmute/universal-wallet-test-vectors';
 
 import { testWalletFactory } from '../../__fixtures__';
-import { JSONEditor } from '@material-did/common';
 
 export default {
   title: 'Dialogs/Interface',

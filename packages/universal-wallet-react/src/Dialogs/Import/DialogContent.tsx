@@ -9,15 +9,10 @@ import { LinkedDataIdentifier } from '@material-did/common';
 
 import { throttle } from 'lodash-es';
 
-export const DialogContent = ({
-  dialogState,
-  setDialogState,
-  seedToId,
-  passwordToKey,
-}: any) => {
+export const DialogContent = ({ dialogState, setDialogState, wallet }: any) => {
   const throttledSetId = throttle(async (value: any) => {
-    const seed = await passwordToKey(value);
-    let seedId = await seedToId(seed);
+    const seed = await wallet.passwordToKey(value);
+    let seedId = await wallet.seedToId(seed);
     setDialogState({
       ...dialogState,
       seedId,

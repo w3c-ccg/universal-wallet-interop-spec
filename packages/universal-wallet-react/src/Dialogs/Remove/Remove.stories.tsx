@@ -1,6 +1,6 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
-import { Remove, IRemoveProps } from '.';
+import { Remove, FullscreenDialog } from '../../index';
 
 import * as fixtures from '@transmute/universal-wallet-test-vectors';
 
@@ -15,17 +15,17 @@ const wallet = testWalletFactory.build({
   ...fixtures.wallet_unlocked,
 });
 
-export const _Remove = (props?: Partial<IRemoveProps>) => {
+export const _Remove = (props?: Partial<FullscreenDialog>) => {
   const [state, setState] = React.useState({
     wallet,
   });
   const dialogProps = {
+    wallet: state.wallet,
     trigger: (
       <Button variant="outlined" color="primary">
         Open Remove Dialog
       </Button>
     ),
-    wallet: state.wallet,
     dialogTitle: 'Remove',
     dialogSubmitTitle: 'Remove',
     handleSubmit: async (args: any) => {

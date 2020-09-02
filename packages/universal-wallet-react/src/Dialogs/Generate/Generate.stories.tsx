@@ -1,6 +1,6 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
-import { Generate, IGenerateProps } from '.';
+import { Generate, FullscreenDialog } from '../../index';
 
 import { testWalletFactory } from '../../__fixtures__';
 
@@ -11,11 +11,12 @@ export default {
 
 const wallet = testWalletFactory.build();
 
-export const _Generate = (props?: Partial<IGenerateProps>) => {
+export const _Generate = (props?: Partial<FullscreenDialog>) => {
   const [state, setState] = React.useState({
     wallet,
   });
-  const dialogProps = {
+  const dialogProps: FullscreenDialog = {
+    wallet: wallet,
     trigger: (
       <Button variant="outlined" color="primary">
         Open full-screen dialog
@@ -23,15 +24,13 @@ export const _Generate = (props?: Partial<IGenerateProps>) => {
     ),
     dialogTitle: 'Generate',
     dialogSubmitTitle: 'Generate',
-    seedToId: wallet.seedToId,
-    passwordToKey: wallet.passwordToKey,
     handleSubmit: async (args: any) => {
       const seed = await wallet.passwordToKey(args.password);
       const content = await wallet.generateContentFromSeed(seed);
       wallet.add(content[0]);
       setState({ wallet });
     },
-    handleCancel: async (args: any) => {
+    handleCancel: async (_args: any) => {
       console.log('storybook handleCancel dialog canceled...');
     },
   };

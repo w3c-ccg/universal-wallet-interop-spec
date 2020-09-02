@@ -3,13 +3,7 @@ import React from 'react';
 import { Fullscreen } from '../Fullscreen';
 import { DialogContent } from './DialogContent';
 
-export interface IIssueProps {
-  trigger: any;
-  dialogTitle: any;
-  dialogSubmitTitle: any;
-  handleCancel: any;
-  handleSubmit: any;
-}
+import { FullscreenDialog } from '../../types';
 
 export const Issue = ({
   trigger,
@@ -18,7 +12,7 @@ export const Issue = ({
   handleCancel,
   handleSubmit,
   wallet,
-}: any) => {
+}: FullscreenDialog) => {
   const [dialogState, setDialogState] = React.useState({
     editorValue: '',
     verificationMethod: '',

@@ -3,13 +3,7 @@ import React from 'react';
 import { Fullscreen } from '../Fullscreen';
 import { DialogContent } from './DialogContent';
 
-export interface IGenerateProps {
-  trigger: any;
-  dialogTitle: any;
-  dialogSubmitTitle: any;
-  handleCancel: any;
-  handleSubmit: any;
-}
+import { FullscreenDialog } from '../../types';
 
 export const Generate = ({
   trigger,
@@ -17,9 +11,8 @@ export const Generate = ({
   dialogSubmitTitle,
   handleCancel,
   handleSubmit,
-  passwordToKey,
-  seedToId,
-}: any) => {
+  wallet,
+}: FullscreenDialog) => {
   const [dialogState, setDialogState] = React.useState({
     password: '',
     seed: '',
@@ -39,8 +32,7 @@ export const Generate = ({
         <DialogContent
           dialogState={dialogState}
           setDialogState={setDialogState}
-          passwordToKey={passwordToKey}
-          seedToId={seedToId}
+          wallet={wallet}
         />
       </Fullscreen>
     </div>
