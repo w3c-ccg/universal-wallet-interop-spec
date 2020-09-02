@@ -13,7 +13,7 @@
   "scripts": {
     "start": "tsdx watch",
     "build": "tsdx build",
-    "test": "tsdx test --passWithNoTests",
+    "test": "tsdx test --passWithNoTests --forceExit",
     "lint": "tsdx lint src --fix",
     "prepare": "tsdx build",
     "storybook": "start-storybook -p 6006",
@@ -21,7 +21,10 @@
     "move:stories": "mv ./storybook-static ../../docs/storybook"
   },
   "peerDependencies": {
-    "react": ">=16"
+    "react": ">=16",
+    "@material-did/common": "0.0.0-unstable.5",
+    "@material-ui/core": "^4.11.0",
+    "@material-ui/icons": "^4.9.1"
   },
   "husky": {
     "hooks": {
@@ -61,6 +64,7 @@
     "factory.ts": "^0.5.1",
     "husky": "^4.2.5",
     "lodash-es": "^4.17.15",
+    "qrcode.react": "^1.0.0",
     "react": "^16.13.1",
     "react-docgen-typescript-loader": "^3.7.2",
     "react-dom": "^16.13.1",

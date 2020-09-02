@@ -4,6 +4,8 @@
   "scripts": {
     "postinstall": "lerna bootstrap",
     "lint": "lerna run lint --stream",
+    "test": "lerna run test --stream",
+    "build": "lerna run build --stream",
     "shove": "git add -A; git commit -m 'chore(ci): test'; git push origin master"
   },
   "husky": {
