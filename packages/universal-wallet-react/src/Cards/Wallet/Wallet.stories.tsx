@@ -17,6 +17,8 @@ import ArchiveIcon from '@material-ui/icons/Archive';
 import UnarchiveIcon from '@material-ui/icons/Unarchive';
 import VerifiedUserIcon from '@material-ui/icons/VerifiedUser';
 import CreateIcon from '@material-ui/icons/Create';
+import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
+import ExploreIcon from '@material-ui/icons/Explore';
 
 import { Generate } from '../../Dialogs/Generate';
 import { Lock } from '../../Dialogs/Lock';
@@ -27,6 +29,8 @@ import { Export } from '../../Dialogs/Export';
 import { Import } from '../../Dialogs/Import';
 import { Verify } from '../../Dialogs/Verify';
 import { Issue } from '../../Dialogs/Issue';
+import { Present } from '../../Dialogs/Present';
+import { Explore } from '../../Dialogs/Explore';
 
 import { download } from '../../utils';
 
@@ -274,7 +278,6 @@ export const Unlocked = (props?: Partial<WalletProps>) => {
           const key = new Ed25519KeyPair(keypair);
           const suite = new Ed25519Signature2018({
             key,
-            date: '2020-03-10T04:24:12.164Z',
           });
           const vc = await wallet.issue({
             credential: JSON.parse(args.editorValue),
@@ -285,6 +288,76 @@ export const Unlocked = (props?: Partial<WalletProps>) => {
           });
           wallet.add(vc);
           setState({ wallet });
+        },
+        handleCancel: async () => {
+          console.log('storybook  handleCancel...');
+        },
+      },
+    },
+    {
+      title: 'Present',
+      disabledWhen: () => {
+        const signingKeys = wallet.contents.find((i: any) => {
+          return i.type === 'Ed25519VerificationKey2018';
+        });
+
+        return wallet.status === 'LOCKED' || !signingKeys;
+      },
+      icon: AssignmentTurnedInIcon,
+      iconProps: {},
+      dialog: Present,
+      dialogProps: {
+        wallet: wallet,
+        dialogTitle: 'Present Content',
+        dialogSubmitTitle: 'Present',
+        handleSubmit: async (args: any) => {
+          const keypair = wallet.contents.find((i: any) => {
+            return i.id === args.verificationMethod;
+          });
+          const key = new Ed25519KeyPair(keypair);
+          const suite = new Ed25519Signature2018({
+            key,
+          });
+          const verifiableCredential = JSON.parse(args.editorValue);
+
+          let vpOpts: any = {};
+          if (args.domain != '') {
+            vpOpts.domain = args.domain;
+          }
+          if (args.challenge != '') {
+            vpOpts.challenge = args.challenge;
+          }
+          const presentation = await wallet.createVerifiablePresentation({
+            verifiableCredential: [verifiableCredential],
+            options: {
+              ...vpOpts,
+              suite,
+              documentLoader: fixtures.documentLoader,
+            },
+          });
+          wallet.add(presentation);
+          setState({ wallet });
+        },
+        handleCancel: async () => {
+          console.log('storybook  handleCancel...');
+        },
+      },
+    },
+
+    {
+      title: 'Explore',
+      disabledWhen: () => {
+        return wallet.status === 'LOCKED' || wallet.contents.length === 0;
+      },
+      icon: ExploreIcon,
+      iconProps: {},
+      dialog: Explore,
+      dialogProps: {
+        wallet: wallet,
+        dialogTitle: 'Explore',
+        dialogSubmitTitle: 'Close',
+        handleSubmit: async (_args: any) => {
+          console.log('storybook  handleSubmit...');
         },
         handleCancel: async () => {
           console.log('storybook  handleCancel...');

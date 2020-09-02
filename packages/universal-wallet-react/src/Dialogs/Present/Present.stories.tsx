@@ -4,33 +4,34 @@ import Button from '@material-ui/core/Button';
 import { Ed25519Signature2018 } from '@transmute/ed25519-signature-2018';
 import { Ed25519KeyPair } from '@transmute/did-key-ed25519';
 
-import { Issue, IIssueProps } from '.';
+import { Present, IPresentProps } from '.';
 
 import * as fixtures from '@transmute/universal-wallet-test-vectors';
 
 import { testWalletFactory } from '../../__fixtures__';
+import { JSONEditor } from '@material-did/common';
 
 export default {
   title: 'Dialogs/Interface',
-  component: Issue,
+  component: Present,
 };
 
 const wallet = testWalletFactory.build({
   contents: fixtures.content,
 });
 
-export const _Issue = (props?: Partial<IIssueProps>) => {
+export const _Present = (props?: Partial<IPresentProps>) => {
   const [state, setState] = React.useState({
     wallet,
   });
   const dialogProps = {
     trigger: (
       <Button variant="outlined" color="primary">
-        Open Issue Dialog
+        Open Present Dialog
       </Button>
     ),
-    dialogTitle: 'Issue',
-    dialogSubmitTitle: 'Issue',
+    dialogTitle: 'Present',
+    dialogSubmitTitle: 'Present',
     wallet,
     handleSubmit: async (args: any) => {
       const keypair = wallet.contents.find((i: any) => {
@@ -40,14 +41,24 @@ export const _Issue = (props?: Partial<IIssueProps>) => {
       const suite = new Ed25519Signature2018({
         key,
       });
-      const vc = await wallet.issue({
-        credential: JSON.parse(args.editorValue),
+      const verifiableCredential = JSON.parse(args.editorValue);
+
+      let vpOpts: any = {};
+      if (args.domain != '') {
+        vpOpts.domain = args.domain;
+      }
+      if (args.challenge != '') {
+        vpOpts.challenge = args.challenge;
+      }
+      const presentation = await wallet.createVerifiablePresentation({
+        verifiableCredential: [verifiableCredential],
         options: {
+          ...vpOpts,
           suite,
           documentLoader: fixtures.documentLoader,
         },
       });
-      wallet.add(vc);
+      wallet.add(presentation);
       setState({ wallet });
     },
     handleCancel: async (args: any) => {
@@ -56,9 +67,9 @@ export const _Issue = (props?: Partial<IIssueProps>) => {
   };
   return (
     <div>
-      <h3>Copy this content to issue</h3>
-      <pre>{JSON.stringify(fixtures.credentials.vc_template, null, 2)}</pre>
-      <Issue {...dialogProps} />
+      <h3>Copy this content to present</h3>
+      <pre>{JSON.stringify(fixtures.credentials.ldp_vc, null, 2)}</pre>
+      <Present {...dialogProps} />
       <pre>{JSON.stringify(state.wallet, null, 2)}</pre>
     </div>
   );
