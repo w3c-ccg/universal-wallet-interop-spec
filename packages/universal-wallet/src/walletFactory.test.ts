@@ -15,13 +15,14 @@ it('can build test wallet factory', async () => {
   expect(wallet.contents).toEqual([]);
 });
 
-it('can add and remove', async () => {
-  const wallet = testWalletFactory.build();
-  wallet.add(fixtures.credentials.ldp_vc);
-  expect(wallet.contents).toEqual([fixtures.credentials.ldp_vc]);
-  const removed = wallet.remove(fixtures.credentials.ldp_vc.id);
-  expect(removed).toEqual(fixtures.credentials.ldp_vc);
-  expect(wallet.contents).toEqual([]);
+it.only('can add and remove', async () => {
+  const wallet = testWalletFactory.build({
+    contents: [...fixtures.content],
+  });
+  expect(wallet.contents.length).toBe(3);
+  const removed = wallet.remove(fixtures.content[1].id);
+  expect(removed).toEqual(fixtures.content[1]);
+  expect(wallet.contents.length).toBe(2);
 });
 
 it('can lock and unlock', async () => {

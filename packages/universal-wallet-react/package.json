@@ -1,4 +1,7 @@
 {
+  "name": "@transmute/universal-wallet-react",
+  "author": "Orie Steele",
+  "module": "dist/universal-wallet-react.esm.js",
   "version": "0.1.0",
   "license": "Apache-2.0",
   "main": "dist/index.js",
@@ -37,9 +40,6 @@
     "singleQuote": true,
     "trailingComma": "es5"
   },
-  "name": "universal-wallet-react",
-  "author": "Orie Steele",
-  "module": "dist/universal-wallet-react.esm.js",
   "devDependencies": {
     "@babel/core": "^7.11.5",
     "@material-did/common": "0.0.0-unstable.5",

@@ -14,7 +14,7 @@ export const Remove = ({
   wallet,
 }: FullscreenDialog) => {
   const [dialogState, setDialogState] = React.useState({
-    idToRemove: wallet.contents[0]?.id,
+    idToRemove: '',
   });
   return (
     <div>

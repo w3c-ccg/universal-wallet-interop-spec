@@ -30,16 +30,30 @@ export const _Verify = (props?: Partial<FullscreenDialog>) => {
     dialogSubmitTitle: 'Verify',
     handleSubmit: async (args: any) => {
       const content = JSON.parse(args.editorValue);
-      const verification = await wallet.verifyCredential({
-        credential: content,
-        options: {
-          // verification uses document loader to get key material
-          suite: new Ed25519Signature2018({}),
-          documentLoader: fixtures.documentLoader,
-        },
-      });
+      let verification;
+      if (content.type && content.type[0] === 'VerifiableCredential') {
+        verification = await wallet.verifyCredential({
+          credential: content,
+          options: {
+            // verification uses document loader to get key material
+            suite: new Ed25519Signature2018({}),
+            documentLoader: fixtures.documentLoader,
+          },
+        });
+      }
 
-      console.log(verification);
+      if (content.type && content.type[0] === 'VerifiablePresentation') {
+        verification = await wallet.verifyPresentation({
+          presentation: content,
+          options: {
+            // verification uses document loader to get key material
+            domain: content.proof.domain,
+            challenge: content.proof.challenge,
+            suite: new Ed25519Signature2018({}),
+            documentLoader: fixtures.documentLoader,
+          },
+        });
+      }
 
       if (verification.verified) {
         wallet.add(content);
@@ -53,7 +67,7 @@ export const _Verify = (props?: Partial<FullscreenDialog>) => {
   return (
     <div>
       <h3>Copy this content to verify</h3>
-      <pre>{JSON.stringify(fixtures.credentials.ldp_vc, null, 2)}</pre>
+      <pre>{JSON.stringify(fixtures.credentials.ldp_vp, null, 2)}</pre>
       <Verify {...dialogProps} />
       <pre>{JSON.stringify(state.wallet, null, 2)}</pre>
     </div>

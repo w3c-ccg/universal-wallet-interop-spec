@@ -12,7 +12,7 @@ export default {
 };
 
 const wallet = testWalletFactory.build({
-  ...fixtures.wallet_unlocked,
+  contents: fixtures.content,
 });
 
 export const _Remove = (props?: Partial<FullscreenDialog>) => {
@@ -31,6 +31,7 @@ export const _Remove = (props?: Partial<FullscreenDialog>) => {
     handleSubmit: async (args: any) => {
       const { idToRemove } = args;
       wallet.remove(idToRemove);
+      console.log(wallet.contents);
       setState({ wallet });
     },
     handleCancel: async (args: any) => {

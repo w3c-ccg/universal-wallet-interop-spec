@@ -1,14 +1,10 @@
-# TSDX React w/ Storybook User Guide
+# @transmute/universal-wallet-react
 
-Congrats! You just saved yourself hours of work by bootstrapping this project with TSDX. Let’s get you oriented with what’s here and how to use it.
-
-> This TSDX setup is meant for developing React component libraries (not apps!) that can be published to NPM. If you’re looking to build a React-based app, you should use `create-react-app`, `razzle`, `nextjs`, `gatsby`, or `react-static`.
-
-> If you’re new to TypeScript and React, checkout [this handy cheatsheet](https://github.com/sw-yx/react-typescript-cheatsheet/)
+This module contains react components and storybook demo for the experimental universal wallet implementation of the universal wallet interop spec.
 
 ## Commands
 
-TSDX scaffolds your new library inside `/src`, and also sets up a [Parcel-based](https://parceljs.org) playground for it inside `/example`.
+TSDX scaffolds your new library inside `/src`.
 
 The recommended workflow is to run TSDX in one terminal:
 

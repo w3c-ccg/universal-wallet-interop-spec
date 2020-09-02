@@ -1,5 +1,7 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
+import * as fixtures from '@transmute/universal-wallet-test-vectors';
+
 import { Generate, FullscreenDialog } from '../../index';
 
 import { testWalletFactory } from '../../__fixtures__';
@@ -36,6 +38,7 @@ export const _Generate = (props?: Partial<FullscreenDialog>) => {
   };
   return (
     <div>
+      <h3>use password {`"${fixtures.password}"`}</h3>
       <Generate {...dialogProps} />
       <pre>{JSON.stringify(state.wallet, null, 2)}</pre>
     </div>

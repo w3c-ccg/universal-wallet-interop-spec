@@ -14,21 +14,44 @@ export const DialogContent = ({ wallet, dialogState, setDialogState }: any) => {
     };
   });
 
-  const value = options[0];
+  const [state, setState] = React.useState({
+    options: options,
+    selected: options[0],
+  } as any);
 
-  const label = 'Select content to remove';
-  const onChange = (option: any) => {
-    setDialogState({ ...dialogState, idToRemove: option.value });
+  const onChange = (value: string) => {
+    setState({
+      ...state,
+      selected: state.options.find((i: any) => {
+        return i.value === value;
+      }),
+    });
+
+    setDialogState({ ...dialogState, idToRemove: value });
   };
+
+  React.useEffect(() => {
+    if (
+      dialogState.idToRemove === '' ||
+      !state.options.find((i: any) => {
+        return i.value === dialogState.idToRemove;
+      })
+    ) {
+      setDialogState({
+        ...dialogState,
+        idToRemove: state.selected.value,
+      });
+    }
+  }, [wallet]);
 
   return (
     <div style={{ padding: '16px' }}>
       <Grid container spacing={4}>
         <Grid item xs={12}>
           <SelectByImage
-            label={label}
-            value={value}
-            options={options}
+            label={'Select content to remove'}
+            value={state.selected}
+            options={state.options}
             onChange={onChange}
           />
         </Grid>

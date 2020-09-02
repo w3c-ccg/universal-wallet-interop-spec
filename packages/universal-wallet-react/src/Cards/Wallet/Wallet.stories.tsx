@@ -181,11 +181,13 @@ export const Unlocked = (props?: Partial<WalletProps>) => {
       dialog: Remove,
       dialogProps: {
         wallet: wallet,
-        dialogTitle: 'Remove Content',
+        dialogTitle: 'Remove',
         dialogSubmitTitle: 'Remove',
         handleSubmit: async (args: any) => {
           const { idToRemove } = args;
+          console.log(args);
           wallet.remove(idToRemove);
+          console.log(wallet, idToRemove);
           setState({ wallet });
         },
         handleCancel: async () => {
@@ -252,7 +254,7 @@ export const Unlocked = (props?: Partial<WalletProps>) => {
       dialog: Issue,
       dialogProps: {
         wallet: wallet,
-        dialogTitle: 'Issue Content',
+        dialogTitle: 'Issue',
         dialogSubmitTitle: 'Issue',
         handleSubmit: async (args: any) => {
           const keypair = wallet.contents.find((i: any) => {
@@ -291,7 +293,7 @@ export const Unlocked = (props?: Partial<WalletProps>) => {
       dialog: Present,
       dialogProps: {
         wallet: wallet,
-        dialogTitle: 'Present Content',
+        dialogTitle: 'Present',
         dialogSubmitTitle: 'Present',
         handleSubmit: async (args: any) => {
           const keypair = wallet.contents.find((i: any) => {
@@ -340,14 +342,30 @@ export const Unlocked = (props?: Partial<WalletProps>) => {
         dialogSubmitTitle: 'Verify',
         handleSubmit: async (args: any) => {
           const content = JSON.parse(args.editorValue);
-          const verification = await wallet.verifyCredential({
-            credential: content,
-            options: {
-              // verification uses document loader to get key material
-              suite: new Ed25519Signature2018({}),
-              documentLoader: fixtures.documentLoader,
-            },
-          });
+          let verification;
+          if (content.type && content.type[0] === 'VerifiableCredential') {
+            verification = await wallet.verifyCredential({
+              credential: content,
+              options: {
+                // verification uses document loader to get key material
+                suite: new Ed25519Signature2018({}),
+                documentLoader: fixtures.documentLoader,
+              },
+            });
+          }
+
+          if (content.type && content.type[0] === 'VerifiablePresentation') {
+            verification = await wallet.verifyPresentation({
+              presentation: content,
+              options: {
+                // verification uses document loader to get key material
+                domain: content.proof.domain,
+                challenge: content.proof.challenge,
+                suite: new Ed25519Signature2018({}),
+                documentLoader: fixtures.documentLoader,
+              },
+            });
+          }
 
           if (verification.verified) {
             wallet.add(content);
