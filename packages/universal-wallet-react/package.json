@@ -2,7 +2,7 @@
   "name": "@transmute/universal-wallet-react",
   "author": "Orie Steele",
   "module": "dist/universal-wallet-react.esm.js",
-  "version": "0.1.0",
+  "version": "0.2.1-alpha.0",
   "license": "Apache-2.0",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -12,6 +12,9 @@
   ],
   "engines": {
     "node": ">=10"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "scripts": {
     "start": "tsdx watch",
@@ -24,10 +27,10 @@
     "move:stories": "rm -rf ../../docs/storybook/; mv ./storybook-static/ ../../docs/storybook/"
   },
   "peerDependencies": {
-    "react": ">=16",
     "@material-did/common": "0.0.0-unstable.5",
     "@material-ui/core": "^4.11.0",
-    "@material-ui/icons": "^4.9.1"
+    "@material-ui/icons": "^4.9.1",
+    "react": ">=16"
   },
   "husky": {
     "hooks": {
@@ -53,10 +56,10 @@
     "@storybook/react": "^6.0.21",
     "@transmute/did-key-ed25519": "^0.2.1-unstable.1",
     "@transmute/ed25519-signature-2018": "^0.1.1-unstable.3",
-    "@transmute/universal-wallet": "^0.1.2-alpha.0",
-    "@transmute/universal-wallet-did-key-plugin": "^0.1.2-alpha.0",
-    "@transmute/universal-wallet-test-vectors": "^0.1.2-alpha.0",
-    "@transmute/universal-wallet-vc-plugin": "^0.1.2-alpha.0",
+    "@transmute/universal-wallet": "^0.2.1-alpha.0",
+    "@transmute/universal-wallet-did-key-plugin": "^0.2.1-alpha.0",
+    "@transmute/universal-wallet-test-vectors": "^0.2.1-alpha.0",
+    "@transmute/universal-wallet-vc-plugin": "^0.2.1-alpha.0",
     "@types/lodash-es": "^4.17.3",
     "@types/react": "^16.9.49",
     "@types/react-dom": "^16.9.8",
@@ -73,5 +76,6 @@
     "tsdx": "^0.13.3",
     "tslib": "^2.0.1",
     "typescript": "^4.0.2"
-  }
+  },
+  "gitHead": "f987b871245fcf117da477bac5cb2fd99adf70be"
 }
