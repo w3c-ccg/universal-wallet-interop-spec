@@ -49,4 +49,14 @@ it('can build wallet with vc plugin', async () => {
     },
   });
   expect(vc).toEqual(fixtures.credentials.ldp_vc);
+
+  const verification = await wallet.verifyCredential({
+    credential: vc,
+    options: {
+      suite: new Ed25519Signature2018({}),
+      documentLoader: fixtures.documentLoader,
+    },
+  });
+
+  expect(verification.verified).toBe(true);
 });

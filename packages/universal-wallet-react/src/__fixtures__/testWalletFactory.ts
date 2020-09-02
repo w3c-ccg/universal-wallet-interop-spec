@@ -1,14 +1,17 @@
 import * as Factory from 'factory.ts';
-import * as UniversalWallet from '@transmute/universal-wallet';
+import * as Wallet from '@transmute/universal-wallet';
 import * as DidKey from '@transmute/universal-wallet-did-key-plugin';
+import * as Vc from '@transmute/universal-wallet-vc-plugin';
 
-interface TestWallet extends UniversalWallet.Wallet, DidKey.DidKeyPlugin {}
+interface TestWallet extends Wallet.Wallet, DidKey.DidKeyPlugin, Vc.VcPlugin {}
 
 const testWalletFactory = Factory.Sync.makeFactory<TestWallet>({
-  ...UniversalWallet.walletDefaults,
+  ...Wallet.walletDefaults,
   ...DidKey.factoryDefaults,
+  ...Vc.factoryDefaults,
 })
-  .combine(UniversalWallet.walletFactory)
-  .combine(DidKey.pluginFactory);
+  .combine(Wallet.walletFactory)
+  .combine(DidKey.pluginFactory)
+  .combine(Vc.pluginFactory);
 
 export { testWalletFactory };

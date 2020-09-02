@@ -10,7 +10,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 
-export default function CardMenu({ status, menu }: any) {
+export default function CardMenu({ menu }: any) {
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const handleClick = (event: any) => {
@@ -44,10 +44,7 @@ export default function CardMenu({ status, menu }: any) {
           return (
             <MenuItem
               key={item.title}
-              disabled={
-                item.disabledWhenStatus &&
-                item.disabledWhenStatus.indexOf(status) !== -1
-              }
+              disabled={item.disabledWhen && item.disabledWhen()}
             >
               <Dialog
                 trigger={

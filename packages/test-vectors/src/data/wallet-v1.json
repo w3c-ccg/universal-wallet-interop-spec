@@ -1,0 +1,61 @@
+{
+  "@context": [
+    {
+      "@version": 1.1
+    },
+    {
+      "id": "@id",
+      "type": "@type",
+
+      "sec": "https://w3id.org/security#",
+      "wal": "https://transmute-industries.github.io/universal-wallet/#",
+
+      "UniversalWallet2020": "wal:UniversalWallet2020",
+      "encryptedWalletContents": {
+        "@id": "wal:encryptedWalletContents",
+        "@type": "@json"
+      },
+
+      "Key": "wal:Key",
+      "Secret": "wal:Secret",
+      "Entropy": "wal:Entropy",
+      "Profile": "wal:Profile",
+      "Mnemonic": "wal:Mnemonic",
+      "MetaData": "wal:MetaData",
+
+      "correlation": "wal:correlation",
+      "tags": "wal:tags",
+      "note": "wal:note",
+      "target": "wal:target",
+      "quorum": "wal:quorum",
+      "multibase": "wal:multibase",
+      "hdPath": "wal:hdPath",
+
+      "amount": "https://schema.org/amount",
+      "currency": "https://schema.org/currency",
+      "value": "https://schema.org/value",
+
+      "publicKeyJwk": {
+        "@id": "sec:publicKeyJwk",
+        "@type": "@json"
+      },
+      "privateKeyJwk": {
+        "@id": "sec:privateKeyJwk",
+        "@type": "@json"
+      },
+      "privateKeyBase58": "sec:privateKeyBase58",
+      "privateKeyWebKms": "sec:privateKeyWebKms",
+      "privateKeySecureEnclave": "sec:privateKeySecureEnclave",
+
+      "Organization": "http://schema.org/Organization",
+      "Person": "http://schema.org/Person",
+      "name": "http://schema.org/name",
+      "description": "http://schema.org/description",
+      "identifier": "http://schema.org/identifier",
+      "image": {
+        "@id": "http://schema.org/image",
+        "@type": "@id"
+      }
+    }
+  ]
+}
