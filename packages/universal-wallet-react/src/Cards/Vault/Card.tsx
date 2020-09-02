@@ -12,7 +12,7 @@ import { blue } from '@material-ui/core/colors';
 
 import EnhancedEncryptionIcon from '@material-ui/icons/EnhancedEncryption';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   root: {
     maxWidth: 345,
   },
@@ -56,6 +56,7 @@ export default function VaultCard({ image }: any) {
           W3C CCG and DIF. To learn more,{' '}
           <a
             target={'_blank'}
+            rel="noreferrer"
             href="https://github.com/decentralized-identity/secure-data-store"
           >
             click this link.

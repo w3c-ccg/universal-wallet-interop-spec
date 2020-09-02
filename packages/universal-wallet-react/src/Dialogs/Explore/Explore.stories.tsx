@@ -16,11 +16,11 @@ const wallet = testWalletFactory.build({
   contents: fixtures.content,
 });
 
-export const _Explore = (props?: Partial<IExploreProps>) => {
+export const _Explore = (props?: Partial<FullscreenDialog>) => {
   const [state, setState] = React.useState({
     wallet,
   });
-  const dialogProps = {
+  const dialogProps: FullscreenDialog = {
     wallet,
     trigger: (
       <Button variant="outlined" color="primary">

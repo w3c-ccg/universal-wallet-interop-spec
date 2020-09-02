@@ -304,10 +304,10 @@ export const Unlocked = (props?: Partial<WalletProps>) => {
           const verifiableCredential = JSON.parse(args.editorValue);
 
           let vpOpts: any = {};
-          if (args.domain != '') {
+          if (args.domain !== '') {
             vpOpts.domain = args.domain;
           }
-          if (args.challenge != '') {
+          if (args.challenge !== '') {
             vpOpts.challenge = args.challenge;
           }
           const presentation = await wallet.createVerifiablePresentation({

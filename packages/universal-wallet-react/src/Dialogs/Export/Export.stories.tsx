@@ -17,11 +17,12 @@ const wallet = testWalletFactory.build({
   ...fixtures.wallet_unlocked,
 });
 
-export const _Export = (props?: Partial<IExportProps>) => {
+export const _Export = (props?: Partial<FullscreenDialog>) => {
   const [state, setState] = React.useState({
     wallet,
   });
-  const dialogProps = {
+  const dialogProps: FullscreenDialog = {
+    wallet,
     trigger: (
       <Button variant="outlined" color="primary">
         Open Export Dialog
@@ -29,11 +30,10 @@ export const _Export = (props?: Partial<IExportProps>) => {
     ),
     dialogTitle: 'Export',
     dialogSubmitTitle: 'Export',
-    seedToId: wallet.seedToId,
-    passwordToKey: wallet.passwordToKey,
     handleSubmit: async (args: any) => {
       const exported = await wallet.export(args.password);
       download('wallet.json', JSON.stringify(exported, null, 2));
+      setState({ ...state, wallet });
     },
     handleCancel: async (args: any) => {
       console.log('storybook handleCancel dialog canceled...');

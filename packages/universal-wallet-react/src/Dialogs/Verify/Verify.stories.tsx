@@ -15,11 +15,12 @@ export default {
 
 const wallet = testWalletFactory.build();
 
-export const _Verify = (props?: Partial<IVerifyProps>) => {
+export const _Verify = (props?: Partial<FullscreenDialog>) => {
   const [state, setState] = React.useState({
     wallet,
   });
-  const dialogProps = {
+  const dialogProps: FullscreenDialog = {
+    wallet,
     trigger: (
       <Button variant="outlined" color="primary">
         Open Verify Dialog

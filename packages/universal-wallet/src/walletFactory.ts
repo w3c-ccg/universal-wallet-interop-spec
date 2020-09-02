@@ -29,11 +29,11 @@ const walletDefaults = {
   contents: [],
   passwordToKey,
   seedToId,
-  add: function (content: any): Wallet {
+  add: function(content: any): Wallet {
     (this as Wallet).contents.push(content);
     return this;
   },
-  remove: function (contentId: string): any {
+  remove: function(contentId: string): any {
     let index = (this as Wallet).contents.findIndex((c: any) => {
       return c.id === contentId;
     });
@@ -41,7 +41,7 @@ const walletDefaults = {
     (this as Wallet).contents = (this as Wallet).contents.splice(index, index);
     return content;
   },
-  lock: async function (password: string): Promise<Wallet> {
+  lock: async function(password: string): Promise<Wallet> {
     (this as Wallet).contents = await lockContents(
       password,
       (this as Wallet).contents
@@ -49,7 +49,7 @@ const walletDefaults = {
     (this as Wallet).status = WalletStatus.Locked;
     return this;
   },
-  unlock: async function (password: string): Promise<Wallet> {
+  unlock: async function(password: string): Promise<Wallet> {
     (this as Wallet).contents = await unlockContents(
       password,
       (this as Wallet).contents
@@ -57,7 +57,7 @@ const walletDefaults = {
     (this as Wallet).status = WalletStatus.Unlocked;
     return this;
   },
-  export: async function (password: string): Promise<any> {
+  export: async function(password: string): Promise<any> {
     const seed = await passwordToKey(password);
     const didDoc = await unlockDidKey(seed);
     // we don't want to leak number of wallet contents...
@@ -84,7 +84,7 @@ const walletDefaults = {
     };
     return encryptedWallet;
   },
-  import: async function (
+  import: async function(
     encryptedWalletCredential: any,
     password: string
   ): Promise<any> {
@@ -98,7 +98,7 @@ const walletDefaults = {
     this.status = WalletStatus.Unlocked;
     return this;
   },
-  query: function (map: any, reduce: any, initialValue: any) {
+  query: function(map: any, reduce: any, initialValue: any) {
     if (this.status !== WalletStatus.Unlocked) {
       throw new Error('You can only query an unlocked wallet.');
     }

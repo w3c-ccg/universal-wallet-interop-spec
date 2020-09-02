@@ -15,7 +15,7 @@ import LockOpenIcon from '@material-ui/icons/LockOpen';
 
 import CardMenu from './CardMenu';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   root: {
     maxWidth: 345,
   },
@@ -70,6 +70,7 @@ export default function WalletCard({ image, status, menu }: any) {
           CCG. To learn more,{' '}
           <a
             target={'_blank'}
+            rel="noreferrer"
             href="https://github.com/w3c-ccg/universal-wallet-interop-spec"
           >
             click this link.

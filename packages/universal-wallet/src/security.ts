@@ -22,7 +22,7 @@ export const passwordToKey = async (
       'deriveBits',
       'deriveKey',
     ])
-    .then(function (key: any) {
+    .then(function(key: any) {
       return crypto.subtle.deriveKey(
         {
           name: 'PBKDF2',
@@ -130,7 +130,7 @@ export const lockContents = async (
   const keyResolver = getKeyResolver(lockedDidKey);
   const cipher = new Cipher();
   return Promise.all(
-    contents.map((content) => {
+    contents.map(content => {
       return lockContent({
         content: { ...content },
         cipher,

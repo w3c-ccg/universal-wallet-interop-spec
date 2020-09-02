@@ -15,11 +15,12 @@ const wallet = testWalletFactory.build({
   ...fixtures.wallet_unlocked,
 });
 
-export const _Lock = (props?: Partial<ILockProps>) => {
+export const _Lock = (props?: Partial<FullscreenDialog>) => {
   const [state, setState] = React.useState({
     wallet,
   });
-  const dialogProps = {
+  const dialogProps: FullscreenDialog = {
+    wallet,
     trigger: (
       <Button variant="outlined" color="primary">
         Open Lock Dialog
@@ -27,8 +28,6 @@ export const _Lock = (props?: Partial<ILockProps>) => {
     ),
     dialogTitle: 'Lock',
     dialogSubmitTitle: 'Lock',
-    seedToId: wallet.seedToId,
-    passwordToKey: wallet.passwordToKey,
     handleSubmit: async (args: any) => {
       await wallet.lock(args.password);
       setState({ wallet });

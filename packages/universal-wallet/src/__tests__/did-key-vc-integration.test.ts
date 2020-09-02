@@ -78,7 +78,7 @@ it('export / issue', async () => {
   const walletToBeExported = didKeyWalletFactory.build();
   const seed = await walletToBeExported.passwordToKey(fixtures.password);
   const contents = await walletToBeExported.generateContentFromSeed(seed);
-  contents.forEach((content) => {
+  contents.forEach(content => {
     walletToBeExported.add(content);
   });
   expect(walletToBeExported.status).toBe('UNLOCKED');
@@ -129,7 +129,7 @@ it('query', async () => {
   const walletForQuery = didKeyWalletFactory.build();
   const seed = await walletForQuery.passwordToKey(fixtures.password);
   const contents = await walletForQuery.generateContentFromSeed(seed);
-  contents.forEach((content) => {
+  contents.forEach(content => {
     walletForQuery.add(content);
   });
   const map = (content: any) => {

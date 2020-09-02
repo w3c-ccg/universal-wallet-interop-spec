@@ -19,11 +19,12 @@ const wallet = testWalletFactory.build({
   contents: fixtures.content,
 });
 
-export const _Present = (props?: Partial<IPresentProps>) => {
+export const _Present = (props?: Partial<FullscreenDialog>) => {
   const [state, setState] = React.useState({
     wallet,
   });
-  const dialogProps = {
+  const dialogProps: FullscreenDialog = {
+    wallet,
     trigger: (
       <Button variant="outlined" color="primary">
         Open Present Dialog
@@ -31,7 +32,6 @@ export const _Present = (props?: Partial<IPresentProps>) => {
     ),
     dialogTitle: 'Present',
     dialogSubmitTitle: 'Present',
-    wallet,
     handleSubmit: async (args: any) => {
       const keypair = wallet.contents.find((i: any) => {
         return i.id === args.verificationMethod;
@@ -43,10 +43,10 @@ export const _Present = (props?: Partial<IPresentProps>) => {
       const verifiableCredential = JSON.parse(args.editorValue);
 
       let vpOpts: any = {};
-      if (args.domain != '') {
+      if (args.domain !== '') {
         vpOpts.domain = args.domain;
       }
-      if (args.challenge != '') {
+      if (args.challenge !== '') {
         vpOpts.challenge = args.challenge;
       }
       const presentation = await wallet.createVerifiablePresentation({

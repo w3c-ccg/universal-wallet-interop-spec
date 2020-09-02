@@ -26,6 +26,7 @@ export const DialogContent = ({ wallet, dialogState, setDialogState }: any) => {
   });
 
   const onChange = (option: any) => {
+    setState({ ...state, selected: option });
     setDialogState({ ...dialogState, verificationMethod: option.value });
   };
 

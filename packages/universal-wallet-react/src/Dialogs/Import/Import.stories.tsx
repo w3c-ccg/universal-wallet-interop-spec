@@ -13,11 +13,12 @@ export default {
 
 const wallet = testWalletFactory.build();
 
-export const _Import = (props?: Partial<IImportProps>) => {
+export const _Import = (props?: Partial<FullscreenDialog>) => {
   const [state, setState] = React.useState({
     wallet,
   });
-  const dialogProps = {
+  const dialogProps: FullscreenDialog = {
+    wallet,
     trigger: (
       <Button variant="outlined" color="primary">
         Open Import Dialog
@@ -35,8 +36,6 @@ export const _Import = (props?: Partial<IImportProps>) => {
     handleCancel: async (args: any) => {
       console.log('storybook handleCancel dialog canceled...');
     },
-    seedToId: wallet.seedToId,
-    passwordToKey: wallet.passwordToKey,
   };
   return (
     <div>

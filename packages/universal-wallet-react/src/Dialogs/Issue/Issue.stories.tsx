@@ -19,11 +19,12 @@ const wallet = testWalletFactory.build({
   contents: fixtures.content,
 });
 
-export const _Issue = (props?: Partial<IIssueProps>) => {
+export const _Issue = (props?: Partial<FullscreenDialog>) => {
   const [state, setState] = React.useState({
     wallet,
   });
-  const dialogProps = {
+  const dialogProps: FullscreenDialog = {
+    wallet,
     trigger: (
       <Button variant="outlined" color="primary">
         Open Issue Dialog
@@ -31,7 +32,6 @@ export const _Issue = (props?: Partial<IIssueProps>) => {
     ),
     dialogTitle: 'Issue',
     dialogSubmitTitle: 'Issue',
-    wallet,
     handleSubmit: async (args: any) => {
       const keypair = wallet.contents.find((i: any) => {
         return i.id === args.verificationMethod;
