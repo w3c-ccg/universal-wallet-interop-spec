@@ -36,10 +36,7 @@ const suite = new Ed25519Signature2018({
 const documentLoader = (uri: string): Promise<any> => {
   // just in time, extend the document loader for the context of credentials
   // you are issuing.
-  if (
-    uri ===
-    'https://w3c-ccg.github.io/universal-wallet-interop-spec/contexts/wallet-v1.json'
-  ) {
+  if (uri === 'http://w3id.org/wallet/v1') {
     return Promise.resolve({
       contextUrl: null,
       documentUrl: uri,
@@ -78,7 +75,7 @@ it('export / issue', async () => {
   const walletToBeExported = didKeyWalletFactory.build();
   const seed = await walletToBeExported.passwordToKey(fixtures.password);
   const contents = await walletToBeExported.generateContentFromSeed(seed);
-  contents.forEach(content => {
+  contents.forEach((content) => {
     walletToBeExported.add(content);
   });
   expect(walletToBeExported.status).toBe('UNLOCKED');
@@ -129,7 +126,7 @@ it('query', async () => {
   const walletForQuery = didKeyWalletFactory.build();
   const seed = await walletForQuery.passwordToKey(fixtures.password);
   const contents = await walletForQuery.generateContentFromSeed(seed);
-  contents.forEach(content => {
+  contents.forEach((content) => {
     walletForQuery.add(content);
   });
   const map = (content: any) => {

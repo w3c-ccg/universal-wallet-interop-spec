@@ -74,7 +74,7 @@ const walletDefaults = {
     const encryptedWallet = {
       '@context': [
         'https://www.w3.org/2018/credentials/v1',
-        'https://w3c-ccg.github.io/universal-wallet-interop-spec/contexts/wallet-v1.json',
+        'http://w3id.org/wallet/v1',
       ],
       // consider using content id of ciphertext here...
       id: didDoc.id + '#encrypted-wallet',
