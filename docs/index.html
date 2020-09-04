@@ -42,14 +42,14 @@ out in the same tree and use relative links so that they'll work offline,
         doJsonLd: true,
 
         github: {
-          repoURL: "https://github.com/transmute-industries/universal-wallet/",
+          repoURL: "https://github.com/w3c-ccg/universal-wallet-interop-spec/",
           // Set branch to master (default is gh-pages) to fix the "Commit history link"
           branch: "master",
         },
         includePermalinks: false,
 
         // if there a publicly available Editor's Draft, this is the link
-        edDraftURI: "https://transmute-industries.github.io/universal-wallet/",
+        edDraftURI: "https://w3c-ccg.github.io/universal-wallet-interop-spec/",
 
         // if this is a LCWD, uncomment and set the end of its review period
         // lcEnd: "2009-08-05",
@@ -146,7 +146,7 @@ out in the same tree and use relative links so that they'll work offline,
         This document is experimental and is undergoing heavy development. It is
         inadvisable to implement the specification in its current form. An
         <a
-          href="https://github.com/transmute-industries/universal-wallet/tree/master/packages/universal-wallet"
+          href="https://github.com/w3c-ccg/universal-wallet-interop-spec/tree/master/packages/universal-wallet"
           >experimental implementation</a
         >
         is available.
@@ -309,9 +309,7 @@ out in the same tree and use relative links so that they'll work offline,
         </dd>
 
         <dt><dfn>profile</dfn></dt>
-        <dd>
-          A profile is a named bucket for grouping wallet content.
-        </dd>
+        <dd>A profile is a named bucket for grouping wallet content.</dd>
 
         <dt><dfn>entropy</dfn></dt>
         <dd>
@@ -338,14 +336,10 @@ out in the same tree and use relative links so that they'll work offline,
         </dd>
 
         <dt id="tags"><dfn>tags</dfn></dt>
-        <dd>
-          Human friendly text labels for organizing information.
-        </dd>
+        <dd>Human friendly text labels for organizing information.</dd>
 
         <dt id="note"><dfn>note</dfn></dt>
-        <dd>
-          Text note about wallet content.
-        </dd>
+        <dd>Text note about wallet content.</dd>
 
         <dt id="target"><dfn>target</dfn></dt>
         <dd>
@@ -354,9 +348,7 @@ out in the same tree and use relative links so that they'll work offline,
         </dd>
 
         <dt id="quorum"><dfn>quorum</dfn></dt>
-        <dd>
-          Number of controllers needed to make a valid transaction.
-        </dd>
+        <dd>Number of controllers needed to make a valid transaction.</dd>
 
         <dt id="UniversalWallet2020"><dfn>universal wallet</dfn></dt>
         <dd>
@@ -754,9 +746,7 @@ out in the same tree and use relative links so that they'll work offline,
 
         <p>A cryptographic key. Used for signing, encrypting or hashing.</p>
 
-        <p>
-          Here is an example of storing an Ed25519 key using JWK.
-        </p>
+        <p>Here is an example of storing an Ed25519 key using JWK.</p>
 
         <pre class="example highlight" title="A jwk key example">
 {
@@ -786,9 +776,7 @@ out in the same tree and use relative links so that they'll work offline,
 </pre
         >
 
-        <p>
-          Here is an example of storing an Ed25519 key using base58.
-        </p>
+        <p>Here is an example of storing an Ed25519 key using base58.</p>
 
         <pre class="example highlight" title="A base58 key example">
 {
@@ -807,9 +795,7 @@ out in the same tree and use relative links so that they'll work offline,
 </pre
         >
 
-        <p>
-          Here is an example of a key which is stored in a remote kms.
-        </p>
+        <p>Here is an example of a key which is stored in a remote kms.</p>
 
         <pre class="example highlight" title="A remote key example">
 {
@@ -833,9 +819,7 @@ out in the same tree and use relative links so that they'll work offline,
 </pre
         >
 
-        <p>
-          Here is an example of a local, hardware isolated key.
-        </p>
+        <p>Here is an example of a local, hardware isolated key.</p>
 
         <pre class="example highlight" title="A remote key example">
 {
@@ -868,9 +852,7 @@ out in the same tree and use relative links so that they'll work offline,
           signatures or sending currency.
         </p>
 
-        <p>
-          Here is an example of storing an EthereumAddress.
-        </p>
+        <p>Here is an example of storing an EthereumAddress.</p>
 
         <pre class="example highlight" title="An ethereum address example">
 {
@@ -1164,9 +1146,7 @@ out in the same tree and use relative links so that they'll work offline,
           Transforms one or more wallet contents from ciphertext to plaintext.
         </p>
 
-        <p>
-          Requires knowledge of the password used to lock the wallet.
-        </p>
+        <p>Requires knowledge of the password used to lock the wallet.</p>
       </section>
 
       <section>
@@ -1174,9 +1154,7 @@ out in the same tree and use relative links so that they'll work offline,
         <p>
           Transforms one or more wallet contents from plaintext to ciphertext.
         </p>
-        <p>
-          Requires knowledge of the password used to lock the wallet.
-        </p>
+        <p>Requires knowledge of the password used to lock the wallet.</p>
 
         <div class="issue" data-number="5">
           Mostly a reference implementation issue. Locked representation should
@@ -1202,9 +1180,7 @@ out in the same tree and use relative links so that they'll work offline,
           terms.
         </p>
 
-        <p>
-          Must support detached signatures.
-        </p>
+        <p>Must support detached signatures.</p>
       </section>
 
       <section>
@@ -1216,9 +1192,7 @@ out in the same tree and use relative links so that they'll work offline,
           terms.
         </p>
 
-        <p>
-          Must support detached signatures.
-        </p>
+        <p>Must support detached signatures.</p>
       </section>
 
       <section>
@@ -1256,9 +1230,7 @@ out in the same tree and use relative links so that they'll work offline,
 
       <section>
         <h3>Transfer</h3>
-        <p>
-          Takes a Currency, Key or Address and recipient options as input.
-        </p>
+        <p>Takes a Currency, Key or Address and recipient options as input.</p>
 
         <p>Produces a Connection, and transaction side effect.</p>
       </section>
@@ -1266,13 +1238,9 @@ out in the same tree and use relative links so that they'll work offline,
       <section>
         <h3>Export</h3>
 
-        <p>
-          Only ciphertext wallet contents can be exported.
-        </p>
+        <p>Only ciphertext wallet contents can be exported.</p>
 
-        <p>
-          Produces a serialized exported wallet representation.
-        </p>
+        <p>Produces a serialized exported wallet representation.</p>
       </section>
     </section>
 
