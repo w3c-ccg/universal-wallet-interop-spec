@@ -12,12 +12,12 @@ let golem = documentLoaderFactory.pluginFactory.build({
     ...contexts.W3C_Decentralized_Identifiers,
     ...contexts.W3C_Verifiable_Credentials,
     ...contexts.W3ID_Security_Vocabulary,
-    'https://w3c-ccg.github.io/universal-wallet-interop-spec/contexts/wallet-v1.json': wallet_v1,
+    'http://w3id.org/wallet/v1': wallet_v1,
   } as any,
 });
 
 // add a resolver to each issuer... and no others.
-Object.keys(issuers).forEach(issuer => {
+Object.keys(issuers).forEach((issuer) => {
   golem.addResolver({
     [issuer]: {
       resolve: (uri: string) => {
