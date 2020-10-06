@@ -4,23 +4,23 @@ import crypto from 'isomorphic-webcrypto';
 
 export const seedToId = async (seed: Uint8Array) => {
   const buffer = await crypto.subtle.digest('SHA-256', seed);
-  return `urn:digest:${Buffer.from(new Int8Array(buffer)).toString('hex')}`;
+  return `urn:digest:${Buffer.from(new Uint8Array(buffer)).toString('hex')}`;
 };
 
 const generateContentFromSeed = async (seed: Uint8Array) => {
-  const ed25519Key = await ed25519.Ed25519KeyPair.generate({
-    seed,
-  });
-  const didDocument: any = ed25519.driver.keyToDidDoc(ed25519Key);
-  const x25519Key = x25519.X25519KeyPair.fromEdKeyPair(ed25519Key);
-  const signingKey = {
-    ...didDocument.publicKey[0],
-    privateKeyBase58: ed25519Key.privateKeyBase58,
-  };
-  const encryptionKey = {
-    ...didDocument.keyAgreement[0],
-    privateKeyBase58: x25519Key.privateKeyBase58,
-  };
+  const ed25519Key = (
+    await ed25519.Ed25519KeyPair.generate({
+      secureRandom: () => {
+        return Buffer.from(seed);
+      },
+    })
+  ).toKeyPair(true);
+
+  const x25519Key = x25519.X25519KeyPair.fromEdKeyPair(ed25519Key).toKeyPair(
+    true
+  );
+  const signingKey = ed25519Key;
+  const encryptionKey = x25519Key;
 
   const seedId = await seedToId(seed);
 

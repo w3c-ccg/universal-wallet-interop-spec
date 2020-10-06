@@ -52,8 +52,8 @@
     "yargs-parser": "^19.0.1"
   },
   "dependencies": {
-    "@transmute/did-key-ed25519": "^0.2.1-unstable.13",
-    "@transmute/did-key-x25519": "^0.2.1-unstable.13",
+    "@transmute/did-key-ed25519": "^0.2.1-unstable.21",
+    "@transmute/did-key-x25519": "^0.2.1-unstable.21",
     "factory.ts": "^0.5.1",
     "isomorphic-webcrypto": "^2.3.6"
   },
