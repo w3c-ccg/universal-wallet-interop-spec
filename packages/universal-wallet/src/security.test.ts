@@ -17,10 +17,10 @@ describe('security', () => {
         'did:key:z6MkwJSaEMnE4u6LiqrZV1BJHSkc9x8S4mTm3ArNL1m19BZR'
       ].id
     );
-    expect(didDocument.publicKey[0].privateKeyBase58).toBe(
+    expect(didDocument.verificationMethod[0].privateKeyBase58).toBe(
       fixtures.content[1].privateKeyBase58
     );
-    expect(didDocument.keyAgreement[0].privateKeyBase58).toBe(
+    expect(didDocument.verificationMethod[1].privateKeyBase58).toBe(
       fixtures.content[2].privateKeyBase58
     );
   });
@@ -30,7 +30,7 @@ describe('security', () => {
       new Uint8Array(Buffer.from(fixtures.seed, 'hex'))
     );
     lockDidKey(didDocument);
-    expect(didDocument.publicKey[0].privateKeyBase58).toBe(undefined);
-    expect(didDocument.keyAgreement[0].privateKeyBase58).toBe(undefined);
+    expect(didDocument.verificationMethod[0].privateKeyBase58).toBe(undefined);
+    expect(didDocument.verificationMethod[1].privateKeyBase58).toBe(undefined);
   });
 });

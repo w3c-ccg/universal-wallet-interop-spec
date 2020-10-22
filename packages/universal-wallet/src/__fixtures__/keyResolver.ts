@@ -3,7 +3,7 @@ import { unlockedDids } from '../__fixtures__';
 export const keyResolver = ({ id }: any) => {
   let keyAgreementKey =
     unlockedDids['did:key:z6MktGVfipjBkipFvdE3qGBPQe9heMSuWpgdNVStAfjUsmXV']
-      .keyAgreement[0];
+      .verificationMethod[1];
   if (keyAgreementKey.id === id) {
     return keyAgreementKey;
   }

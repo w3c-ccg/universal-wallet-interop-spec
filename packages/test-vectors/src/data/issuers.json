@@ -24,12 +24,18 @@
         { "@base": "did:key:z6MkwJSaEMnE4u6LiqrZV1BJHSkc9x8S4mTm3ArNL1m19BZR" }
       ],
       "id": "did:key:z6MkwJSaEMnE4u6LiqrZV1BJHSkc9x8S4mTm3ArNL1m19BZR",
-      "publicKey": [
+      "verificationMethod": [
         {
           "id": "#z6MkwJSaEMnE4u6LiqrZV1BJHSkc9x8S4mTm3ArNL1m19BZR",
           "type": "Ed25519VerificationKey2018",
           "controller": "did:key:z6MkwJSaEMnE4u6LiqrZV1BJHSkc9x8S4mTm3ArNL1m19BZR",
           "publicKeyBase58": "HrBXe7XnjMbscM1roSDTSMCcLNraetDQM9wSVjnzDxn3"
+        },
+        {
+          "id": "#z6LSnHCakA8zvH61bCXv7goaT2MyVf8PjfW7XjeKTEGCgG9N",
+          "type": "X25519KeyAgreementKey2019",
+          "controller": "did:key:z6MkwJSaEMnE4u6LiqrZV1BJHSkc9x8S4mTm3ArNL1m19BZR",
+          "publicKeyBase58": "Bc2RDrL8ppNGVpA9b3Hd8S9VeWbH34KxekvdxmcfxtNc"
         }
       ],
       "authentication": ["#z6MkwJSaEMnE4u6LiqrZV1BJHSkc9x8S4mTm3ArNL1m19BZR"],
@@ -41,12 +47,7 @@
         "#z6MkwJSaEMnE4u6LiqrZV1BJHSkc9x8S4mTm3ArNL1m19BZR"
       ],
       "keyAgreement": [
-        {
-          "id": "#z6LSnHCakA8zvH61bCXv7goaT2MyVf8PjfW7XjeKTEGCgG9N",
-          "type": "X25519KeyAgreementKey2019",
-          "controller": "did:key:z6MkwJSaEMnE4u6LiqrZV1BJHSkc9x8S4mTm3ArNL1m19BZR",
-          "publicKeyBase58": "Bc2RDrL8ppNGVpA9b3Hd8S9VeWbH34KxekvdxmcfxtNc"
-        }
+        "#z6LSnHCakA8zvH61bCXv7goaT2MyVf8PjfW7XjeKTEGCgG9N"
       ]
     }
   }
