@@ -7,7 +7,7 @@ const cipher = new Cipher();
 const keyAgreementKey = new X25519KeyPair(
   unlockedDids[
     'did:key:z6MktGVfipjBkipFvdE3qGBPQe9heMSuWpgdNVStAfjUsmXV'
-  ].keyAgreement[0]
+  ].verificationMethod[1]
 );
 
 const recipient = {

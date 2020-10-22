@@ -52,29 +52,33 @@ export const passwordToKey = async (
 
 export const unlockDidKey = async (seed: Uint8Array): Promise<any> => {
   const ed25519Key = await Ed25519KeyPair.generate({
-    seed,
+    secureRandom: ()=> {
+      return seed;
+    },
   });
-  const didDocument: any = driver.keyToDidDoc(ed25519Key);
+  const result = await driver.resolve(ed25519Key.controller);
   const unlockedDIDDocument = {
-    ...didDocument,
+    ...result.didDocument,
   };
-  const x25519Key = X25519KeyPair.fromEdKeyPair(ed25519Key);
-  unlockedDIDDocument.publicKey[0].privateKeyBase58 =
-    ed25519Key.privateKeyBase58;
-  unlockedDIDDocument.keyAgreement[0].privateKeyBase58 =
-    x25519Key.privateKeyBase58;
-  return didDocument;
+  
+  const x25519Key = ed25519Key.toX25519KeyPair(true);
+
+  unlockedDIDDocument.verificationMethod[0].privateKeyBase58 =
+    ed25519Key.toKeyPair(true).privateKeyBase58;
+  unlockedDIDDocument.verificationMethod[1].privateKeyBase58 =
+    x25519Key.toKeyPair(true).privateKeyBase58;
+  return unlockedDIDDocument;
 };
 
 export const lockDidKey = (unlockedDIDDocument: any): any => {
-  delete unlockedDIDDocument.publicKey[0].privateKeyBase58;
-  delete unlockedDIDDocument.keyAgreement[0].privateKeyBase58;
+  delete unlockedDIDDocument.verificationMethod[0].privateKeyBase58;
+  delete unlockedDIDDocument.verificationMethod[1].privateKeyBase58;
   const didDocument = { ...unlockedDIDDocument };
   return didDocument;
 };
 
 export const getKeyResolver = (didDocument: any) => {
-  let keyAgreementKey: any = didDocument.keyAgreement[0];
+  let keyAgreementKey: any = didDocument.verificationMethod[1];
   const keyResolver = ({ id }: any) => {
     if (keyAgreementKey.id === id) {
       return keyAgreementKey;
@@ -116,7 +120,7 @@ export const lockContents = async (
   const derivedKey = await passwordToKey(password);
   const unlockedDidKey = await unlockDidKey(derivedKey);
   const lockedDidKey = lockDidKey(unlockedDidKey);
-  const keyAgreementKey = lockedDidKey.keyAgreement[0];
+  const keyAgreementKey = lockedDidKey.verificationMethod[1];
   if (keyAgreementKey.id.indexOf('#') === 0) {
     keyAgreementKey.id = keyAgreementKey.controller + keyAgreementKey.id;
   }
@@ -147,7 +151,7 @@ export const unlockContents = async (
 ): Promise<any[]> => {
   const derivedKey = await passwordToKey(password);
   const unlockedDidKey = await unlockDidKey(derivedKey);
-  const keyAgreementKey = unlockedDidKey.keyAgreement[0];
+  const keyAgreementKey = unlockedDidKey.verificationMethod[1];
   if (keyAgreementKey.id.indexOf('#') === 0) {
     keyAgreementKey.id = keyAgreementKey.controller + keyAgreementKey.id;
   }
