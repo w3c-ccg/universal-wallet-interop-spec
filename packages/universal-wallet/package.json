@@ -2,7 +2,7 @@
   "name": "@transmute/universal-wallet",
   "author": "Orie Steele",
   "module": "dist/universal-wallet.esm.js",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "license": "Apache-2.0",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -30,13 +30,11 @@
     "trailingComma": "es5"
   },
   "devDependencies": {
-    "@transmute/did-key-ed25519": "^0.2.1-unstable.23",
-    "@transmute/did-key-x25519": "^0.2.1-unstable.23",
     "@transmute/ed25519-signature-2018": "^0.1.1-unstable.10",
-    "@transmute/universal-wallet-did-key-plugin": "^0.4.0",
-    "@transmute/universal-wallet-edv-plugin": "^0.4.0",
-    "@transmute/universal-wallet-test-vectors": "^0.4.0",
-    "@transmute/universal-wallet-vc-plugin": "^0.4.0",
+    "@transmute/universal-wallet-did-key-plugin": "^0.4.1",
+    "@transmute/universal-wallet-edv-plugin": "^0.4.1",
+    "@transmute/universal-wallet-test-vectors": "^0.4.1",
+    "@transmute/universal-wallet-vc-plugin": "^0.4.1",
     "@transmute/vc.js": "^0.1.1-unstable.1",
     "edv-client": "^4.0.1",
     "husky": "^4.2.5",
@@ -45,6 +43,8 @@
     "typescript": "^3.8.3"
   },
   "dependencies": {
+    "@transmute/did-key-ed25519": "^0.2.1-unstable.23",
+    "@transmute/did-key-x25519": "^0.2.1-unstable.23",
     "base64url-universal": "^1.1.0",
     "bs58": "^4.0.1",
     "factory.ts": "^0.5.1",
