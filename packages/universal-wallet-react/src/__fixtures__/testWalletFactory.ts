@@ -1,7 +1,7 @@
 import * as Factory from 'factory.ts';
-import * as Wallet from '@transmute/universal-wallet';
-import * as DidKey from '@transmute/universal-wallet-did-key-plugin';
-import * as Vc from '@transmute/universal-wallet-vc-plugin';
+import * as Wallet from '@w3c-ccg/universal-wallet';
+import * as DidKey from '@w3c-ccg/universal-wallet-did-key-plugin';
+import * as Vc from '@w3c-ccg/universal-wallet-vc-plugin';
 
 interface TestWallet extends Wallet.Wallet, DidKey.DidKeyPlugin, Vc.VcPlugin {}
 

@@ -3,7 +3,7 @@ import Button from '@material-ui/core/Button';
 
 import { Explore, FullscreenDialog } from '../../index';
 
-import * as fixtures from '@transmute/universal-wallet-test-vectors';
+import * as fixtures from '@w3c-ccg/universal-wallet-test-vectors';
 
 import { testWalletFactory } from '../../__fixtures__';
 

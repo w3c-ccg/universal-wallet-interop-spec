@@ -1,4 +1,4 @@
-# @transmute/universal-wallet-react
+# @w3c-ccg/universal-wallet-react
 
 This module contains react components and storybook demo for the experimental universal wallet implementation of the universal wallet interop spec.
 

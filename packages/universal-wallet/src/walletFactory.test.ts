@@ -1,7 +1,7 @@
 import * as Factory from 'factory.ts';
 
 import { Wallet, walletFactory, walletDefaults } from './walletFactory';
-import * as fixtures from '@transmute/universal-wallet-test-vectors';
+import * as fixtures from '@w3c-ccg/universal-wallet-test-vectors';
 
 interface TestWallet extends Wallet {}
 

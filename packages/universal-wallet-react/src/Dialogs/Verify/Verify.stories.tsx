@@ -2,7 +2,7 @@ import React from 'react';
 import Button from '@material-ui/core/Button';
 
 import { Ed25519Signature2018 } from '@transmute/ed25519-signature-2018';
-import * as fixtures from '@transmute/universal-wallet-test-vectors';
+import * as fixtures from '@w3c-ccg/universal-wallet-test-vectors';
 
 import { Verify, FullscreenDialog } from '../../index';
 

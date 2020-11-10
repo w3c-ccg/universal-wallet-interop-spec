@@ -1,6 +1,6 @@
 import { passwordToKey, unlockDidKey, lockDidKey } from './security';
 
-import * as fixtures from '@transmute/universal-wallet-test-vectors';
+import * as fixtures from '@w3c-ccg/universal-wallet-test-vectors';
 
 describe('security', () => {
   it('seed from password', async () => {

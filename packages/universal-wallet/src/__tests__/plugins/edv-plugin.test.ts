@@ -4,9 +4,9 @@ import {
   EdvPlugin,
   pluginFactory,
   factoryDefaults,
-} from '@transmute/universal-wallet-edv-plugin';
+} from '@w3c-ccg/universal-wallet-edv-plugin';
 
-import * as fixtures from '@transmute/universal-wallet-test-vectors';
+import * as fixtures from '@w3c-ccg/universal-wallet-test-vectors';
 
 import { Wallet, walletFactory, walletDefaults } from '../../walletFactory';
 

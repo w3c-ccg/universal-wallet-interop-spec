@@ -1,7 +1,7 @@
 import { VaultClient } from './VaultClient';
 import { EdvClient } from 'edv-client';
 
-import * as fixtures from '@transmute/universal-wallet-test-vectors';
+import * as fixtures from '@w3c-ccg/universal-wallet-test-vectors';
 
 describe.skip('vault-client', () => {
   it('fromDerivedContents', async () => {

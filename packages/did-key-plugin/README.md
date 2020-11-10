@@ -1,7 +1,7 @@
-# @transmute/universal-wallet-did-key-plugin
+# @w3c-ccg/universal-wallet-did-key-plugin
 
 ```
-npm i @transmute/universal-wallet-did-key-plugin --save
+npm i @w3c-ccg/universal-wallet-did-key-plugin --save
 ```
 
 ## Getting Started
