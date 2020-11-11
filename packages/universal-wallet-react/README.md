@@ -5,8 +5,8 @@ This module contains react components and storybook demo for the experimental un
 ## Scripts
 
 ```
-lerna boostrap
+lerna bootstrap
 npm run storybook
 npm run storybook:build
-npx serve serve ../../docs/storybook
+npx serve ../../docs/storybook
 ```
