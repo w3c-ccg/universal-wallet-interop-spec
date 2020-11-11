@@ -31,6 +31,9 @@
     "typescript": "^3.8.3"
   },
   "dependencies": {
-    "@w3c-ccg/universal-wallet": "file:packages/universal-wallet"
+    "@transmute/did-key-ed25519": "^0.2.1-unstable.24",
+    "@transmute/did-key-x25519": "^0.2.1-unstable.24",
+    "@w3c-ccg/universal-wallet": "file:packages/universal-wallet",
+    "react-native": "^0.63.3"
   }
 }
