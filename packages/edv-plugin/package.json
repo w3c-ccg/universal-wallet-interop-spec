@@ -43,7 +43,7 @@
     "serialize-javascript": ">=3.1.0"
   },
   "devDependencies": {
-    "@w3c-ccg/universal-wallet-test-vectors": "file:../test-vectors",
+    "@w3c-ccg/universal-wallet-test-vectors": "^0.4.1",
     "husky": "^4.2.5",
     "serialize-javascript": ">=3.1.0",
     "tsdx": "^0.13.3",
