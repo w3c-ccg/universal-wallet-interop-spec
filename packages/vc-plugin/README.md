@@ -1,7 +1,7 @@
-# @w3c-ccg/universal-wallet-vc-plugin
+# @transmute/universal-wallet-vc-plugin
 
 ```
-npm i @w3c-ccg/universal-wallet-vc-plugin --save
+npm i @transmute/universal-wallet-vc-plugin --save
 ```
 
 ## Getting Started

@@ -1,7 +1,7 @@
-# @w3c-ccg/universal-wallet-test-vectors
+# @transmute/universal-wallet-test-vectors
 
 ```
-npm i @w3c-ccg/universal-wallet-test-vectors --save
+npm i @transmute/universal-wallet-test-vectors --save
 ```
 
 ## Getting Started

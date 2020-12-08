@@ -1,14 +1,14 @@
 import * as Factory from 'factory.ts';
 
-import * as DidKey from '@w3c-ccg/universal-wallet-did-key-plugin';
-import * as Vc from '@w3c-ccg/universal-wallet-vc-plugin';
+import * as DidKey from '@transmute/universal-wallet-did-key-plugin';
+import * as Vc from '@transmute/universal-wallet-vc-plugin';
 
 import { Ed25519KeyPair } from '@transmute/did-key-ed25519';
 import { Ed25519Signature2018 } from '@transmute/ed25519-signature-2018';
 
 import { Wallet, walletFactory, walletDefaults } from '../walletFactory';
 
-import * as fixtures from '@w3c-ccg/universal-wallet-test-vectors';
+import * as fixtures from '@transmute/universal-wallet-test-vectors';
 
 interface DidKeyVcWallet extends Wallet, DidKey.DidKeyPlugin, Vc.VcPlugin {}
 

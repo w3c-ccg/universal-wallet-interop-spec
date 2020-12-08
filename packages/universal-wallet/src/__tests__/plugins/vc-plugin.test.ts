@@ -4,12 +4,12 @@ import {
   VcPlugin,
   pluginFactory,
   factoryDefaults,
-} from '@w3c-ccg/universal-wallet-vc-plugin';
+} from '@transmute/universal-wallet-vc-plugin';
 
 import { Ed25519KeyPair } from '@transmute/did-key-ed25519';
 import { Ed25519Signature2018 } from '@transmute/ed25519-signature-2018';
 
-import * as fixtures from '@w3c-ccg/universal-wallet-test-vectors';
+import * as fixtures from '@transmute/universal-wallet-test-vectors';
 
 import { Wallet, walletFactory, walletDefaults } from '../../walletFactory';
 

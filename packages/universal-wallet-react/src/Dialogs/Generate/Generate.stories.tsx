@@ -1,6 +1,6 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
-import * as fixtures from '@w3c-ccg/universal-wallet-test-vectors';
+import * as fixtures from '@transmute/universal-wallet-test-vectors';
 
 import { Generate, FullscreenDialog } from '../../index';
 
