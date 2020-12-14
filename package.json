@@ -17,7 +17,7 @@
   },
   "devDependencies": {
     "@commitlint/cli": "^9.0.1",
-    "@commitlint/config-conventional": "^9.0.1",
+    "@commitlint/config-conventional": "^11.0.0",
     "@types/jest": "^25.2.3",
     "@typescript-eslint/eslint-plugin": "^3.1.0",
     "@typescript-eslint/parser": "^3.1.0",
@@ -29,5 +29,11 @@
     "lerna": "^3.20.2",
     "prettier": "^2.0.5",
     "typescript": "^3.8.3"
+  },
+  "dependencies": {
+    "@transmute/did-key-ed25519": "^0.2.1-unstable.24",
+    "@transmute/did-key-x25519": "^0.2.1-unstable.24",
+    "@transmute/universal-wallet": "^0.4.1",
+    "react-native": "^0.63.3"
   }
 }

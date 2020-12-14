@@ -37,6 +37,9 @@
       "pre-commit": "npm run lint"
     }
   },
+  "browser": {
+    "fs": false
+  },
   "prettier": {
     "printWidth": 80,
     "semi": true,
