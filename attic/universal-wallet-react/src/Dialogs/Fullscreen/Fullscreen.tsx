@@ -1,5 +1,4 @@
-import React, { FC, HTMLAttributes, ReactChild } from 'react';
-
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -10,7 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
 import Slide from '@material-ui/core/Slide';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   appBar: {
     position: 'relative',
   },
@@ -27,23 +26,14 @@ const Transition: any = React.forwardRef(function Transition(
   return <Slide direction="up" ref={ref} {...props} />;
 } as any);
 
-export interface Props extends HTMLAttributes<HTMLDivElement> {
-  children?: ReactChild;
-  dialogTitle: string;
-  dialogSubmitTitle: string;
-  trigger: ReactChild;
-  handleCancel: any;
-  handleSubmit: any;
-}
-
-export const Fullscreen: FC<Props> = ({
+export const Fullscreen: any = ({
   children,
   dialogTitle,
   dialogSubmitTitle,
   trigger,
   handleCancel,
   handleSubmit,
-}) => {
+}: any) => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
 

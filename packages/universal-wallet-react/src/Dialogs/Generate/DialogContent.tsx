@@ -1,25 +1,30 @@
-import React from 'react';
+import React, { FC, HTMLAttributes } from 'react';
+
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 
-import { LinkedDataIdentifier } from '@material-did/common';
+import { LinkedDataIdentifier } from '../../LinkedDataIdentifier';
 
-import { throttle } from 'lodash-es';
+// import { throttle } from 'lodash-es';
 
-export const DialogContent = ({ dialogState, setDialogState, wallet }: any) => {
-  const throttledSetId = throttle(async (value: any) => {
-    const seed = await wallet.passwordToKey(value);
+export interface Props extends HTMLAttributes<HTMLDivElement> {
+  setDialogState?: any;
+  wallet: any;
+}
+
+export const DialogContent: FC<Props> = ({ setDialogState, wallet }) => {
+  const [seedId, setSeedId] = React.useState('');
+
+  const handlePasswordChange = async (event: any) => {
+    const password = event.target.value;
+    const seed = await wallet.passwordToKey(password);
     let seedId = await wallet.seedToId(seed);
+    setSeedId(seedId);
     setDialogState({
-      ...dialogState,
       seedId,
       seed: Buffer.from(seed).toString('hex'),
-      password: value,
+      password: password,
     });
-  }, 1 * 1000);
-
-  const handlePasswordChange = (event: any) => {
-    throttledSetId(event.target.value);
   };
 
   return (
@@ -34,7 +39,7 @@ export const DialogContent = ({ dialogState, setDialogState, wallet }: any) => {
           />
         </Grid>
         <Grid item xs={12}>
-          <LinkedDataIdentifier value={dialogState.seedId} />
+          <LinkedDataIdentifier value={seedId} />
         </Grid>
       </Grid>
     </div>
