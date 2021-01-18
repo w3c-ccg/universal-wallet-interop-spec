@@ -21,7 +21,6 @@ interface Wallet {
   unlock: (password: string) => Promise<Wallet>;
   export: (password: string) => Promise<any>;
   import: (encryptedWalletCredential: any, password: string) => Promise<Wallet>;
-  query: (map: any, reduce: any, initialValue: any) => any;
 }
 
 const walletDefaults = {
@@ -101,16 +100,6 @@ const walletDefaults = {
     this.contents = unlockedContents[0].contents;
     this.status = WalletStatus.Unlocked;
     return this;
-  },
-  query: function (map: any, reduce: any, initialValue: any) {
-    if (this.status !== WalletStatus.Unlocked) {
-      throw new Error('You can only query an unlocked wallet.');
-    }
-    let results = this.contents.map(map);
-    if (reduce) {
-      return results.reduce(reduce, initialValue);
-    }
-    return results;
   },
 };
 
