@@ -120,33 +120,3 @@ it('lock / unlock', async () => {
   expect(walletForLock.status).toBe('LOCKED');
   expect(walletForLock.contents[0].ciphertext).toBeDefined();
 });
-
-// count items by generatedFrom
-it('query', async () => {
-  const walletForQuery = didKeyWalletFactory.build();
-  const seed = await walletForQuery.passwordToKey(fixtures.password);
-  const contents = await walletForQuery.generateContentFromSeed(seed);
-  contents.forEach((content) => {
-    walletForQuery.add(content);
-  });
-  const map = (content: any) => {
-    return content.generatedFrom;
-  };
-  const reduce = (initialValue: any, item: any) => {
-    if (item) {
-      item.forEach((generatedFrom: any) => {
-        if (!initialValue[generatedFrom]) {
-          initialValue[generatedFrom] = 1;
-        } else {
-          initialValue[generatedFrom]++;
-        }
-      });
-    }
-    return initialValue;
-  };
-  const initialValue = {};
-  const results = walletForQuery.query(map, reduce, initialValue);
-  expect(results).toEqual({
-    'urn:digest:9468ad3dcb7c87cd994b9013f980569af9c81823b1bfd1ffdb7c3fc72abb652a': 2,
-  });
-});
