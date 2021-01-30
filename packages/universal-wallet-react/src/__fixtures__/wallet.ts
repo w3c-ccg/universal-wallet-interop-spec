@@ -4,6 +4,10 @@ import {
   seedToId,
 } from '@transmute/universal-wallet';
 
-export const wallet = walletFactory.build();
+export const emptyWallet = walletFactory.build();
+
+export const fullWallet = walletFactory.build({
+  contents: [{ id: '123', type: '456' } as any],
+});
 
 export { passwordToKey, seedToId };

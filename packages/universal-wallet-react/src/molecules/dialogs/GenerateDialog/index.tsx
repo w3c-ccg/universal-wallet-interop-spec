@@ -1,2 +1,2 @@
 export * from './GenerateDialog';
-export { DialogContent as GenerateDialogContent } from './DialogContent';
+export * from './GenerateDialogContent';

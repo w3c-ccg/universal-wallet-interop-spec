@@ -10,7 +10,7 @@ import CreateNewFolderIcon from '@material-ui/icons/CreateNewFolder';
 // import VerifiedUserIcon from '@material-ui/icons/VerifiedUser';
 // import CreateIcon from '@material-ui/icons/Create';
 // import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
-// import ExploreIcon from '@material-ui/icons/Explore';
+import ExploreIcon from '@material-ui/icons/Explore';
 
 import { Card } from './Card';
 
@@ -20,6 +20,11 @@ import {
   GenerateDialog,
   GenerateDialogContent,
 } from '../../molecules/dialogs/GenerateDialog';
+
+import {
+  ExploreDialog,
+  ExploreDialogContent,
+} from '../../molecules/dialogs/ExploreDialog';
 
 export interface Props extends HTMLAttributes<HTMLDivElement> {
   wallet: any;
@@ -63,9 +68,25 @@ export const UniversalWalletCard: FC<Props> = ({
           handleSubmit: async () => {
             handleWalletOperation('generate', dialogState);
           },
-          handleCancel: async () => {
-            // console.log('storybook  handleCancel...');
+          handleCancel: async () => {},
+        },
+      },
+      {
+        title: 'Explore',
+        disabledWhen: () => {
+          return wallet.status === 'LOCKED';
+        },
+        icon: ExploreIcon,
+        iconProps: {},
+        dialog: ExploreDialog,
+        dialogProps: {
+          dialogTitle: 'Explore',
+          dialogSubmitTitle: 'Explore',
+          dialogContent: <ExploreDialogContent contents={wallet.contents} />,
+          handleSubmit: async () => {
+            handleWalletOperation('explore', dialogState);
           },
+          handleCancel: async () => {},
         },
       },
     ],

@@ -72,7 +72,10 @@
   "dependencies": {
     "@material-ui/core": "^4.11.2",
     "@material-ui/icons": "^4.11.2",
+    "@transmute/universal-wallet": "0.4.1",
+    "material-table": "^1.69.2",
     "react-identicons": "^1.2.4",
-    "@transmute/universal-wallet": "0.4.1"
+    "react-ace": "^6.3.2",
+    "brace": "^0.11.1"
   }
 }

@@ -5,7 +5,7 @@ import { action } from '@storybook/addon-actions';
 
 import { UniversalWalletCard as Component, Props } from './UniversalWalletCard';
 
-import { wallet } from '../../__fixtures__/wallet';
+import { emptyWallet, fullWallet } from '../../__fixtures__/wallet';
 
 const meta: Meta = {
   title: 'Organisms/Wallet',
@@ -16,10 +16,24 @@ export default meta;
 
 const Template: Story<Props> = (args) => <Component {...args} />;
 
-export const Wallet = Template.bind({});
+export const Empty = Template.bind({});
 
-Wallet.args = {
-  wallet,
+Empty.args = {
+  wallet: emptyWallet,
+  handleWalletOperation: (operationId: string, operationInput: any) => {
+    action('use a plugin to handle')({
+      operationId,
+      operationInput,
+    });
+    // here you handle wallet interface calls
+    // then update wallet prop.
+  },
+};
+
+export const Full = Template.bind({});
+
+Full.args = {
+  wallet: fullWallet,
   handleWalletOperation: (operationId: string, operationInput: any) => {
     action('use a plugin to handle')({
       operationId,

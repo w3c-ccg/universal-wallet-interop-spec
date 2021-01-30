@@ -6,12 +6,12 @@ import {
   FullscreenDialog as Component,
   Props,
 } from '../../../atoms/FullscreenDialog';
-import { GenerateDialogContent } from './GenerateDialogContent';
+import { AddDialogContent } from './AddDialogContent';
 
-import { seedToId, passwordToKey } from '../../../__fixtures__/wallet';
+import { fullWallet } from '../../../__fixtures__/wallet';
 
 const meta: Meta = {
-  title: 'Molecules/Dialogs/Generate',
+  title: 'Molecules/Dialogs/Add',
   component: Component,
 };
 
@@ -23,17 +23,9 @@ export const Dialog = Template.bind({});
 
 Dialog.args = {
   trigger: <Button>trigger</Button>,
-  dialogTitle: 'Generate',
-  dialogSubmitTitle: 'Generate',
-  dialogContent: (
-    <GenerateDialogContent
-      seedToId={seedToId}
-      passwordToKey={passwordToKey}
-      setDialogState={(state: any) => {
-        action('setDialogState')(state);
-      }}
-    />
-  ),
+  dialogTitle: 'Add',
+  dialogSubmitTitle: 'Add',
+  dialogContent: <AddDialogContent contents={fullWallet.contents} />,
   handleSubmit: async () => {
     action('handleSubmit')();
   },

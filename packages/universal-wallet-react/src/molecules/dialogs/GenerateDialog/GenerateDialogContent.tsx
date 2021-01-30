@@ -11,7 +11,7 @@ export interface Props extends HTMLAttributes<HTMLDivElement> {
   seedToId: any;
 }
 
-export const DialogContent: FC<Props> = ({
+export const GenerateDialogContent: FC<Props> = ({
   setDialogState,
   passwordToKey,
   seedToId,

@@ -6,12 +6,12 @@ import {
   FullscreenDialog as Component,
   Props,
 } from '../../../atoms/FullscreenDialog';
-import { GenerateDialogContent } from './GenerateDialogContent';
+import { ExploreDialogContent } from './ExploreDialogContent';
 
-import { seedToId, passwordToKey } from '../../../__fixtures__/wallet';
+import { fullWallet } from '../../../__fixtures__/wallet';
 
 const meta: Meta = {
-  title: 'Molecules/Dialogs/Generate',
+  title: 'Molecules/Dialogs/Explore',
   component: Component,
 };
 
@@ -19,21 +19,15 @@ export default meta;
 
 const Template: Story<Props> = (args) => <Component {...args} />;
 
+// By passing using the Args format for exported stories, you can control the props for a component for reuse in a test
+// https://storybook.js.org/docs/react/workflows/unit-testing
 export const Dialog = Template.bind({});
 
 Dialog.args = {
   trigger: <Button>trigger</Button>,
-  dialogTitle: 'Generate',
-  dialogSubmitTitle: 'Generate',
-  dialogContent: (
-    <GenerateDialogContent
-      seedToId={seedToId}
-      passwordToKey={passwordToKey}
-      setDialogState={(state: any) => {
-        action('setDialogState')(state);
-      }}
-    />
-  ),
+  dialogTitle: 'Explore',
+  dialogSubmitTitle: 'Explore',
+  dialogContent: <ExploreDialogContent contents={fullWallet.contents} />,
   handleSubmit: async () => {
     action('handleSubmit')();
   },
