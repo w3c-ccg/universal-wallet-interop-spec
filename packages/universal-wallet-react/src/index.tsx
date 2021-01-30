@@ -1,1 +1,1 @@
-export * from './Thing';
+export * from './atoms/Thing';

@@ -52,10 +52,9 @@
     "yargs-parser": "^19.0.1"
   },
   "dependencies": {
-    "@transmute/did-key-ed25519": "^0.2.1-unstable.21",
-    "@transmute/did-key-x25519": "^0.2.1-unstable.21",
-    "factory.ts": "^0.5.1",
-    "isomorphic-webcrypto": "^2.3.6"
+    "@transmute/did-key-ed25519": "^0.2.1-unstable.31",
+    "core-js": "^3.8.3",
+    "factory.ts": "^0.5.1"
   },
   "gitHead": "f987b871245fcf117da477bac5cb2fd99adf70be"
 }

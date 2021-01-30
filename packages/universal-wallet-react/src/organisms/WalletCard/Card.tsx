@@ -47,7 +47,7 @@ export interface Props extends HTMLAttributes<HTMLDivElement> {
   menu?: any[];
 }
 
-const WalletCard = (
+const WalletCard: FC<Props> = (
   { image, status, menu }: any = {
     image: 'https://via.placeholder.com/150',
     status: 'UNLOCKED',
