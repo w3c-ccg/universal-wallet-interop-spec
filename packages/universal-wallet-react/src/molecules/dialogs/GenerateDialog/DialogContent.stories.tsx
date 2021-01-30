@@ -1,8 +1,9 @@
 import React from 'react';
 import { Meta, Story } from '@storybook/react';
+import { action } from '@storybook/addon-actions';
 import { DialogContent as Component, Props } from './DialogContent';
 
-import { passwordToKey, seedToId } from '../../__fixtures__/wallet';
+import { passwordToKey, seedToId } from '../../../__fixtures__/wallet';
 
 const meta: Meta = {
   title: 'Molecules/Dialogs/Generate',
@@ -23,7 +24,8 @@ DialogContent.args = {
   seedToId,
   // this method is used to handle the result of submitting the dialog
   setDialogState: (state: any) => {
-    console.log('setDialogState', state);
-    // here is where you would add the contents from state to your wallet.
+    // here is where you
+    // wire the dialog result to your wallet.
+    action('setDialogState')(state);
   },
 };

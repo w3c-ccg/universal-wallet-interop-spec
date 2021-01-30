@@ -3,7 +3,7 @@ import React, { FC, HTMLAttributes } from 'react';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 
-import { LinkedDataIdentifier } from '../../LinkedDataIdentifier';
+import { LinkedDataIdentifier } from '../../../atoms/LinkedDataIdentifier';
 
 export interface Props extends HTMLAttributes<HTMLDivElement> {
   setDialogState?: any;

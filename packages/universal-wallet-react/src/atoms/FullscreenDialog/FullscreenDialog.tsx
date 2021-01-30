@@ -28,7 +28,7 @@ const Transition: any = React.forwardRef(function Transition(
 } as any);
 
 export interface Props extends HTMLAttributes<HTMLDivElement> {
-  children?: ReactChild;
+  dialogContent: ReactChild;
   dialogTitle: string;
   dialogSubmitTitle: string;
   trigger: ReactChild;
@@ -36,8 +36,8 @@ export interface Props extends HTMLAttributes<HTMLDivElement> {
   handleSubmit: any;
 }
 
-export const Fullscreen: FC<Props> = ({
-  children,
+export const FullscreenDialog: FC<Props> = ({
+  dialogContent,
   dialogTitle,
   dialogSubmitTitle,
   trigger,
@@ -89,7 +89,7 @@ export const Fullscreen: FC<Props> = ({
             </Button>
           </Toolbar>
         </AppBar>
-        {children}
+        {dialogContent}
       </Dialog>
     </React.Fragment>
   );
