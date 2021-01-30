@@ -1,4 +1,4 @@
-import crypto from 'isomorphic-webcrypto';
+import crypto from '../crypto';
 
 export const seedToId = async (seed: Uint8Array) => {
   const buffer = await crypto.subtle.digest('SHA-256', seed);

@@ -5,20 +5,24 @@ import Grid from '@material-ui/core/Grid';
 
 import { LinkedDataIdentifier } from '../../LinkedDataIdentifier';
 
-// import { throttle } from 'lodash-es';
-
 export interface Props extends HTMLAttributes<HTMLDivElement> {
   setDialogState?: any;
-  wallet: any;
+  passwordToKey: any;
+  seedToId: any;
 }
 
-export const DialogContent: FC<Props> = ({ setDialogState, wallet }) => {
+export const DialogContent: FC<Props> = ({
+  setDialogState,
+  passwordToKey,
+  seedToId,
+}) => {
   const [seedId, setSeedId] = React.useState('');
 
   const handlePasswordChange = async (event: any) => {
     const password = event.target.value;
-    const seed = await wallet.passwordToKey(password);
-    let seedId = await wallet.seedToId(seed);
+    const seed = await passwordToKey(password);
+    let seedId = await seedToId(seed);
+
     setSeedId(seedId);
     setDialogState({
       seedId,

@@ -2,7 +2,7 @@ import React from 'react';
 import { Meta, Story } from '@storybook/react';
 import { DialogContent as Component, Props } from './DialogContent';
 
-import { wallet } from '../../__fixtures__/wallet';
+import { passwordToKey, seedToId } from '../../__fixtures__/wallet';
 
 const meta: Meta = {
   title: 'Molecules/Dialogs/Generate',
@@ -18,8 +18,12 @@ const Template: Story<Props> = (args) => <Component {...args} />;
 export const DialogContent = Template.bind({});
 
 DialogContent.args = {
+  // these methods are used by the dialog
+  passwordToKey,
+  seedToId,
+  // this method is used to handle the result of submitting the dialog
   setDialogState: (state: any) => {
     console.log('setDialogState', state);
+    // here is where you would add the contents from state to your wallet.
   },
-  wallet,
 };

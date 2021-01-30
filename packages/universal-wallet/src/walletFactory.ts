@@ -23,11 +23,11 @@ interface Wallet {
 const walletDefaults = {
   status: WalletStatus.Unlocked,
   contents: [],
-  add: function (content: any): Wallet {
+  add: function(content: any): Wallet {
     (this as Wallet).contents.push(content);
     return this;
   },
-  remove: function (contentId: string): any {
+  remove: function(contentId: string): any {
     let contents = JSON.parse(JSON.stringify(this.contents));
     let index = contents.findIndex((c: any) => {
       return c.id === contentId;
@@ -39,7 +39,7 @@ const walletDefaults = {
 
     return content;
   },
-  lock: async function (password: string): Promise<Wallet> {
+  lock: async function(password: string): Promise<Wallet> {
     (this as Wallet).contents = await lockContents(
       password,
       (this as Wallet).contents
@@ -47,7 +47,7 @@ const walletDefaults = {
     (this as Wallet).status = WalletStatus.Locked;
     return this;
   },
-  unlock: async function (password: string): Promise<Wallet> {
+  unlock: async function(password: string): Promise<Wallet> {
     (this as Wallet).contents = await unlockContents(
       password,
       (this as Wallet).contents
@@ -55,10 +55,10 @@ const walletDefaults = {
     (this as Wallet).status = WalletStatus.Unlocked;
     return this;
   },
-  export: async function (password: string): Promise<any> {
+  export: async function(password: string): Promise<any> {
     return exportContentsAsCredential(password, this.contents);
   },
-  import: async function (
+  import: async function(
     encryptedWalletCredential: any,
     password: string
   ): Promise<any> {

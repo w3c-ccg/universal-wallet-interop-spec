@@ -33,7 +33,7 @@ export const lockContents = async (
   const cipher = new Cipher(X25519KeyPair);
 
   const encryptedContents = await Promise.all(
-    contents.map(async (content) => {
+    contents.map(async content => {
       // spreading to avoid mutation of function args.
       const jwe = await cipher.encryptObject({
         obj: { ...content },

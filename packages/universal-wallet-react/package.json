@@ -1,6 +1,9 @@
 {
-  "version": "0.1.0",
-  "license": "MIT",
+  "name": "@transmute/universal-wallet-react",
+  "author": "Orie Steele",
+  "module": "dist/universal-wallet-react.esm.js",
+  "version": "0.4.1",
+  "license": "Apache-2.0",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "files": [
@@ -14,11 +17,11 @@
     "start": "tsdx watch",
     "build": "tsdx build",
     "test": "tsdx test --passWithNoTests",
-    "lint": "tsdx lint",
+    "lint": "tsdx lint --fix src",
     "prepare": "tsdx build",
     "size": "size-limit",
     "analyze": "size-limit --why",
-    "storybook": "start-storybook -p 6006",
+    "storybook": "start-storybook -p 6006 -h localhost",
     "build-storybook": "build-storybook"
   },
   "peerDependencies": {
@@ -26,7 +29,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "tsdx lint"
+      "pre-commit": "npm run lint"
     }
   },
   "prettier": {
@@ -35,9 +38,6 @@
     "singleQuote": true,
     "trailingComma": "es5"
   },
-  "name": "universal-wallet-react",
-  "author": "Orie Steele",
-  "module": "dist/universal-wallet-react.esm.js",
   "size-limit": [
     {
       "path": "dist/universal-wallet-react.cjs.production.min.js",
@@ -60,7 +60,6 @@
     "@types/react-dom": "^17.0.0",
     "babel-loader": "^8.2.2",
     "husky": "^4.3.8",
-    "isomorphic-webcrypto": "^2.3.6",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-is": "^17.0.1",
@@ -72,6 +71,7 @@
   "dependencies": {
     "@material-ui/core": "^4.11.2",
     "@material-ui/icons": "^4.11.2",
-    "react-identicons": "^1.2.4"
+    "react-identicons": "^1.2.4",
+    "@transmute/universal-wallet": "0.4.1"
   }
 }

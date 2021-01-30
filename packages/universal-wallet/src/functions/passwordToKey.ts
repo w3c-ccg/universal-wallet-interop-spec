@@ -1,4 +1,4 @@
-import crypto from 'isomorphic-webcrypto';
+import crypto from '../crypto';
 
 export const passwordToKey = async (
   password: string,
@@ -8,6 +8,7 @@ export const passwordToKey = async (
 ): Promise<Uint8Array> => {
   var saltBuffer = Buffer.from(salt);
   var passphraseKey = Buffer.from(password);
+
   return crypto.subtle
     .importKey('raw', passphraseKey, { name: 'PBKDF2' }, false, [
       'deriveBits',
