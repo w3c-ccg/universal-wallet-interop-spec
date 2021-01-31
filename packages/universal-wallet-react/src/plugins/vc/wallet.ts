@@ -73,6 +73,76 @@ const contents: any = [
       'urn:digest:a00b3be8b299033978e12f1db36a8ed208569c233fd52a733d96f11b039c8cb4',
     ],
   },
+  {
+    '@context': [
+      'https://www.w3.org/2018/credentials/v1',
+      'https://www.w3.org/2018/credentials/examples/v1',
+    ],
+    id: 'http://example.gov/credentials/3732',
+    type: ['VerifiableCredential', 'UniversityDegreeCredential'],
+    issuer: 'did:key:z6Mkf7FWHfJANm9n4hPMt3dmtAcqnkNuyJLHSovSMnfq4Wws',
+    issuanceDate: '2020-03-10T04:24:12.164Z',
+    credentialSubject: {
+      id: 'did:key:z6MkjjCpsoQrwnEmqHzLdxWowXk5gjbwor4urC1RPDmGeV8r',
+      degree: {
+        type: 'BachelorDegree',
+        name: 'Bachelor of Science and Arts',
+      },
+    },
+    proof: [
+      {
+        type: 'Ed25519Signature2018',
+        created: '2021-01-31T14:40:48.328Z',
+        jws:
+          'eyJhbGciOiJFZERTQSIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19..1SL3Zgzvt7bvQPdJe1kUu6LKSJ3pjHAgb49EDVutCyE0StgKfwOVZBOLPDzSUGJBJLRcw5ddFXTzUgoaKSfdAA',
+        proofPurpose: 'assertionMethod',
+        verificationMethod:
+          'did:key:z6Mkf7FWHfJANm9n4hPMt3dmtAcqnkNuyJLHSovSMnfq4Wws#z6Mkf7FWHfJANm9n4hPMt3dmtAcqnkNuyJLHSovSMnfq4Wws',
+      },
+    ],
+  },
+  {
+    '@context': ['https://www.w3.org/2018/credentials/v1'],
+    type: ['VerifiablePresentation'],
+    holder: 'did:key:z6Mkf7FWHfJANm9n4hPMt3dmtAcqnkNuyJLHSovSMnfq4Wws',
+    verifiableCredential: {
+      '@context': [
+        'https://www.w3.org/2018/credentials/v1',
+        'https://www.w3.org/2018/credentials/examples/v1',
+      ],
+      id: 'http://example.gov/credentials/3732',
+      type: ['VerifiableCredential', 'UniversityDegreeCredential'],
+      issuer: 'did:key:z6Mkf7FWHfJANm9n4hPMt3dmtAcqnkNuyJLHSovSMnfq4Wws',
+      issuanceDate: '2020-03-10T04:24:12.164Z',
+      credentialSubject: {
+        id: 'did:key:z6MkjjCpsoQrwnEmqHzLdxWowXk5gjbwor4urC1RPDmGeV8r',
+        degree: {
+          type: 'BachelorDegree',
+          name: 'Bachelor of Science and Arts',
+        },
+      },
+      proof: {
+        type: 'Ed25519Signature2018',
+        created: '2021-01-31T15:20:07.783Z',
+        jws:
+          'eyJhbGciOiJFZERTQSIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19..JOoVxfxNnRYJ_4HRTsZbtaCN6V1T8Otaho8zG7ezYStnj2xUoss_3tEPOCcACyesVPMK2X4aB0WILuQHdy2JCw',
+        proofPurpose: 'assertionMethod',
+        verificationMethod:
+          'did:key:z6Mkf7FWHfJANm9n4hPMt3dmtAcqnkNuyJLHSovSMnfq4Wws#z6Mkf7FWHfJANm9n4hPMt3dmtAcqnkNuyJLHSovSMnfq4Wws',
+      },
+    },
+    proof: {
+      type: 'Ed25519Signature2018',
+      created: '2021-01-31T15:20:35.651Z',
+      challenge: '8bb1cfda-9d31-46fc-9742-72b48747a2f1',
+      domain: 'example.com',
+      jws:
+        'eyJhbGciOiJFZERTQSIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19..xVdnERITPrbwKv3086IzHgP-ffS_BgXwe_CTqZHPugvofhpw_cwvK4r8IrluBNT1QGpGN1O6MdFRiMiiIkmoCA',
+      proofPurpose: 'authentication',
+      verificationMethod:
+        'did:key:z6Mkf7FWHfJANm9n4hPMt3dmtAcqnkNuyJLHSovSMnfq4Wws#z6Mkf7FWHfJANm9n4hPMt3dmtAcqnkNuyJLHSovSMnfq4Wws',
+    },
+  },
 ];
 
 export const wallet = didKeyWalletFactory.build({

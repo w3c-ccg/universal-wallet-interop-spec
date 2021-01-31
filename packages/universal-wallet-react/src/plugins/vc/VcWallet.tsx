@@ -36,6 +36,60 @@ export const VcWallet: FC<Props> = () => {
             });
             break;
           }
+          case 'present': {
+            const { verifiableCredential, domain, challenge } = operationInput;
+            const key = await Ed25519KeyPair.from(operationInput.keypair);
+            const suite = new Ed25519Signature2018({ key });
+
+            const vp = await wallet.createVerifiablePresentation({
+              verifiableCredential,
+              options: {
+                holder: key.controller,
+                domain,
+                challenge,
+                suite,
+                documentLoader,
+              },
+            });
+            wallet.add(vp);
+
+            setState({
+              wallet,
+            });
+            break;
+          }
+          case 'verify': {
+            const { content, domain, challenge } = operationInput;
+            let verification = { verified: false };
+            const suite = new Ed25519Signature2018();
+            const options = { suite, documentLoader };
+            if (content.type.includes('VerifiableCredential')) {
+              verification = await wallet.verifyCredential({
+                credential: content,
+                options,
+              });
+            }
+
+            if (content.type.includes('VerifiablePresentation')) {
+              verification = await wallet.verifyPresentation({
+                presentation: content,
+                options: {
+                  ...options,
+                  domain,
+                  challenge,
+                },
+              });
+            }
+
+            if (verification.verified) {
+              alert('success');
+            } else {
+              console.log(verification);
+              alert('failure');
+            }
+
+            break;
+          }
         }
       }}
     />

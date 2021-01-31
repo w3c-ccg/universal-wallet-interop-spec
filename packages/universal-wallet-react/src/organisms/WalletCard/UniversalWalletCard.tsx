@@ -28,6 +28,8 @@ import { buildRemoveInterface } from '../../molecules/dialogs/RemoveDialog';
 import { buildExportInterface } from '../../molecules/dialogs/ExportDialog';
 import { buildImportInterface } from '../../molecules/dialogs/ImportDialog';
 import { buildIssueCredentialInterface } from '../../molecules/dialogs/IssueCredentialDialog';
+import { buildVerifiablePresentationDialogInterface } from '../../molecules/dialogs/CreateVerifiablePresentationDialog';
+import { buildVerifyInterface } from '../../molecules/dialogs/VerifyDialog';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -70,6 +72,8 @@ export const UniversalWalletCard: FC<Props> = ({
     dialogState: {
       editor: '',
       password: '',
+      domain: 'example.com',
+      challenge: '8bb1cfda-9d31-46fc-9742-72b48747a2f1',
       selected: {},
     },
   });
@@ -121,17 +125,17 @@ export const UniversalWalletCard: FC<Props> = ({
   }
 
   if (status === 'UNLOCKED' && wallet.contents.length > 0) {
-    actionsList.push(
-      buildExploreInterface(wallet, () => {
-        handleWalletOperation('explore', state.dialogState);
+    menuList.push(
+      buildExportInterface(wallet, setDialogState, () => {
+        handleWalletOperation('export', state.dialogState);
       })
     );
   }
 
   if (status === 'UNLOCKED' && wallet.contents.length > 0) {
     actionsList.push(
-      buildExportInterface(wallet, setDialogState, () => {
-        handleWalletOperation('export', state.dialogState);
+      buildExploreInterface(wallet, () => {
+        handleWalletOperation('explore', state.dialogState);
       })
     );
   }
@@ -142,9 +146,52 @@ export const UniversalWalletCard: FC<Props> = ({
         const keypair = wallet.contents.find((i: any) => {
           return i.id === (state.dialogState.selected as any).value;
         });
+
+        const credential = JSON.parse(state.dialogState.editor);
+
+        if (typeof credential.issuer === 'string') {
+          credential.issuer = keypair.controller;
+        } else {
+          credential.issuer.id = keypair.controller;
+        }
+
         handleWalletOperation('issue', {
           keypair,
-          credential: JSON.parse(state.dialogState.editor),
+          credential,
+        });
+      })
+    );
+
+    actionsList.push(
+      buildVerifiablePresentationDialogInterface(
+        wallet,
+        state.dialogState,
+        setDialogState,
+        () => {
+          const keypair = wallet.contents.find((i: any) => {
+            return i.id === (state.dialogState.selected as any).value;
+          });
+
+          const verifiableCredential = JSON.parse(state.dialogState.editor);
+
+          handleWalletOperation('present', {
+            keypair,
+            domain: state.dialogState.domain,
+            challenge: state.dialogState.challenge,
+            verifiableCredential,
+          });
+        }
+      )
+    );
+
+    actionsList.push(
+      buildVerifyInterface(wallet, state.dialogState, setDialogState, () => {
+        // credential or presentation
+        const content = JSON.parse(state.dialogState.editor);
+        handleWalletOperation('verify', {
+          domain: state.dialogState.domain,
+          challenge: state.dialogState.challenge,
+          content,
         });
       })
     );
