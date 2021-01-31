@@ -27,6 +27,7 @@ import { buildAddInterface } from '../../molecules/dialogs/AddDialog';
 import { buildRemoveInterface } from '../../molecules/dialogs/RemoveDialog';
 import { buildExportInterface } from '../../molecules/dialogs/ExportDialog';
 import { buildImportInterface } from '../../molecules/dialogs/ImportDialog';
+import { buildIssueCredentialInterface } from '../../molecules/dialogs/IssueCredentialDialog';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -131,6 +132,20 @@ export const UniversalWalletCard: FC<Props> = ({
     actionsList.push(
       buildExportInterface(wallet, setDialogState, () => {
         handleWalletOperation('export', state.dialogState);
+      })
+    );
+  }
+
+  if (status === 'UNLOCKED' && wallet.contents.length > 0) {
+    actionsList.push(
+      buildIssueCredentialInterface(wallet, setDialogState, () => {
+        const keypair = wallet.contents.find((i: any) => {
+          return i.id === (state.dialogState.selected as any).value;
+        });
+        handleWalletOperation('issue', {
+          keypair,
+          credential: JSON.parse(state.dialogState.editor),
+        });
       })
     );
   }
