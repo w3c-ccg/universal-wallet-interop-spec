@@ -258,7 +258,11 @@ export const UniversalWalletCard: FC<Props> = ({
         }
       />
 
-      <CardMedia className={classes.media} image={image} title="Wallet image" />
+      <CardMedia
+        className={classes.media}
+        image={image || 'https://did.key.transmute.industries/image.jpg'}
+        title="Wallet image"
+      />
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
           This wallet implements the specification under development in the W3C
