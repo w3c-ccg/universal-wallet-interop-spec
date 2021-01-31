@@ -5,13 +5,11 @@ import { action } from '@storybook/addon-actions';
 import {
   FullscreenDialog as Component,
   Props,
-} from '../../atoms/FullscreenDialog';
-import { ImportDialogContent } from './ImportDialog/ImportDialogContent';
-
-import { seedToId, passwordToKey } from '../../__fixtures__/wallet';
+} from '../../../atoms/FullscreenDialog';
+import { RemoveDialogContent } from './RemoveDialogContent';
 
 const meta: Meta = {
-  title: 'Molecules/Dialogs/Import/Dialog',
+  title: 'Molecules/Dialogs/Remove/Dialog',
   component: Component,
 };
 
@@ -21,16 +19,29 @@ const Template: Story<Props> = (args) => <Component {...args} />;
 
 export const Dialog = Template.bind({});
 
+const options = [
+  {
+    value: 'did:example:123#key-0',
+    logo: 'https://issuer.interop.transmute.world/logo512.png',
+    label: 'Key 0',
+  },
+  {
+    value: 'did:example:456#key-1',
+    logo: 'https://issuer.interop.transmute.world/logo512.png',
+    label: 'Key 1',
+  },
+];
+
 Dialog.args = {
   dialogTrigger: <Button>trigger</Button>,
-  dialogTitle: 'Import',
-  dialogSubmitTitle: 'Import',
+  dialogTitle: 'Remove',
+  dialogSubmitTitle: 'Remove',
   dialogContent: (
-    <ImportDialogContent
-      seedToId={seedToId}
-      passwordToKey={passwordToKey}
-      setDialogState={(state: any) => {
-        action('setDialogState')(state);
+    <RemoveDialogContent
+      value={options[0]}
+      options={options}
+      onChange={(selected: any) => {
+        action('onChange')(selected);
       }}
     />
   ),

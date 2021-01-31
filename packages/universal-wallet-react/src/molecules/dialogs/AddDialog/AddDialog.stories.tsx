@@ -5,8 +5,8 @@ import { action } from '@storybook/addon-actions';
 import {
   FullscreenDialog as Component,
   Props,
-} from '../../atoms/FullscreenDialog';
-import { AddDialogContent } from './AddDialog/AddDialogContent';
+} from '../../../atoms/FullscreenDialog';
+import { AddDialogContent } from './AddDialogContent';
 
 const meta: Meta = {
   title: 'Molecules/Dialogs/Add/Dialog',

@@ -26,6 +26,7 @@ import { buildExploreInterface } from '../../molecules/dialogs/ExploreDialog';
 import { buildAddInterface } from '../../molecules/dialogs/AddDialog';
 import { buildRemoveInterface } from '../../molecules/dialogs/RemoveDialog';
 import { buildExportInterface } from '../../molecules/dialogs/ExportDialog';
+import { buildImportInterface } from '../../molecules/dialogs/ImportDialog';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -88,6 +89,12 @@ export const UniversalWalletCard: FC<Props> = ({
     actionsList.push(
       buildGenerateInterface(wallet, setDialogState, () => {
         handleWalletOperation('generate', state.dialogState);
+      })
+    );
+
+    actionsList.push(
+      buildImportInterface(wallet, setDialogState, () => {
+        handleWalletOperation('import', state.dialogState);
       })
     );
   }
