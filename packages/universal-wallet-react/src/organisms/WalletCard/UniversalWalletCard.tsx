@@ -1,18 +1,5 @@
 import React, { FC, HTMLAttributes } from 'react';
 
-import AddIcon from '@material-ui/icons/Add';
-import RemoveIcon from '@material-ui/icons/Remove';
-import ArchiveIcon from '@material-ui/icons/Archive';
-// import UnarchiveIcon from '@material-ui/icons/Unarchive';
-// import VerifiedUserIcon from '@material-ui/icons/VerifiedUser';
-// import CreateIcon from '@material-ui/icons/Create';
-// import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
-import ExploreIcon from '@material-ui/icons/Explore';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-
 import { makeStyles } from '@material-ui/core/styles';
 
 import Card from '@material-ui/core/Card';
@@ -34,14 +21,11 @@ import { FullscreenDialog } from '../../atoms/FullscreenDialog';
 
 import { WalletMenu } from '../WalletMenu';
 
-import { passwordToKey, seedToId } from '@transmute/universal-wallet';
-
-import { CapturePasswordDialogContent } from '../../atoms/CapturePasswordDialog';
-
-import { ExploreDialogContent } from '../../molecules/dialogs/ExploreDialog';
-
-import { AddDialogContent } from '../../molecules/dialogs/AddDialog';
-import { RemoveDialogContent } from '../../molecules/dialogs/RemoveDialog';
+import { buildGenerateInterface } from '../../molecules/dialogs/GenerateDialog';
+import { buildExploreInterface } from '../../molecules/dialogs/ExploreDialog';
+import { buildAddInterface } from '../../molecules/dialogs/AddDialog';
+import { buildRemoveInterface } from '../../molecules/dialogs/RemoveDialog';
+import { buildExportInterface } from '../../molecules/dialogs/ExportDialog';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -79,177 +63,19 @@ export const UniversalWalletCard: FC<Props> = ({
   handleWalletOperation,
 }) => {
   const classes = useStyles();
-  const contentAsOptions = wallet.contents.map((content: any) => {
-    return {
-      value: content.id,
-      logo: content.image || 'https://via.placeholder.com/150',
-      label: content.name || content.id,
-    };
-  });
 
   const [state, setState] = React.useState({
     dialogState: {
       editor: '',
-      selected: contentAsOptions[0],
+      selected: {},
     },
   });
 
-  const generateInterface = {
-    disabledWhen: () => {
-      return wallet.contents.length !== 0;
-    },
-    dialogTitle: 'Generate',
-    dialogSubmitTitle: 'Generate',
-    dialogTrigger: (
-      <List>
-        <ListItem style={{ padding: '0px' }}>
-          <ListItemIcon>
-            <ExploreIcon />
-          </ListItemIcon>
-          <ListItemText primary={'Generate'} />
-        </ListItem>
-      </List>
-    ),
-    dialogContent: (
-      <CapturePasswordDialogContent
-        seedToId={seedToId}
-        passwordToKey={passwordToKey}
-        setDialogState={(dialogState: any) => {
-          setState({ dialogState });
-        }}
-      />
-    ),
-    handleSubmit: async () => {
-      handleWalletOperation('generate', state.dialogState);
-    },
-    handleCancel: async () => {},
-  };
-
-  const exploreInterface = {
-    disabledWhen: () => {
-      return wallet.status === 'LOCKED' || wallet.contents.length === 0;
-    },
-    dialogTrigger: (
-      <List>
-        <ListItem style={{ padding: '0px' }}>
-          <ListItemIcon>
-            <ExploreIcon />
-          </ListItemIcon>
-          <ListItemText primary={'Explore'} />
-        </ListItem>
-      </List>
-    ),
-    dialogTitle: 'Explore',
-    dialogSubmitTitle: 'Explore',
-    dialogContent: <ExploreDialogContent contents={wallet.contents} />,
-    handleSubmit: async () => {
-      handleWalletOperation('explore', state.dialogState);
-    },
-    handleCancel: async () => {},
-  };
-
-  const addInterface = {
-    disabledWhen: () => {
-      return wallet.status === 'LOCKED';
-    },
-    dialogTrigger: (
-      <List>
-        <ListItem style={{ padding: '0px' }}>
-          <ListItemIcon>
-            <AddIcon />
-          </ListItemIcon>
-          <ListItemText primary={'Add'} />
-        </ListItem>
-      </List>
-    ),
-    dialogTitle: 'Add',
-    dialogSubmitTitle: 'Add',
-    dialogContent: (
-      <AddDialogContent
-        value={state.dialogState.editor}
-        onChange={(value) => {
-          setState({
-            ...state,
-            dialogState: {
-              ...state.dialogState,
-              editor: value,
-            },
-          });
-        }}
-      />
-    ),
-    handleSubmit: async () => {
-      handleWalletOperation('add', JSON.parse(state.dialogState.editor));
-    },
-    handleCancel: async () => {},
-  };
-
-  const removeInterface = {
-    disabledWhen: () => {
-      return wallet.status === 'LOCKED' || wallet.contents.length === 0;
-    },
-    dialogTrigger: (
-      <List>
-        <ListItem style={{ padding: '0px' }}>
-          <ListItemIcon>
-            <RemoveIcon />
-          </ListItemIcon>
-          <ListItemText primary={'Remove'} />
-        </ListItem>
-      </List>
-    ),
-    dialogTitle: 'Remove',
-    dialogSubmitTitle: 'Remove',
-    dialogContent: (
-      <RemoveDialogContent
-        value={state.dialogState.selected}
-        options={contentAsOptions}
-        onChange={(value) => {
-          setState({
-            ...state,
-            dialogState: {
-              ...state.dialogState,
-              selected: value,
-            },
-          });
-        }}
-      />
-    ),
-    handleSubmit: async () => {
-      handleWalletOperation('remove', state.dialogState.selected);
-    },
-    handleCancel: async () => {},
-  };
-
-  const exportInterface = {
-    disabledWhen: () => {
-      return wallet.status === 'LOCKED' || wallet.contents.length === 0;
-    },
-    dialogTrigger: (
-      <List>
-        <ListItem style={{ padding: '0px' }}>
-          <ListItemIcon>
-            <ArchiveIcon />
-          </ListItemIcon>
-          <ListItemText primary={'Export'} />
-        </ListItem>
-      </List>
-    ),
-    dialogTitle: 'Export',
-    dialogSubmitTitle: 'Export',
-    dialogContent: (
-      <CapturePasswordDialogContent
-        seedToId={seedToId}
-        passwordToKey={passwordToKey}
-        setDialogState={(dialogState: any) => {
-          setState({ dialogState });
-        }}
-      />
-    ),
-    handleSubmit: async () => {
-      handleWalletOperation('export', state.dialogState);
-    },
-    handleCancel: async () => {},
+  const setDialogState = (dialogState: any) => {
+    setState({
+      ...state,
+      dialogState,
+    });
   };
 
   const image = 'https://via.placeholder.com/150';
@@ -258,21 +84,41 @@ export const UniversalWalletCard: FC<Props> = ({
   const menuList: any = [];
   const actionsList: any = [];
 
-  if (status === 'UNLOCKED') {
-    menuList.push(addInterface);
-    menuList.push(removeInterface);
-  }
-
   if (status === 'UNLOCKED' && wallet.contents.length === 0) {
-    actionsList.push(generateInterface);
+    actionsList.push(
+      buildGenerateInterface(wallet, setDialogState, () => {
+        handleWalletOperation('generate', state.dialogState);
+      })
+    );
+  }
+
+  if (status === 'UNLOCKED') {
+    menuList.push(
+      buildAddInterface(wallet, state.dialogState, setDialogState, () => {
+        handleWalletOperation('add', JSON.parse(state.dialogState.editor));
+      })
+    );
+    menuList.push(
+      buildRemoveInterface(wallet, state.dialogState, setDialogState, () => {
+        handleWalletOperation('remove', state.dialogState.selected);
+      })
+    );
   }
 
   if (status === 'UNLOCKED' && wallet.contents.length > 0) {
-    actionsList.push(exportInterface);
+    actionsList.push(
+      buildExploreInterface(wallet, () => {
+        handleWalletOperation('explore', state.dialogState);
+      })
+    );
   }
 
   if (status === 'UNLOCKED' && wallet.contents.length > 0) {
-    actionsList.push(exploreInterface);
+    actionsList.push(
+      buildExportInterface(wallet, setDialogState, () => {
+        handleWalletOperation('export', state.dialogState);
+      })
+    );
   }
 
   return (

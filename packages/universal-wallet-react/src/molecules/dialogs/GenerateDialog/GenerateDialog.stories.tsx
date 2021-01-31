@@ -5,10 +5,10 @@ import { action } from '@storybook/addon-actions';
 import {
   FullscreenDialog as Component,
   Props,
-} from '../../atoms/FullscreenDialog';
-import { CapturePasswordDialogContent } from '../../atoms/CapturePasswordDialog/CapturePasswordDialogContent';
+} from '../../../atoms/FullscreenDialog';
+import { CapturePasswordDialogContent } from '../../../atoms/CapturePasswordDialog/CapturePasswordDialogContent';
 
-import { seedToId, passwordToKey } from '../../__fixtures__/wallet';
+import { seedToId, passwordToKey } from '../../../__fixtures__/wallet';
 
 const meta: Meta = {
   title: 'Molecules/Dialogs/Generate/Dialog',
