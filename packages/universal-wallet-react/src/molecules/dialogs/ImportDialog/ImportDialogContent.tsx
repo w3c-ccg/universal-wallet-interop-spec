@@ -25,12 +25,18 @@ export const ImportDialogContent: FC<Props> = ({
     const password = event.target.value;
     const seed = await passwordToKey(password);
     let seedId = await seedToId(seed);
-
     setSeedId(seedId);
     setDialogState({
       seedId,
       seed: Buffer.from(seed).toString('hex'),
       password: password,
+    });
+  };
+
+  const handleEditorChange = (value: any) => {
+    setEditorValue(value);
+    setDialogState({
+      editor: value,
     });
   };
   return (
@@ -54,7 +60,7 @@ export const ImportDialogContent: FC<Props> = ({
           <LinkedDataIdentifier value={seedId} />
         </Grid>
         <Grid item xs={12}>
-          <JsonEditor value={editor} onChange={setEditorValue} />
+          <JsonEditor value={editor} onChange={handleEditorChange} />
         </Grid>
       </Grid>
     </div>

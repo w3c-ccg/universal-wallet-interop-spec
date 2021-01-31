@@ -35,9 +35,7 @@ export const buildImportInterface = (
       <ImportDialogContent
         seedToId={seedToId}
         passwordToKey={passwordToKey}
-        setDialogState={(dialogState: any) => {
-          setDialogState(dialogState);
-        }}
+        setDialogState={setDialogState}
       />
     ),
     handleSubmit,

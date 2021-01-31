@@ -68,6 +68,7 @@ export const UniversalWalletCard: FC<Props> = ({
   const [state, setState] = React.useState({
     dialogState: {
       editor: '',
+      password: '',
       selected: {},
     },
   });
@@ -75,7 +76,10 @@ export const UniversalWalletCard: FC<Props> = ({
   const setDialogState = (dialogState: any) => {
     setState({
       ...state,
-      dialogState,
+      dialogState: {
+        ...state.dialogState,
+        ...dialogState,
+      },
     });
   };
 
@@ -94,7 +98,10 @@ export const UniversalWalletCard: FC<Props> = ({
 
     actionsList.push(
       buildImportInterface(wallet, setDialogState, () => {
-        handleWalletOperation('import', state.dialogState);
+        handleWalletOperation('import', {
+          password: state.dialogState.password,
+          encryptedWalletCredential: JSON.parse(state.dialogState.editor),
+        });
       })
     );
   }
