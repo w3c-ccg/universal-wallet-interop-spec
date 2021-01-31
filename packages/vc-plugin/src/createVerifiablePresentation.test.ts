@@ -8,14 +8,14 @@ const keypair = {
   ...fixtures.content[1],
   id: 'http://example.com/issuer/123#key-1',
 };
-const key = new Ed25519KeyPair(keypair);
-
-const suite = new Ed25519Signature2018({
-  key,
-  date: '2020-03-10T04:24:12.164Z',
-});
 
 it('should createVerifiablePresentation', async () => {
+  const key = await Ed25519KeyPair.from(keypair);
+  const suite = new Ed25519Signature2018({
+    key,
+    date: '2020-03-10T04:24:12.164Z',
+  });
+
   const vp = await plugin.createVerifiablePresentation({
     verifiableCredential: [fixtures.credentials.ldp_vc],
     options: {

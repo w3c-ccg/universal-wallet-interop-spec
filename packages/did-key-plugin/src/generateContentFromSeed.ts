@@ -53,7 +53,9 @@ const generateContentFromSeed = async (seed: Uint8Array) => {
     tags: ['inception'],
     generatedFrom: [secret0.id],
   };
-  return [secret0, key0, key1];
+
+  const contents = [secret0, key0, key1];
+  return contents;
 };
 
 export { generateContentFromSeed };
