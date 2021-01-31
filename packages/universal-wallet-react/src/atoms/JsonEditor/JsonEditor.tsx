@@ -25,7 +25,7 @@ export const JsonEditor: FC<Props> = ({ value, onChange, style }) => {
       }}
       readOnly={onChange === undefined}
       wrapEnabled={true}
-      name="JSONEditorEditor"
+      name={`editor-${Math.random()}`}
       value={value}
       editorProps={{ $blockScrolling: true }}
     />

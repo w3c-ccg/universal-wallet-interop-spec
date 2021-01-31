@@ -2,14 +2,14 @@ import React from 'react';
 import { Meta, Story } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import {
-  GenerateDialogContent as Component,
+  CapturePasswordDialogContent as Component,
   Props,
-} from './GenerateDialogContent';
+} from './CapturePasswordDialogContent';
 
-import { passwordToKey, seedToId } from '../../../__fixtures__/wallet';
+import { passwordToKey, seedToId } from '../../__fixtures__/wallet';
 
 const meta: Meta = {
-  title: 'Molecules/Dialogs/Generate',
+  title: 'Atoms/Capture Password',
   component: Component,
 };
 
@@ -19,9 +19,9 @@ const Template: Story<Props> = (args) => <Component {...args} />;
 
 // By passing using the Args format for exported stories, you can control the props for a component for reuse in a test
 // https://storybook.js.org/docs/react/workflows/unit-testing
-export const Content = Template.bind({});
+export const CapturePassword = Template.bind({});
 
-Content.args = {
+CapturePassword.args = {
   // these methods are used by the dialog
   passwordToKey,
   seedToId,

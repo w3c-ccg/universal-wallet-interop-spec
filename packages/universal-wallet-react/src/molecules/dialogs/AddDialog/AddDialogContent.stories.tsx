@@ -1,12 +1,10 @@
 import React from 'react';
 import { Meta, Story } from '@storybook/react';
-
+import { action } from '@storybook/addon-actions';
 import { AddDialogContent as Component, Props } from './AddDialogContent';
 
-import { fullWallet } from '../../../__fixtures__/wallet';
-
 const meta: Meta = {
-  title: 'Molecules/Dialogs/Add',
+  title: 'Molecules/Dialogs/Add/Content',
   component: Component,
 };
 
@@ -17,5 +15,8 @@ const Template: Story<Props> = (args) => <Component {...args} />;
 export const Content = Template.bind({});
 
 Content.args = {
-  contents: fullWallet.contents,
+  value: '{}',
+  onChange: (value: string) => {
+    action('onChange')(value);
+  },
 };

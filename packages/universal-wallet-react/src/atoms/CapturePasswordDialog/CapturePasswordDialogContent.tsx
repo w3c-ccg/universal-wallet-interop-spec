@@ -3,7 +3,7 @@ import React, { FC, HTMLAttributes } from 'react';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 
-import { LinkedDataIdentifier } from '../../../atoms/LinkedDataIdentifier';
+import { LinkedDataIdentifier } from '../LinkedDataIdentifier';
 
 export interface Props extends HTMLAttributes<HTMLDivElement> {
   setDialogState?: any;
@@ -11,7 +11,7 @@ export interface Props extends HTMLAttributes<HTMLDivElement> {
   seedToId: any;
 }
 
-export const GenerateDialogContent: FC<Props> = ({
+export const CapturePasswordDialogContent: FC<Props> = ({
   setDialogState,
   passwordToKey,
   seedToId,
@@ -36,10 +36,16 @@ export const GenerateDialogContent: FC<Props> = ({
       <Grid container spacing={4}>
         <Grid item xs={12}>
           <TextField
+            autoFocus
             label="Password"
             type="password"
+            inputProps={{
+              autoComplete: 'new-password',
+            }}
             fullWidth
-            onChange={handlePasswordChange}
+            onChange={(event) => {
+              handlePasswordChange(event);
+            }}
           />
         </Grid>
         <Grid item xs={12}>

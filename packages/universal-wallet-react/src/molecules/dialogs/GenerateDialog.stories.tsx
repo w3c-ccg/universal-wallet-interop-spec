@@ -5,13 +5,13 @@ import { action } from '@storybook/addon-actions';
 import {
   FullscreenDialog as Component,
   Props,
-} from '../../../atoms/FullscreenDialog';
-import { GenerateDialogContent } from './GenerateDialogContent';
+} from '../../atoms/FullscreenDialog';
+import { CapturePasswordDialogContent } from '../../atoms/CapturePasswordDialog/CapturePasswordDialogContent';
 
-import { seedToId, passwordToKey } from '../../../__fixtures__/wallet';
+import { seedToId, passwordToKey } from '../../__fixtures__/wallet';
 
 const meta: Meta = {
-  title: 'Molecules/Dialogs/Generate',
+  title: 'Molecules/Dialogs/Generate/Dialog',
   component: Component,
 };
 
@@ -22,11 +22,11 @@ const Template: Story<Props> = (args) => <Component {...args} />;
 export const Dialog = Template.bind({});
 
 Dialog.args = {
-  trigger: <Button>trigger</Button>,
+  dialogTrigger: <Button>trigger</Button>,
   dialogTitle: 'Generate',
   dialogSubmitTitle: 'Generate',
   dialogContent: (
-    <GenerateDialogContent
+    <CapturePasswordDialogContent
       seedToId={seedToId}
       passwordToKey={passwordToKey}
       setDialogState={(state: any) => {

@@ -72,10 +72,13 @@
   "dependencies": {
     "@material-ui/core": "^4.11.2",
     "@material-ui/icons": "^4.11.2",
+    "@material-ui/lab": "^4.0.0-alpha.57",
     "@transmute/universal-wallet": "0.4.1",
+    "brace": "^0.11.1",
+    "copy-to-clipboard": "^3.3.1",
     "material-table": "^1.69.2",
-    "react-identicons": "^1.2.4",
     "react-ace": "^6.3.2",
-    "brace": "^0.11.1"
+    "react-identicons": "^1.2.4",
+    "react-json-view": "^1.20.4"
   }
 }

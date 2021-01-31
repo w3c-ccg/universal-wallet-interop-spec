@@ -7,8 +7,9 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
+import ReactJson from 'react-json-view';
 
-import { JsonEditor } from '../../../atoms/JsonEditor';
+import copy from 'copy-to-clipboard';
 
 function TabPanel(props: any) {
   const { children, value, index, ...other } = props;
@@ -71,7 +72,14 @@ export const ContentTableRow: FC<IWalletContentsTableDetailsProps> = ({
       </AppBar>
 
       <TabPanel value={value} index={0}>
-        <JsonEditor value={JSON.stringify(document, null, 2)} />
+        <ReactJson
+          src={document}
+          name={false}
+          displayDataTypes={false}
+          enableClipboard={(data) => {
+            copy(JSON.stringify(data.src, null, 2));
+          }}
+        />
       </TabPanel>
     </div>
   );

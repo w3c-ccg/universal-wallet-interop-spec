@@ -9,7 +9,7 @@ import {
 import { fullWallet } from '../../../__fixtures__/wallet';
 
 const meta: Meta = {
-  title: 'Molecules/Dialogs/Explore',
+  title: 'Molecules/Dialogs/Explore/Content',
   component: Component,
 };
 

@@ -31,7 +31,7 @@ export interface Props extends HTMLAttributes<HTMLDivElement> {
   dialogContent: ReactChild;
   dialogTitle: string;
   dialogSubmitTitle: string;
-  trigger: ReactChild;
+  dialogTrigger: ReactChild;
   handleCancel: any;
   handleSubmit: any;
 }
@@ -40,7 +40,7 @@ export const FullscreenDialog: FC<Props> = ({
   dialogContent,
   dialogTitle,
   dialogSubmitTitle,
-  trigger,
+  dialogTrigger,
   handleCancel,
   handleSubmit,
 }) => {
@@ -63,7 +63,7 @@ export const FullscreenDialog: FC<Props> = ({
 
   return (
     <React.Fragment>
-      <div onClick={handleClickOpen}>{trigger}</div>
+      <div onClick={handleClickOpen}>{dialogTrigger}</div>
 
       <Dialog
         fullScreen
