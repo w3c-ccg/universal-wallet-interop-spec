@@ -8,8 +8,6 @@ import {
 } from '../../../atoms/FullscreenDialog';
 import { IssueCredentialDialogContent } from './IssueCredentialDialogContent';
 
-import { seedToId, passwordToKey } from '../../../__fixtures__/wallet';
-
 const meta: Meta = {
   title: 'Molecules/Dialogs/Issue/Dialog',
   component: Component,
