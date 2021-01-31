@@ -1,4 +1,3 @@
-import { walletFactory } from '@transmute/universal-wallet';
 import React, { FC, HTMLAttributes } from 'react';
 
 import { UniversalWalletCard } from '../../organisms/WalletCard/UniversalWalletCard';
@@ -14,12 +13,9 @@ const download = (filename: string, text: string) => {
     `data:text/plain;charset=utf-8,${encodeURIComponent(text)}`
   );
   element.setAttribute('download', filename);
-
   element.style.display = 'none';
   document.body.appendChild(element);
-
   element.click();
-
   document.body.removeChild(element);
 };
 
