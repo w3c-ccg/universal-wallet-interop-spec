@@ -23,6 +23,10 @@ export const DidKeyWallet: FC<Props> = () => {
   const [state, setState] = React.useState({ wallet });
   return (
     <UniversalWalletCard
+      image={
+        'https://cdn.pixabay.com/photo/2018/09/24/10/19/system-3699542_1280.jpg'
+      }
+      loading={false}
       wallet={state.wallet}
       handleWalletOperation={async (
         operationId: string,

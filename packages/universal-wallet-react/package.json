@@ -68,7 +68,8 @@
     "tslib": "^2.1.0",
     "typescript": "^4.1.3",
     "@transmute/universal-wallet-did-key-plugin": "0.4.1",
-    "@transmute/universal-wallet-vc-plugin": "0.4.1"
+    "@transmute/universal-wallet-vc-plugin": "0.4.1",
+    "@transmute/universal-wallet-edv-plugin": "0.4.1"
   },
   "dependencies": {
     "@material-ui/core": "^4.11.2",

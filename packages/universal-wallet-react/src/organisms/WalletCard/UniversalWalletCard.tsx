@@ -12,10 +12,11 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 
 import Typography from '@material-ui/core/Typography';
-import { red, blue } from '@material-ui/core/colors';
+import { red, blue, yellow, green } from '@material-ui/core/colors';
 
 import LockIcon from '@material-ui/icons/Lock';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
+import SyncIcon from '@material-ui/icons/Sync';
 
 import { FullscreenDialog } from '../../atoms/FullscreenDialog';
 
@@ -30,6 +31,9 @@ import { buildImportInterface } from '../../molecules/dialogs/ImportDialog';
 import { buildIssueCredentialInterface } from '../../molecules/dialogs/IssueCredentialDialog';
 import { buildVerifiablePresentationDialogInterface } from '../../molecules/dialogs/CreateVerifiablePresentationDialog';
 import { buildVerifyInterface } from '../../molecules/dialogs/VerifyDialog';
+import { buildSyncContentInterface } from '../../molecules/dialogs/SyncContentDialog';
+
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -55,14 +59,28 @@ const useStyles = makeStyles((theme) => ({
   blue: {
     backgroundColor: blue[500],
   },
+  green: {
+    backgroundColor: green[500],
+  },
+  yellow: {
+    backgroundColor: yellow[800],
+  },
+  spinnerLoading: {
+    color: green[500],
+    position: 'absolute',
+  },
 }));
 
 export interface Props extends HTMLAttributes<HTMLDivElement> {
+  image: string;
+  loading: boolean;
   wallet: any;
   handleWalletOperation: any;
 }
 
 export const UniversalWalletCard: FC<Props> = ({
+  image,
+  loading,
   wallet,
   handleWalletOperation,
 }) => {
@@ -71,10 +89,12 @@ export const UniversalWalletCard: FC<Props> = ({
   const [state, setState] = React.useState({
     dialogState: {
       editor: '',
-      password: '',
       domain: 'example.com',
       challenge: '8bb1cfda-9d31-46fc-9742-72b48747a2f1',
       selected: {},
+      edvEndpoint: 'https://staging.data-vault.transmute.industries/edvs',
+      edvFilter: 'https://schema.org/UniversalWallet',
+      password: '8bb1cfda-9d31-46fc-9742-72b48747a2f1',
     },
   });
 
@@ -87,8 +107,6 @@ export const UniversalWalletCard: FC<Props> = ({
       },
     });
   };
-
-  const image = 'https://via.placeholder.com/150';
 
   const status = wallet.status;
   const menuList: any = [];
@@ -121,6 +139,19 @@ export const UniversalWalletCard: FC<Props> = ({
       buildRemoveInterface(wallet, state.dialogState, setDialogState, () => {
         handleWalletOperation('remove', state.dialogState.selected);
       })
+    );
+  }
+
+  if (status === 'UNLOCKED' && wallet.contents.length > 0) {
+    menuList.push(
+      buildSyncContentInterface(
+        wallet,
+        state.dialogState,
+        setDialogState,
+        () => {
+          handleWalletOperation('sync', state.dialogState);
+        }
+      )
     );
   }
 
@@ -197,15 +228,25 @@ export const UniversalWalletCard: FC<Props> = ({
     );
   }
 
+  const avatarColor = loading
+    ? classes.yellow
+    : status === 'UNLOCKED'
+    ? classes.green
+    : classes.blue;
+
   return (
     <Card className={classes.root}>
       <CardHeader
         avatar={
-          <Avatar
-            aria-label="recipe"
-            className={status === 'UNLOCKED' ? classes.red : classes.blue}
-          >
-            {status === 'UNLOCKED' ? <LockOpenIcon /> : <LockIcon />}
+          <Avatar aria-label="status" className={avatarColor}>
+            {loading ? (
+              <>
+                <SyncIcon />
+                <CircularProgress className={classes.spinnerLoading} />
+              </>
+            ) : (
+              <>{status === 'UNLOCKED' ? <LockOpenIcon /> : <LockIcon />} </>
+            )}
           </Avatar>
         }
         action={<WalletMenu list={menuList} />}
@@ -216,6 +257,7 @@ export const UniversalWalletCard: FC<Props> = ({
             : 'Locked, a password is required before use.'
         }
       />
+
       <CardMedia className={classes.media} image={image} title="Wallet image" />
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">

@@ -8,20 +8,36 @@ import { wallet } from './wallet';
 import { documentLoader } from './documentLoader';
 export interface Props extends HTMLAttributes<HTMLDivElement> {}
 
-export const VcWallet: FC<Props> = () => {
+export const EdvWallet: FC<Props> = () => {
   const [state, setState] = React.useState({ wallet });
+  const [loading, setLoading] = React.useState(false);
   return (
     <UniversalWalletCard
-      loading={false}
       image={
-        'https://cdn.pixabay.com/photo/2018/07/14/11/28/network-3537389_1280.jpg'
+        'https://cdn.pixabay.com/photo/2017/01/22/22/11/cloud-computing-2001090_1280.jpg'
       }
+      loading={loading}
       wallet={state.wallet}
       handleWalletOperation={async (
         operationId: string,
         operationInput: any
       ) => {
         switch (operationId) {
+          case 'sync': {
+            setLoading(true);
+            const { edvEndpoint, password } = operationInput;
+            const client = await wallet.vaultClientFromPassord(
+              edvEndpoint,
+              password
+            );
+            const contents = await client.syncContent(wallet);
+            wallet.contents = contents;
+            setState({
+              wallet,
+            });
+            setLoading(false);
+            break;
+          }
           case 'issue': {
             const { credential } = operationInput;
             const key = await Ed25519KeyPair.from(operationInput.keypair);
