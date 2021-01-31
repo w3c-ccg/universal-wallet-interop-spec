@@ -1138,11 +1138,21 @@ out in the same tree and use relative links so that they'll work offline,
         as input, and they produce wallet contents and side effects as output.
       </p>
 
+      <p>
+        In order to ensure portability, wallet interfaces MUST be functions of
+        JSON, and not take complex instances of classes, functions or other
+        types of object.
+      </p>
+
       <section>
         <h3>Import</h3>
         <p>
           Takes a serialized exported wallet representation as input. Loads the
           representation into wallet software.
+        </p>
+        <p>
+          This method may not be necessary, for implementations that rely on
+          external storage, such as Encrypted Data Vaults.
         </p>
       </section>
 
@@ -1153,6 +1163,11 @@ out in the same tree and use relative links so that they'll work offline,
         </p>
 
         <p>Requires knowledge of the password used to lock the wallet.</p>
+
+        <p>
+          This method may not be necessary, for implementations that rely on
+          external storage, such as Encrypted Data Vaults.
+        </p>
       </section>
 
       <section>
@@ -1162,19 +1177,15 @@ out in the same tree and use relative links so that they'll work offline,
         </p>
         <p>Requires knowledge of the password used to lock the wallet.</p>
 
+        <p>
+          This method may not be necessary, for implementations that rely on
+          external storage, such as Encrypted Data Vaults.
+        </p>
+
         <div class="issue" data-number="5">
           Mostly a reference implementation issue. Locked representation should
           indicate a best practice.
         </div>
-      </section>
-
-      <section>
-        <h3>Query</h3>
-
-        <p>
-          Takes a map and reduce functions as input, and returns a collection of
-          results based on the current wallet contents.
-        </p>
       </section>
 
       <section>
