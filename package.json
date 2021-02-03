@@ -33,7 +33,6 @@
   "dependencies": {
     "@transmute/did-key-ed25519": "^0.2.1-unstable.24",
     "@transmute/did-key-x25519": "^0.2.1-unstable.24",
-    "@transmute/universal-wallet": "^0.4.1",
-    "react-native": "^0.63.3"
+    "@transmute/universal-wallet": "^0.4.1"
   }
 }
