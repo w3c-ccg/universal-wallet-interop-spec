@@ -7,7 +7,8 @@
     "lint": "lerna run lint --stream",
     "test": "lerna run test --stream",
     "build": "lerna run build --stream",
-    "shove": "git add -A; git commit -m 'chore(ci): test'; git push origin master"
+    "shove": "git add -A; git commit -m 'chore(ci): test'; git push origin master",
+    "release": "lerna publish"
   },
   "husky": {
     "hooks": {
