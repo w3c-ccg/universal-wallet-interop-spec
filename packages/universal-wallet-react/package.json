@@ -22,7 +22,9 @@
     "size": "size-limit",
     "analyze": "size-limit --why",
     "storybook": "start-storybook -p 6006 -h localhost",
-    "build-storybook": "build-storybook"
+    "prestorybook:build": "rm -rf ../../docs/storybook",
+    "storybook:build": "build-storybook",
+    "poststorybook:build": "mv ./storybook-static ../../docs/storybook"
   },
   "peerDependencies": {
     "react": ">=16"
