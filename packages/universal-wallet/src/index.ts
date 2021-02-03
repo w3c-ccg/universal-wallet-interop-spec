@@ -1,3 +1,2 @@
-export { Wallet, walletFactory, walletDefaults } from './walletFactory';
-
-export * from './security';
+export * from './functions';
+export * from './walletFactory';

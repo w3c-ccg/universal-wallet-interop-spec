@@ -2,7 +2,7 @@
   "name": "@transmute/universal-wallet-react",
   "author": "Orie Steele",
   "module": "dist/universal-wallet-react.esm.js",
-  "version": "0.4.1",
+  "version": "0.5.0",
   "license": "Apache-2.0",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -13,23 +13,20 @@
   "engines": {
     "node": ">=10"
   },
-  "publishConfig": {
-    "access": "public"
-  },
   "scripts": {
     "start": "tsdx watch",
     "build": "tsdx build",
-    "test": "tsdx test --passWithNoTests --forceExit",
+    "test": "tsdx test --passWithNoTests",
     "lint": "tsdx lint src --fix",
     "prepare": "tsdx build",
-    "storybook": "start-storybook -p 6006",
-    "storybook:build": "build-storybook && npm run move:stories",
-    "move:stories": "rm -rf ../../docs/storybook/; mv ./storybook-static/ ../../docs/storybook/"
+    "size": "size-limit",
+    "analyze": "size-limit --why",
+    "storybook": "start-storybook -p 6006 -h localhost",
+    "prestorybook:build": "rm -rf ../../docs/storybook",
+    "storybook:build": "build-storybook",
+    "poststorybook:build": "mv ./storybook-static ../../docs/storybook"
   },
   "peerDependencies": {
-    "@material-did/common": "0.0.0-unstable.5",
-    "@material-ui/core": "^4.11.0",
-    "@material-ui/icons": "^4.9.1",
     "react": ">=16"
   },
   "husky": {
@@ -37,48 +34,56 @@
       "pre-commit": "npm run lint"
     }
   },
-  "browser": {
-    "fs": false
-  },
   "prettier": {
     "printWidth": 80,
     "semi": true,
     "singleQuote": true,
     "trailingComma": "es5"
   },
+  "size-limit": [
+    {
+      "path": "dist/universal-wallet-react.cjs.production.min.js",
+      "limit": "10 KB"
+    },
+    {
+      "path": "dist/universal-wallet-react.esm.js",
+      "limit": "10 KB"
+    }
+  ],
   "devDependencies": {
-    "@babel/core": "^7.11.5",
-    "@material-did/common": "0.0.0-unstable.5",
-    "@material-ui/core": "^4.11.0",
-    "@material-ui/icons": "^4.9.1",
-    "@storybook/addon-actions": "^6.0.21",
-    "@storybook/addon-docs": "^6.0.21",
+    "@babel/core": "^7.12.10",
+    "@size-limit/preset-small-lib": "^4.9.1",
+    "@storybook/addon-essentials": "^6.1.15",
     "@storybook/addon-info": "^5.3.21",
-    "@storybook/addon-links": "^6.0.21",
-    "@storybook/addons": "^6.0.21",
-    "@storybook/react": "^6.0.21",
-    "@transmute/did-key-ed25519": "^0.2.1-unstable.1",
-    "@transmute/ed25519-signature-2018": "^0.1.1-unstable.3",
-    "@transmute/universal-wallet": "^0.4.1",
-    "@transmute/universal-wallet-did-key-plugin": "^0.4.1",
-    "@transmute/universal-wallet-test-vectors": "^0.4.1",
-    "@transmute/universal-wallet-vc-plugin": "^0.4.1",
-    "@types/lodash-es": "^4.17.3",
-    "@types/react": "^16.9.49",
-    "@types/react-dom": "^16.9.8",
-    "babel-loader": "^8.1.0",
-    "factory.ts": "^0.5.1",
-    "husky": "^4.2.5",
-    "lodash-es": "^4.17.15",
-    "qrcode.react": "^1.0.0",
-    "react": "^16.13.1",
-    "react-docgen-typescript-loader": "^3.7.2",
-    "react-dom": "^16.13.1",
-    "react-is": "^16.13.1",
-    "ts-loader": "^8.0.3",
-    "tsdx": "^0.13.3",
-    "tslib": "^2.0.1",
-    "typescript": "^4.0.2"
+    "@storybook/addon-links": "^6.1.15",
+    "@storybook/addons": "^6.1.15",
+    "@storybook/react": "^6.1.15",
+    "@transmute/universal-wallet-did-key-plugin": "^0.5.0",
+    "@transmute/universal-wallet-edv-plugin": "^0.5.0",
+    "@transmute/universal-wallet-vc-plugin": "^0.5.0",
+    "@types/react": "^17.0.0",
+    "@types/react-dom": "^17.0.0",
+    "babel-loader": "^8.2.2",
+    "husky": "^4.3.8",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-is": "^17.0.1",
+    "size-limit": "^4.9.1",
+    "tsdx": "^0.14.1",
+    "tslib": "^2.1.0",
+    "typescript": "^4.1.3"
   },
-  "gitHead": "f987b871245fcf117da477bac5cb2fd99adf70be"
+  "dependencies": {
+    "@material-ui/core": "^4.11.2",
+    "@material-ui/icons": "^4.11.2",
+    "@material-ui/lab": "^4.0.0-alpha.57",
+    "@transmute/ed25519-signature-2018": "^0.2.1-unstable.1",
+    "@transmute/universal-wallet": "^0.5.0",
+    "brace": "^0.11.1",
+    "copy-to-clipboard": "^3.3.1",
+    "material-table": "^1.69.2",
+    "react-ace": "^6.3.2",
+    "react-identicons": "^1.2.4",
+    "react-json-view": "^1.20.4"
+  }
 }

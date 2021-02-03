@@ -7,6 +7,8 @@ import Invoker from './Invoker';
 
 import { EdvClient } from 'edv-client';
 
+import { passwordToKey } from '../functions/passwordToKey';
+
 export interface IEdvVendorConfig {
   account_seed: string;
   vault_endpoint: string;
@@ -26,9 +28,39 @@ export class VaultClient {
     x25519Key: any,
     hmacSecret: Buffer
   ) => {
-    const invocationSigner = new Invoker(new Ed25519KeyPair(ed25519Key));
-    const keyAgreementKey = new KeyAgreementKey(new X25519KeyPair(x25519Key));
+    const k0: any = new Ed25519KeyPair(ed25519Key).toKeyPair(true);
+    const k1: any = new X25519KeyPair(x25519Key).toKeyPair(true);
+    const invocationSigner = new Invoker(k0);
+    const keyAgreementKey = new KeyAgreementKey(k1);
     const hmac = await Hmac.create(hmacSecret);
+    const client = new VaultClient(
+      vault_endpoint,
+      invocationSigner,
+      keyAgreementKey,
+      hmac
+    );
+    await client.getClient();
+    return client;
+  };
+
+  static fromPassword = async (vault_endpoint: string, password: string) => {
+    const seed = await passwordToKey(password);
+    const ed25519KeyPair = await Ed25519KeyPair.generate({
+      secureRandom: () => {
+        return Buffer.from(seed);
+      },
+    });
+
+    const k0: any = ed25519KeyPair.toKeyPair(true);
+    const k1: any = (ed25519KeyPair.toX25519KeyPair(true) as any).toKeyPair(
+      true
+    );
+    k0.id = k0.controller + k0.id;
+    k1.id = k1.controller + k1.id;
+
+    const invocationSigner = new Invoker(k0 as any);
+    const keyAgreementKey = new KeyAgreementKey(k1 as any);
+    const hmac = await Hmac.create(Buffer.from(seed));
     const client = new VaultClient(
       vault_endpoint,
       invocationSigner,
@@ -123,5 +155,47 @@ export class VaultClient {
     return documents.map((d: any) => {
       return d.content.data;
     });
+  }
+
+  async syncContent(wallet: any) {
+    let contents = [];
+
+    const isContentPersisted = (localContents: any, id: string) => {
+      return (
+        localContents.find((c: any) => {
+          return c.id === id;
+        }) !== undefined
+      );
+    };
+
+    try {
+      contents = await this.getWalletContents();
+    } catch (e) {
+      if (e.message === 'Request failed with status code 404') {
+        // no-op we will add content that does not exist anyway..
+      }
+    }
+
+    try {
+      for (const content of wallet.contents) {
+        const isPersisted = isContentPersisted(contents, content.id);
+        if (!isPersisted) {
+          let data = JSON.parse(JSON.stringify(content));
+          delete data.tableData;
+          const doc = {
+            id: await EdvClient.generateId(),
+            content: {
+              schema: 'https://schema.org/UniversalWallet',
+              data,
+            },
+          };
+          await this.addWalletContent(doc);
+        }
+      }
+      contents = await this.getWalletContents();
+    } catch (error) {
+      console.error(error);
+    }
+    return contents;
   }
 }

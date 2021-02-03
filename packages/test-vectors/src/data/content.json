@@ -12,10 +12,19 @@
     },
     {
       "id": "did:key:z6MkwJSaEMnE4u6LiqrZV1BJHSkc9x8S4mTm3ArNL1m19BZR#z6MkwJSaEMnE4u6LiqrZV1BJHSkc9x8S4mTm3ArNL1m19BZR",
-      "type": "Ed25519VerificationKey2018",
+      "type": "JsonWebKey2020",
       "controller": "did:key:z6MkwJSaEMnE4u6LiqrZV1BJHSkc9x8S4mTm3ArNL1m19BZR",
-      "publicKeyBase58": "HrBXe7XnjMbscM1roSDTSMCcLNraetDQM9wSVjnzDxn3",
-      "privateKeyBase58": "3FFXDEFub6DPDX9CEZugQKAFikm1rfnNFwdycUGksAWhrs6BNca6USdttMcyx6oAdKmtnFBQijgisU58r26JfXJF",
+      "publicKeyJwk": {
+        "crv": "Ed25519",
+        "x": "-lRa1bMYFQRsPjpzEdZsVfnUrPVVxJgQQDrD6s5OXgA",
+        "kty": "OKP"
+      },
+      "privateKeyJwk": {
+        "crv": "Ed25519",
+        "d": "cFKt6o-YI4FwZUVuytW_JNzTGmmPe8mgtfwXCEmvQiY",
+        "x": "-lRa1bMYFQRsPjpzEdZsVfnUrPVVxJgQQDrD6s5OXgA",
+        "kty": "OKP"
+      },
       "@context": ["http://w3id.org/wallet/v1"],
       "name": "Signing Key",
       "image": "https://via.placeholder.com/150",
@@ -27,10 +36,19 @@
     },
     {
       "id": "did:key:z6MkwJSaEMnE4u6LiqrZV1BJHSkc9x8S4mTm3ArNL1m19BZR#z6LSnHCakA8zvH61bCXv7goaT2MyVf8PjfW7XjeKTEGCgG9N",
-      "type": "X25519KeyAgreementKey2019",
+      "type": "JsonWebKey2020",
       "controller": "did:key:z6MkwJSaEMnE4u6LiqrZV1BJHSkc9x8S4mTm3ArNL1m19BZR",
-      "publicKeyBase58": "Bc2RDrL8ppNGVpA9b3Hd8S9VeWbH34KxekvdxmcfxtNc",
-      "privateKeyBase58": "1Tkx9xhgiPBAbvWmsKKWW3sPwA29YbMf2wKDhAKD2p8",
+      "publicKeyJwk": {
+        "kty": "OKP",
+        "crv": "X25519",
+        "x": "nY3M7Fl-Ilpp7_LSslX5_UHyaSBnIyAYKRq-K-YGRWk"
+      },
+      "privateKeyJwk": {
+        "kty": "OKP",
+        "crv": "X25519",
+        "d": "AB5BTwyLblrivJi4gGUkuO3-WzDmTUi2eWKuBH6YuXE",
+        "x": "nY3M7Fl-Ilpp7_LSslX5_UHyaSBnIyAYKRq-K-YGRWk"
+      },
       "@context": ["http://w3id.org/wallet/v1"],
       "name": "Encryption Key",
       "image": "https://via.placeholder.com/150",

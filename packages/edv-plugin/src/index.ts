@@ -7,6 +7,10 @@ interface EdvPlugin {
   vaultClientFromDerivedContents: (
     config: VaultClientConfig
   ) => Promise<VaultClient>;
+  vaultClientFromPassord: (
+    edvEndpoint: string,
+    password: string
+  ) => Promise<VaultClient>;
 }
 
 const factoryDefaults = {
@@ -19,6 +23,14 @@ const factoryDefaults = {
       config.x25519Key,
       config.hmacSecret
     );
+  },
+
+  vaultClientFromPassord: (
+    edvEndpoint: string,
+    password: string
+  ): Promise<VaultClient> => {
+    const client = VaultClient.fromPassword(edvEndpoint, password);
+    return client;
   },
 };
 

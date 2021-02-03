@@ -17,7 +17,7 @@ let golem = documentLoaderFactory.pluginFactory.build({
 });
 
 // add a resolver to each issuer... and no others.
-Object.keys(issuers).forEach((issuer) => {
+Object.keys(issuers).forEach(issuer => {
   golem.addResolver({
     [issuer]: {
       resolve: (uri: string) => {

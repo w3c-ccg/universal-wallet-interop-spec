@@ -1,5 +1,5 @@
 import * as ed25519 from '@transmute/did-key-ed25519';
-import * as x25519 from '@transmute/did-key-x25519';
+
 import crypto from 'isomorphic-webcrypto';
 
 export const seedToId = async (seed: Uint8Array) => {
@@ -8,19 +8,16 @@ export const seedToId = async (seed: Uint8Array) => {
 };
 
 const generateContentFromSeed = async (seed: Uint8Array) => {
-  const ed25519Key = (
-    await ed25519.Ed25519KeyPair.generate({
-      secureRandom: () => {
-        return Buffer.from(seed);
-      },
-    })
-  ).toKeyPair(true);
+  const ed25519KeyPair = await ed25519.Ed25519KeyPair.generate({
+    secureRandom: () => {
+      return Buffer.from(seed);
+    },
+  });
 
-  const x25519Key = x25519.X25519KeyPair.fromEdKeyPair(ed25519Key).toKeyPair(
-    true
-  );
-  const signingKey = ed25519Key;
-  const encryptionKey = x25519Key;
+  const k0 = ed25519KeyPair.toJsonWebKeyPair(true);
+  const k1 = ed25519KeyPair.toX25519KeyPair(true).toJsonWebKeyPair(true);
+  const signingKey = k0;
+  const encryptionKey = k1;
 
   const seedId = await seedToId(seed);
 
@@ -56,7 +53,9 @@ const generateContentFromSeed = async (seed: Uint8Array) => {
     tags: ['inception'],
     generatedFrom: [secret0.id],
   };
-  return [secret0, key0, key1];
+
+  const contents = [secret0, key0, key1];
+  return contents;
 };
 
 export { generateContentFromSeed };
