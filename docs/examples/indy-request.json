@@ -9,7 +9,7 @@
   "image": "https://via.placeholder.com/150",
   "description": "Some hyperledger indy request",
   "tags": ["personal"],
-  "controller": ["did:example:123"],
+  "controller": "did:example:123",
   "correlation": ["4058a72a-9523-11ea-bb37-0242ac130002"],
   "request": {
     "blinded_ms": {

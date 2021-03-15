@@ -540,7 +540,7 @@ out in the same tree and use relative links so that they'll work offline,
   "tags": ["personal"],
   "amount": "7.00749119",
   "currency": "BTC",
-  "controller": ["did:example:123"],
+  "controller": "did:example:123",
   "correlation": ["4058a72a-9523-11ea-bb37-0242ac130002"]
 }
 </pre
@@ -559,7 +559,7 @@ out in the same tree and use relative links so that they'll work offline,
   "tags": ["personal"],
   "amount": "8.142406194939252896",
   "currency": "ETH",
-  "controller": ["did:ethr:0x74fd35392f1c2a97c6080e0394b1995b0e63c8bf#key-0"],
+  "controller": "did:ethr:0x74fd35392f1c2a97c6080e0394b1995b0e63c8bf",
   "correlation": ["4058a72a-9523-11ea-bb37-0242ac130002"]
 }
 </pre
@@ -580,7 +580,7 @@ out in the same tree and use relative links so that they'll work offline,
   "tags": ["personal"],
   "amount": "6,271.91386730845876097",
   "currency": "ETH",
-  "controller": ["did:ethr:0x658e4fe24b34589492b18b1a45294be0601606a9#key-0", "did:ethr:0x658e4fe24b34589492b18b1a45294be0601606a9#key-1"],
+  "controller": "did:ethr:0x658e4fe24b34589492b18b1a45294be0601606a9",
   "quorum": 2,
   "correlation": ["4058a72a-9523-11ea-bb37-0242ac130002"]
 }
@@ -745,7 +745,7 @@ out in the same tree and use relative links so that they'll work offline,
   "image": "https://via.placeholder.com/150",
   "description": "Some hyperledger indy request",
   "tags": ["personal"],
-  "controller": ["did:example:123"],
+  "controller": "did:example:123",
   "correlation": ["4058a72a-9523-11ea-bb37-0242ac130002"],
   "request": {
     "blinded_ms": {
@@ -787,7 +787,7 @@ out in the same tree and use relative links so that they'll work offline,
   "image": "https://via.placeholder.com/150",
   "description": "Some hyperledger indy response",
   "tags": ["personal"],
-  "controller": ["did:example:123"],
+  "controller": "did:example:123",
   "correlation": ["4058a72a-9523-11ea-bb37-0242ac130002"],
   "response": {
     "cred_def_id": "97RDzn8aDviHUQQKPXg96e:3:CL:1:cred_def_tag",
@@ -842,7 +842,7 @@ out in the same tree and use relative links so that they'll work offline,
   "description" : "For testing only, totally compromised.",
   "tags": ["professional", "organization", "compromised"],
   "correlation": ["4058a72a-9523-11ea-bb37-0242ac130002"],
-  "controller": ["did:example:123#_Qq0UL2Fq651Q0Fjd6TvnYE-faHiOpRlPVQcY_-tA4A"],
+  "controller": "did:example:123",
   "type": "Ed25519VerificationKey2018",
   "publicKeyJwk": {
     "crv": "Ed25519",
@@ -872,7 +872,7 @@ out in the same tree and use relative links so that they'll work offline,
   "description" : "For testing only, totally compromised.",
   "tags": ["professional", "organization", "compromised"],
   "correlation": ["4058a72a-9523-11ea-bb37-0242ac130002"],
-  "controller": ["did:key:z6MkjjCpsoQrwnEmqHzLdxWowXk5gjbwor4urC1RPDmGeV8r#z6MkjjCpsoQrwnEmqHzLdxWowXk5gjbwor4urC1RPDmGeV8r"],
+  "controller": "did:key:z6MkjjCpsoQrwnEmqHzLdxWowXk5gjbwor4urC1RPDmGeV8r",
   "type": "Ed25519VerificationKey2018",
   "privateKeyBase58": "3CQCBKF3Mf1tU5q1FLpHpbxYrNYxLiZk4adDtfyPEfc39Wk6gsTb2qoc1ZtpqzJYdM1rG4gpaD3ZVKdkiDrkLF1p",
   "publicKeyBase58": "6GwnHZARcEkJio9dxPYy6SC5sAL6PxpZAB6VYwoFjGMU"
@@ -891,7 +891,7 @@ out in the same tree and use relative links so that they'll work offline,
   "description" : "For testing only, totally compromised.",
   "tags": ["professional", "organization", "compromised"],
   "correlation": ["4058a72a-9523-11ea-bb37-0242ac130002"],
-  "controller": ["did:key:z6MkjjCpsoQrwnEmqHzLdxWowXk5gjbwor4urC1RPDmGeV8r#z6MkjjCpsoQrwnEmqHzLdxWowXk5gjbwor4urC1RPDmGeV8r"],
+  "controller": "did:key:z6MkjjCpsoQrwnEmqHzLdxWowXk5gjbwor4urC1RPDmGeV8r",
   "type": "Ed25519VerificationKey2018",
   "publicKeyJwk": {
     "crv": "Ed25519",
@@ -915,7 +915,7 @@ out in the same tree and use relative links so that they'll work offline,
   "description" : "For testing only, totally compromised.",
   "tags": ["professional", "organization", "compromised"],
   "correlation": ["4058a72a-9523-11ea-bb37-0242ac130002"],
-  "controller": ["did:key:z6MkjjCpsoQrwnEmqHzLdxWowXk5gjbwor4urC1RPDmGeV8r#z6MkjjCpsoQrwnEmqHzLdxWowXk5gjbwor4urC1RPDmGeV8r"],
+  "controller": "did:key:z6MkjjCpsoQrwnEmqHzLdxWowXk5gjbwor4urC1RPDmGeV8r",
   "type": "Ed25519VerificationKey2018",
   "publicKeyJwk": {
     "crv": "Ed25519",
@@ -946,9 +946,7 @@ out in the same tree and use relative links so that they'll work offline,
   ],
   "id": "did:ethr:0x774477c4cd54718d32d4df393415796b9bfcb63c",
   "type": "EthereumAddress",
-  "controller": [
-    "did:ethr:0x774477c4cd54718d32d4df393415796b9bfcb63c"
-  ],
+  "controller": "did:ethr:0x774477c4cd54718d32d4df393415796b9bfcb63c",
   "name": "MetaMask Account",
   "image": "https://metamask.io/images/webclip.png",
   "description": "My ropsten testnet account.",
@@ -1195,9 +1193,7 @@ out in the same tree and use relative links so that they'll work offline,
       "description": "For testing only, totally compromised.",
       "tags": ["professional", "organization", "compromised"],
       "correlation": ["4058a72a-9523-11ea-bb37-0242ac130002"],
-      "controller": [
-        "did:key:z6MkjjCpsoQrwnEmqHzLdxWowXk5gjbwor4urC1RPDmGeV8r#z6MkjjCpsoQrwnEmqHzLdxWowXk5gjbwor4urC1RPDmGeV8r"
-      ],
+      "controller": "did:key:z6MkjjCpsoQrwnEmqHzLdxWowXk5gjbwor4urC1RPDmGeV8r",
       "type": "Ed25519VerificationKey2018",
       "privateKeyBase58": "3CQCBKF3Mf1tU5q1FLpHpbxYrNYxLiZk4adDtfyPEfc39Wk6gsTb2qoc1ZtpqzJYdM1rG4gpaD3ZVKdkiDrkLF1p",
       "publicKeyBase58": "6GwnHZARcEkJio9dxPYy6SC5sAL6PxpZAB6VYwoFjGMU"

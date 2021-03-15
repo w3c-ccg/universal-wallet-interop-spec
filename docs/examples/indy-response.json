@@ -9,7 +9,7 @@
   "image": "https://via.placeholder.com/150",
   "description": "Some hyperledger indy response",
   "tags": ["personal"],
-  "controller": ["did:example:123"],
+  "controller": "did:example:123",
   "correlation": ["4058a72a-9523-11ea-bb37-0242ac130002"],
   "response": {
     "cred_def_id": "97RDzn8aDviHUQQKPXg96e:3:CL:1:cred_def_tag",
