@@ -1065,6 +1065,16 @@ out in the same tree and use relative links so that they'll work offline,
         <h3>Meta Data</h3>
 
         <p>Information about wallet data.</p>
+        
+        <p>
+          Implementors may use Meta Data to reference non-standard data formats, stored locally or externally. The following recommendations apply:
+         
+          <ul>
+            <li>Implementors MAY define custom types for their non-standard data formats</li>
+            <li>Implementors SHOULD register their custom types if they want other wallets to support them</li>
+            <li>Implementors MAY use hashlinks to reference external (non-local) data with content integrity checks</li>
+          </ul>   
+        </p>
 
         <div class="issue" data-number="6">
           Mostly an EDV integration question...Should authorization be
@@ -1113,6 +1123,24 @@ out in the same tree and use relative links so that they'll work offline,
 }
 </pre
         >
+      
+        <p>
+Here is an example of using Meta Data to reference non-standard data: 
+        </p>
+        <pre>
+{
+  "@context": ["https://w3id.org/wallet/v1"],
+  "id": "urn:uuid:1d52bc38-c336-455a-8227-2c1e635df2d7",
+  "type": "CustomData",
+  "name": "Quantum Computing 101",
+  "image": "https://via.placeholder.com/150",
+  "description" : "Certificate of completion from an online quantum computing course",
+  "tags": ["professional", "education"],
+  "correlation": ["urn:uuid:d36fd219-bccd-4ebd-a84a-65ed5751ddd2"],
+  "hashlink": "hl:zm9YZpCjPLPJ4Epc"
+}
+        </pre> 
+      
       </section>
 
       <section>
