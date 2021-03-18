@@ -326,8 +326,8 @@ out in the same tree and use relative links so that they'll work offline,
           <a>wallet</a>. MAY support <a>transfer</a>,<a>issue</a>, <a>prove</a>.
         </dd>
 
-        <dt><dfn>profile</dfn></dt>
-        <dd>A profile is a named bucket for grouping wallet content.</dd>
+        <dt><dfn>collection</dfn></dt>
+        <dd>A collection is a named bucket for grouping wallet content.</dd>
 
         <dt><dfn>entropy</dfn></dt>
         <dd>
@@ -398,22 +398,27 @@ out in the same tree and use relative links so that they'll work offline,
       </p>
 
       <section>
-        <h3 id="Profile">Profile</h3>
+        <h3 id="Collection">Collection</h3>
 
-        <p>A profile is a named bucket for grouping wallet content.</p>
+        <p>A collection is a named bucket for grouping wallet content.</p>
         <p>
-          A profile MAY be used to group all correlatable wallet items together.
+          A collection MAY be used to group all correlatable wallet items together.
         </p>
         <p>
-          A profile MAY be used to manage separate external personal, or
-          organizational identities and their associated data.
+          A collection MAY be used to aggregate personal or
+          organizational identities and their associated data. 
+        </p>
+        <p>
+          Collection membership is not exclusive; for instance, a credential
+          representing college graduation could appear in a "student record"
+          collection as well as a "professional profile" collection.
         </p>
 
-        <p>Here is an example of a personal profile.</p>
+        <p>Here is an example of a professional profile collection.</p>
 
         <pre
           class="example highlight"
-          title="A profile for a personal identity"
+          title="A professional profile collection"
         >
 {
   "@context": ["https://w3id.org/wallet/v1"],
@@ -432,7 +437,7 @@ out in the same tree and use relative links so that they'll work offline,
 
         <pre
           class="example highlight"
-          title="A profile for an organizational identity"
+          title="An organizational identity collection"
         >
 {
   "@context": ["https://w3id.org/wallet/v1"],
