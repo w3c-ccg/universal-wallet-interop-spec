@@ -449,22 +449,23 @@ out in the same tree and use relative links so that they'll work offline,
       </section>
 
       <section>
-        <h3 id="CachedDIDDocument">Cached DID Document</h3>
+        <h3 id="DIDResolutionResponse">DID Resolution Response</h3>
 
         <p>
           A cached result of DID Resolution. Useful when device connectivity is
           intermitent, or offline support is required.
         </p>
 
-        <p>Here is an example of a cached did document.</p>
+        <p>Here is an example.</p>
 
-        <pre class="example highlight" title="A cached did document">
+        <pre class="example highlight" title="A did resolution response">
 {
   "@context": [
-    "https://w3id.org/wallet/v1"
+    "https://w3id.org/wallet/v1",
+    "https://w3id.org/did-resolution/v1"
   ],
   "id": "did:example:123",
-  "type": ["CachedDIDDocument"],
+  "type": ["DIDResolutionResponse"],
   "name": "Farming Sensor DID Document",
   "image": "https://via.placeholder.com/150",
   "description": "An IoT device in the middle of a corn field.",
@@ -473,37 +474,55 @@ out in the same tree and use relative links so that they'll work offline,
   "created": "2017-06-18T21:19:10Z",
   "expires": "2026-06-18T21:19:10Z",
   "didDocument": {
-    "@context": "https://w3id.org/did/v0.11",
-    "id": "did:example:123",
-    "assertionMethod": [
-      "did:example:123#z6MksHh7qHWvybLg5QTPPdG2DgEjjduBDArV9EF9mRiRzMBN"
+    "@context": [
+      "https://www.w3.org/ns/did/v1",
+      {
+        "@base": "did:key:z6Mks8mvCnVx4HQcoq7ZwvpTbMnoRGudHSiEpXhMf6VW8XMg"
+      }
+    ],
+    "id": "did:key:z6Mks8mvCnVx4HQcoq7ZwvpTbMnoRGudHSiEpXhMf6VW8XMg",
+    "verificationMethod": [
+      {
+        "id": "#z6Mks8mvCnVx4HQcoq7ZwvpTbMnoRGudHSiEpXhMf6VW8XMg",
+        "type": "JsonWebKey2020",
+        "controller": "did:key:z6Mks8mvCnVx4HQcoq7ZwvpTbMnoRGudHSiEpXhMf6VW8XMg",
+        "publicKeyJwk": {
+          "crv": "Ed25519",
+          "x": "vGur-MEOrN6GDLf4TBGHDYAERxkmWOjTbztvG3xP0I8",
+          "kty": "OKP"
+        }
+      },
+      {
+        "id": "#z6LScrLMVd9jvbphPeQkGffSeB99EWSYqAnMg8rGiHCgz5ha",
+        "type": "JsonWebKey2020",
+        "controller": "did:key:z6Mks8mvCnVx4HQcoq7ZwvpTbMnoRGudHSiEpXhMf6VW8XMg",
+        "publicKeyJwk": {
+          "kty": "OKP",
+          "crv": "X25519",
+          "x": "EXXinkMxdA4zGmwpOOpbCXt6Ts6CwyXyEKI3jfHkS3k"
+        }
+      }
     ],
     "authentication": [
-      "did:example:123#z6MksHh7qHWvybLg5QTPPdG2DgEjjduBDArV9EF9mRiRzMBN"
+      "#z6Mks8mvCnVx4HQcoq7ZwvpTbMnoRGudHSiEpXhMf6VW8XMg"
     ],
-    "capabilityDelegation": [
-      "did:example:123#z6MksHh7qHWvybLg5QTPPdG2DgEjjduBDArV9EF9mRiRzMBN"
+    "assertionMethod": [
+      "#z6Mks8mvCnVx4HQcoq7ZwvpTbMnoRGudHSiEpXhMf6VW8XMg"
     ],
     "capabilityInvocation": [
-      "did:example:123#z6MksHh7qHWvybLg5QTPPdG2DgEjjduBDArV9EF9mRiRzMBN"
+      "#z6Mks8mvCnVx4HQcoq7ZwvpTbMnoRGudHSiEpXhMf6VW8XMg"
+    ],
+    "capabilityDelegation": [
+      "#z6Mks8mvCnVx4HQcoq7ZwvpTbMnoRGudHSiEpXhMf6VW8XMg"
     ],
     "keyAgreement": [
-      {
-        "id": "did:example:123#zC5iai1sL93gQxn8LKh1i42fTbpfar65dVx4NYznYfG3Y5",
-        "type": "X25519KeyAgreementKey2019",
-        "controller": "did:example:123",
-        "publicKeyBase58": "6DrzegWwfw8Xg5MsHX95sVnJaPmtXP214B5X9hkG9oRs"
-      }
-    ],
-    "publicKey": [
-      {
-        "id": "did:example:123#z6MksHh7qHWvybLg5QTPPdG2DgEjjduBDArV9EF9mRiRzMBN",
-        "type": "Ed25519VerificationKey2018",
-        "controller": "did:example:123",
-        "publicKeyBase58": "DqS5F3GVe3rCxucgi4JBNagjv4dKoHc8TDLDw9kR58Pz"
-      }
+      "#z6LScrLMVd9jvbphPeQkGffSeB99EWSYqAnMg8rGiHCgz5ha"
     ]
-  }
+  },
+  "didDocumentMetadata": {
+    "content-type": "application/did+json"
+  },
+  "didResolutionMetadata": {}
 }
 
 </pre
@@ -527,7 +546,7 @@ out in the same tree and use relative links so that they'll work offline,
   "tags": ["personal"],
   "amount": "7.00749119",
   "currency": "BTC",
-  "controller": ["did:example:123"],
+  "controller": "did:example:123",
   "correlation": ["4058a72a-9523-11ea-bb37-0242ac130002"]
 }
 </pre
@@ -546,7 +565,7 @@ out in the same tree and use relative links so that they'll work offline,
   "tags": ["personal"],
   "amount": "8.142406194939252896",
   "currency": "ETH",
-  "controller": ["did:ethr:0x74fd35392f1c2a97c6080e0394b1995b0e63c8bf#key-0"],
+  "controller": "did:ethr:0x74fd35392f1c2a97c6080e0394b1995b0e63c8bf",
   "correlation": ["4058a72a-9523-11ea-bb37-0242ac130002"]
 }
 </pre
@@ -567,7 +586,7 @@ out in the same tree and use relative links so that they'll work offline,
   "tags": ["personal"],
   "amount": "6,271.91386730845876097",
   "currency": "ETH",
-  "controller": ["did:ethr:0x658e4fe24b34589492b18b1a45294be0601606a9#key-0", "did:ethr:0x658e4fe24b34589492b18b1a45294be0601606a9#key-1"],
+  "controller": "did:ethr:0x658e4fe24b34589492b18b1a45294be0601606a9",
   "quorum": 2,
   "correlation": ["4058a72a-9523-11ea-bb37-0242ac130002"]
 }
@@ -619,6 +638,60 @@ out in the same tree and use relative links so that they'll work offline,
 }
 </pre
         >
+
+        <pre class="example highlight" title="A verifiable credential that supports selective disclosure">
+{
+  "@context": [
+    "https://www.w3.org/2018/credentials/v1",
+    "https://w3id.org/vaccination/v1",
+    "https://w3id.org/security/bbs/v1"
+  ],
+  "type": [
+    "VerifiableCredential",
+    "VaccinationCertificate"
+  ],
+  "id": "urn:uvci:af5vshde843jf831j128fj",
+  "name": "COVID-19 Vaccination Certificate",
+  "description": "COVID-19 Vaccination Certificate",
+  "issuanceDate": "2019-12-03T12:19:52Z",
+  "expirationDate": "2029-12-03T12:19:52Z",
+  "issuer": "did:key:zUC7Jg5oPHrf5ctdesmufk7pVLEPL9Z6zbrbtND9LDb6RrHRqSNt3Xfg3W9fHYAQPYkTdN1AMxWF2EwSiwLPpmEcEz6QqnNpihQ5FqGiAbCH2j3iM4ywVMAgYdccaEXpAK67AGm",
+  "credentialSubject": {
+    "type": "VaccinationEvent",
+    "batchNumber": "1183738569",
+    "administeringCentre": "MoH",
+    "healthProfessional": "MoH",
+    "countryOfVaccination": "NZ",
+    "recipient": {
+      "type": "VaccineRecipient",
+      "givenName": "JOHN",
+      "familyName": "SMITH",
+      "gender": "Male",
+      "birthDate": "1958-07-17"
+    },
+    "vaccine": {
+      "type": "Vaccine",
+      "disease": "COVID-19",
+      "atcCode": "J07BX03",
+      "medicinalProductName": "COVID-19 Vaccine Moderna",
+      "marketingAuthorizationHolder": "Moderna Biotech"
+    }
+  },
+  "proof": {
+    "type": "BbsBlsSignature2020",
+    "created": "2021-03-15T18:22:20Z",
+    "proofPurpose": "assertionMethod",
+    "proofValue": "teftp5epKE+C8IHuEnZhcffQQpnFkhYx2XTHs/B5VcQiiFJV8UMoI9JV7Q2MO4g5cScXYhnCf1lRnw31KwBSFaZJZOhARvVxwLJz/z5TX7UromVsjI330XKnS8lwj80RwcJQc/9ve9rJhvnFkgG7mw==",
+    "verificationMethod": "did:key:zUC7Jg5oPHrf5ctdesmufk7pVLEPL9Z6zbrbtND9LDb6RrHRqSNt3Xfg3W9fHYAQPYkTdN1AMxWF2EwSiwLPpmEcEz6QqnNpihQ5FqGiAbCH2j3iM4ywVMAgYdccaEXpAK67AGm#zUC7Jg5oPHrf5ctdesmufk7pVLEPL9Z6zbrbtND9LDb6RrHRqSNt3Xfg3W9fHYAQPYkTdN1AMxWF2EwSiwLPpmEcEz6QqnNpihQ5FqGiAbCH2j3iM4ywVMAgYdccaEXpAK67AGm"
+  }
+}
+          </pre
+                  >
+
+        <p>Here is the credential above encoded as an alphanumeric QRCode of Base32 of CBOR-LD of the JSON-LD.</p>
+
+        <img src="/images/cbor-ld-base32-qr-code.png" style="max-width: 256px; max-height: 256px;"/>
+
 
         <p>Here is an example of an JWT Credential.</p>
 
@@ -678,7 +751,7 @@ out in the same tree and use relative links so that they'll work offline,
   "image": "https://via.placeholder.com/150",
   "description": "Some hyperledger indy request",
   "tags": ["personal"],
-  "controller": ["did:example:123"],
+  "controller": "did:example:123",
   "correlation": ["4058a72a-9523-11ea-bb37-0242ac130002"],
   "request": {
     "blinded_ms": {
@@ -720,7 +793,7 @@ out in the same tree and use relative links so that they'll work offline,
   "image": "https://via.placeholder.com/150",
   "description": "Some hyperledger indy response",
   "tags": ["personal"],
-  "controller": ["did:example:123"],
+  "controller": "did:example:123",
   "correlation": ["4058a72a-9523-11ea-bb37-0242ac130002"],
   "response": {
     "cred_def_id": "97RDzn8aDviHUQQKPXg96e:3:CL:1:cred_def_tag",
@@ -775,7 +848,7 @@ out in the same tree and use relative links so that they'll work offline,
   "description" : "For testing only, totally compromised.",
   "tags": ["professional", "organization", "compromised"],
   "correlation": ["4058a72a-9523-11ea-bb37-0242ac130002"],
-  "controller": ["did:example:123#_Qq0UL2Fq651Q0Fjd6TvnYE-faHiOpRlPVQcY_-tA4A"],
+  "controller": "did:example:123",
   "type": "Ed25519VerificationKey2018",
   "publicKeyJwk": {
     "crv": "Ed25519",
@@ -805,7 +878,7 @@ out in the same tree and use relative links so that they'll work offline,
   "description" : "For testing only, totally compromised.",
   "tags": ["professional", "organization", "compromised"],
   "correlation": ["4058a72a-9523-11ea-bb37-0242ac130002"],
-  "controller": ["did:key:z6MkjjCpsoQrwnEmqHzLdxWowXk5gjbwor4urC1RPDmGeV8r#z6MkjjCpsoQrwnEmqHzLdxWowXk5gjbwor4urC1RPDmGeV8r"],
+  "controller": "did:key:z6MkjjCpsoQrwnEmqHzLdxWowXk5gjbwor4urC1RPDmGeV8r",
   "type": "Ed25519VerificationKey2018",
   "privateKeyBase58": "3CQCBKF3Mf1tU5q1FLpHpbxYrNYxLiZk4adDtfyPEfc39Wk6gsTb2qoc1ZtpqzJYdM1rG4gpaD3ZVKdkiDrkLF1p",
   "publicKeyBase58": "6GwnHZARcEkJio9dxPYy6SC5sAL6PxpZAB6VYwoFjGMU"
@@ -824,7 +897,7 @@ out in the same tree and use relative links so that they'll work offline,
   "description" : "For testing only, totally compromised.",
   "tags": ["professional", "organization", "compromised"],
   "correlation": ["4058a72a-9523-11ea-bb37-0242ac130002"],
-  "controller": ["did:key:z6MkjjCpsoQrwnEmqHzLdxWowXk5gjbwor4urC1RPDmGeV8r#z6MkjjCpsoQrwnEmqHzLdxWowXk5gjbwor4urC1RPDmGeV8r"],
+  "controller": "did:key:z6MkjjCpsoQrwnEmqHzLdxWowXk5gjbwor4urC1RPDmGeV8r",
   "type": "Ed25519VerificationKey2018",
   "publicKeyJwk": {
     "crv": "Ed25519",
@@ -848,7 +921,7 @@ out in the same tree and use relative links so that they'll work offline,
   "description" : "For testing only, totally compromised.",
   "tags": ["professional", "organization", "compromised"],
   "correlation": ["4058a72a-9523-11ea-bb37-0242ac130002"],
-  "controller": ["did:key:z6MkjjCpsoQrwnEmqHzLdxWowXk5gjbwor4urC1RPDmGeV8r#z6MkjjCpsoQrwnEmqHzLdxWowXk5gjbwor4urC1RPDmGeV8r"],
+  "controller": "did:key:z6MkjjCpsoQrwnEmqHzLdxWowXk5gjbwor4urC1RPDmGeV8r",
   "type": "Ed25519VerificationKey2018",
   "publicKeyJwk": {
     "crv": "Ed25519",
@@ -879,9 +952,7 @@ out in the same tree and use relative links so that they'll work offline,
   ],
   "id": "did:ethr:0x774477c4cd54718d32d4df393415796b9bfcb63c",
   "type": "EthereumAddress",
-  "controller": [
-    "did:ethr:0x774477c4cd54718d32d4df393415796b9bfcb63c"
-  ],
+  "controller": "did:ethr:0x774477c4cd54718d32d4df393415796b9bfcb63c",
   "name": "MetaMask Account",
   "image": "https://metamask.io/images/webclip.png",
   "description": "My ropsten testnet account.",
@@ -1128,9 +1199,7 @@ out in the same tree and use relative links so that they'll work offline,
       "description": "For testing only, totally compromised.",
       "tags": ["professional", "organization", "compromised"],
       "correlation": ["4058a72a-9523-11ea-bb37-0242ac130002"],
-      "controller": [
-        "did:key:z6MkjjCpsoQrwnEmqHzLdxWowXk5gjbwor4urC1RPDmGeV8r#z6MkjjCpsoQrwnEmqHzLdxWowXk5gjbwor4urC1RPDmGeV8r"
-      ],
+      "controller": "did:key:z6MkjjCpsoQrwnEmqHzLdxWowXk5gjbwor4urC1RPDmGeV8r",
       "type": "Ed25519VerificationKey2018",
       "privateKeyBase58": "3CQCBKF3Mf1tU5q1FLpHpbxYrNYxLiZk4adDtfyPEfc39Wk6gsTb2qoc1ZtpqzJYdM1rG4gpaD3ZVKdkiDrkLF1p",
       "publicKeyBase58": "6GwnHZARcEkJio9dxPYy6SC5sAL6PxpZAB6VYwoFjGMU"
