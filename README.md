@@ -8,7 +8,7 @@ A portable, extensible, JSON-LD wallet supporting digital currencies and credent
 
 ### [Latest Specification](https://w3c-ccg.github.io/universal-wallet-interop-spec/)
 
-### [Experimental Implementation](./packages/universal-wallet)
+### [Experimental Implementation](./packages/universal-wallet-react)
 
 ### [Experimental Demo](https://w3c-ccg.github.io/universal-wallet-interop-spec/storybook/?path=/story/cards-wallet--unlocked)
 
