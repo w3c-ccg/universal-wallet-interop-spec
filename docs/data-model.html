@@ -1,0 +1,854 @@
+<section id="Data Model" class="normative">
+    <h2>Data Model</h2>
+
+    <p>
+      Each entity is represented as a JSON Object, with relationships between
+      entities described using identifiers.
+    </p>
+
+    <section>
+      <h3 id="Collection">Collection</h3>
+
+      <p>A collection is a named bucket for grouping wallet content.</p>
+      <p>
+        A collection MAY be used to group all correlatable wallet items together.
+      </p>
+      <p>
+        A collection MAY be used to aggregate personal or
+        organizational identities and their associated data. 
+      </p>
+      <p>
+        Collection membership is not exclusive; for instance, a credential
+        representing college graduation could appear in a "student record"
+        collection as well as a "professional profile" collection.
+      </p>
+
+      <p>Here is an example of a professional profile collection.</p>
+
+      <pre
+        class="example highlight"
+        title="A professional profile collection"
+      >
+{
+"@context": ["https://w3id.org/wallet/v1"],
+"id": "did:example:123456789abcdefghi",
+"type": "Person",
+"name": "John Smith",
+"image": "https://via.placeholder.com/150",
+"description" : "Professional software developer for Acme Corp.",
+"tags": ["professional", "person"],
+"correlation": ["4058a72a-9523-11ea-bb37-0242ac130002"]
+}
+</pre
+      >
+
+      <p>Here is an example of an organization profile.</p>
+
+      <pre
+        class="example highlight"
+        title="An organizational identity collection"
+      >
+{
+"@context": ["https://w3id.org/wallet/v1"],
+"id": "did:example:123456789abcdefghi",
+"type": "Organization",
+"name": "Acme Corp.",
+"image": "https://via.placeholder.com/150",
+"description" : "A software company.",
+"tags": ["professional", "organization"],
+"correlation": ["4058a72a-9523-11ea-bb37-0242ac130002"]
+}
+</pre
+      >
+    </section>
+
+    <section>
+      <h3 id="DIDResolutionResponse">DID Resolution Response</h3>
+
+      <p>
+        A cached result of DID Resolution. Useful when device connectivity is
+        intermitent, or offline support is required.
+      </p>
+
+      <p>Here is an example.</p>
+
+      <pre class="example highlight" title="A did resolution response">
+{
+"@context": [
+  "https://w3id.org/wallet/v1",
+  "https://w3id.org/did-resolution/v1"
+],
+"id": "did:example:123",
+"type": ["DIDResolutionResponse"],
+"name": "Farming Sensor DID Document",
+"image": "https://via.placeholder.com/150",
+"description": "An IoT device in the middle of a corn field.",
+"tags": ["professional"],
+"correlation": ["4058a72a-9523-11ea-bb37-0242ac130002"],
+"created": "2017-06-18T21:19:10Z",
+"expires": "2026-06-18T21:19:10Z",
+"didDocument": {
+  "@context": [
+    "https://www.w3.org/ns/did/v1",
+    {
+      "@base": "did:key:z6Mks8mvCnVx4HQcoq7ZwvpTbMnoRGudHSiEpXhMf6VW8XMg"
+    }
+  ],
+  "id": "did:key:z6Mks8mvCnVx4HQcoq7ZwvpTbMnoRGudHSiEpXhMf6VW8XMg",
+  "verificationMethod": [
+    {
+      "id": "#z6Mks8mvCnVx4HQcoq7ZwvpTbMnoRGudHSiEpXhMf6VW8XMg",
+      "type": "JsonWebKey2020",
+      "controller": "did:key:z6Mks8mvCnVx4HQcoq7ZwvpTbMnoRGudHSiEpXhMf6VW8XMg",
+      "publicKeyJwk": {
+        "crv": "Ed25519",
+        "x": "vGur-MEOrN6GDLf4TBGHDYAERxkmWOjTbztvG3xP0I8",
+        "kty": "OKP"
+      }
+    },
+    {
+      "id": "#z6LScrLMVd9jvbphPeQkGffSeB99EWSYqAnMg8rGiHCgz5ha",
+      "type": "JsonWebKey2020",
+      "controller": "did:key:z6Mks8mvCnVx4HQcoq7ZwvpTbMnoRGudHSiEpXhMf6VW8XMg",
+      "publicKeyJwk": {
+        "kty": "OKP",
+        "crv": "X25519",
+        "x": "EXXinkMxdA4zGmwpOOpbCXt6Ts6CwyXyEKI3jfHkS3k"
+      }
+    }
+  ],
+  "authentication": [
+    "#z6Mks8mvCnVx4HQcoq7ZwvpTbMnoRGudHSiEpXhMf6VW8XMg"
+  ],
+  "assertionMethod": [
+    "#z6Mks8mvCnVx4HQcoq7ZwvpTbMnoRGudHSiEpXhMf6VW8XMg"
+  ],
+  "capabilityInvocation": [
+    "#z6Mks8mvCnVx4HQcoq7ZwvpTbMnoRGudHSiEpXhMf6VW8XMg"
+  ],
+  "capabilityDelegation": [
+    "#z6Mks8mvCnVx4HQcoq7ZwvpTbMnoRGudHSiEpXhMf6VW8XMg"
+  ],
+  "keyAgreement": [
+    "#z6LScrLMVd9jvbphPeQkGffSeB99EWSYqAnMg8rGiHCgz5ha"
+  ]
+},
+"didDocumentMetadata": {
+  "content-type": "application/did+json"
+},
+"didResolutionMetadata": {}
+}
+
+</pre
+      >
+    </section>
+
+    <section>
+      <h3 id="Currency"><dfn>Currency</dfn></h3>
+      <p>An amount of currency controlled by one or more <a>Key</a>s.</p>
+
+      <p>Here is an example of some bitcoin stored on a testnet.</p>
+
+      <pre class="example highlight" title="A bitcoin currency example">
+{
+"@context": ["https://w3id.org/wallet/v1"],
+"id": "https://live.blockcypher.com/btc-testnet/address/mu6vftfsBxJDhnUQVrZfwjzj5BL5WRvLUH/",
+"type": "Currency",
+"name": "BTC for Testing",
+"image": "https://via.placeholder.com/150",
+"description" : "Bitcoin reserved for testing",
+"tags": ["personal"],
+"amount": "7.00749119",
+"currency": "BTC",
+"controller": "did:example:123",
+"correlation": ["4058a72a-9523-11ea-bb37-0242ac130002"]
+}
+</pre
+      >
+
+      <p>Here is an example of some ethereum stored on a testnet.</p>
+
+      <pre class="example highlight" title="A currency example">
+{
+"@context": ["https://w3id.org/wallet/v1"],
+"id": "https://ropsten.etherscan.io/address/0x74fd35392f1c2a97c6080e0394b1995b0e63c8bf",
+"type": "Currency",
+"name": "ETH for Tips",
+"image": "https://via.placeholder.com/150",
+"description" : "Ethereum reserved for tipping software developers.",
+"tags": ["personal"],
+"amount": "8.142406194939252896",
+"currency": "ETH",
+"controller": "did:ethr:0x74fd35392f1c2a97c6080e0394b1995b0e63c8bf",
+"correlation": ["4058a72a-9523-11ea-bb37-0242ac130002"]
+}
+</pre
+      >
+
+      <p>
+        Here is an example of some ethereum stored on a testnet requiring
+        multisig.
+      </p>
+
+      <pre class="example highlight" title="A currency example">
+{
+"id": "https://ropsten.etherscan.io/address/0x658e4fe24b34589492b18b1a45294be0601606a9",
+"type": "Currency",
+"name": "ETH for Games",
+"image": "https://via.placeholder.com/150",
+"description" : "Ethereum reserved for games.",
+"tags": ["personal"],
+"amount": "6,271.91386730845876097",
+"currency": "ETH",
+"controller": "did:ethr:0x658e4fe24b34589492b18b1a45294be0601606a9",
+"quorum": 2,
+"correlation": ["4058a72a-9523-11ea-bb37-0242ac130002"]
+}
+</pre
+      >
+    </section>
+
+    <section>
+      <h3 id="Credential"><dfn>Credential</dfn></h3>
+
+      <p>A set of claims about a subject.</p>
+
+      <p>MAY be presented with one or more <a>Key</a>s.</p>
+
+      <p>
+        Here is an example of a University Degree represented using the
+        [[vc-data-model]].
+      </p>
+
+      <pre class="example highlight" title="A verifiable credential example">
+{
+"@context": [
+  "https://www.w3.org/2018/credentials/v1",
+  "https://www.w3.org/2018/credentials/examples/v1"
+],
+"id": "http://example.gov/credentials/3732",
+"type": [
+  "VerifiableCredential",
+  "UniversityDegreeCredential"
+],
+"issuer": {
+  "id": "did:example:123456789abcdefghi"
+},
+"issuanceDate": "2020-03-10T04:24:12.164Z",
+"credentialSubject": {
+  "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+  "degree": {
+    "type": "BachelorDegree",
+    "name": "Bachelor of Science and Arts"
+  }
+},
+"proof": {
+  "type": "JsonWebSignature2020",
+  "created": "2020-03-21T17:51:48Z",
+  "verificationMethod": "did:example:123456789abcdefghi#_Qq0UL2Fq651Q0Fjd6TvnYE-faHiOpRlPVQcY_-tA4A",
+  "proofPurpose": "assertionMethod",
+  "jws": "eyJiNjQiOmZhbHNlLCJjcml0IjpbImI2NCJdLCJhbGciOiJFZERTQSJ9..OPxskX37SK0FhmYygDk-S4csY_gNhCUgSOAaXFXDTZx86CmI5nU9xkqtLWg-f4cqkigKDdMVdtIqWAvaYx2JBA"
+}
+}
+</pre
+      >
+
+      <pre class="example highlight" title="A verifiable credential that supports selective disclosure">
+{
+"@context": [
+  "https://www.w3.org/2018/credentials/v1",
+  "https://w3id.org/vaccination/v1",
+  "https://w3id.org/security/bbs/v1"
+],
+"type": [
+  "VerifiableCredential",
+  "VaccinationCertificate"
+],
+"id": "urn:uvci:af5vshde843jf831j128fj",
+"name": "COVID-19 Vaccination Certificate",
+"description": "COVID-19 Vaccination Certificate",
+"issuanceDate": "2019-12-03T12:19:52Z",
+"expirationDate": "2029-12-03T12:19:52Z",
+"issuer": "did:key:zUC7Jg5oPHrf5ctdesmufk7pVLEPL9Z6zbrbtND9LDb6RrHRqSNt3Xfg3W9fHYAQPYkTdN1AMxWF2EwSiwLPpmEcEz6QqnNpihQ5FqGiAbCH2j3iM4ywVMAgYdccaEXpAK67AGm",
+"credentialSubject": {
+  "type": "VaccinationEvent",
+  "batchNumber": "1183738569",
+  "administeringCentre": "MoH",
+  "healthProfessional": "MoH",
+  "countryOfVaccination": "NZ",
+  "recipient": {
+    "type": "VaccineRecipient",
+    "givenName": "JOHN",
+    "familyName": "SMITH",
+    "gender": "Male",
+    "birthDate": "1958-07-17"
+  },
+  "vaccine": {
+    "type": "Vaccine",
+    "disease": "COVID-19",
+    "atcCode": "J07BX03",
+    "medicinalProductName": "COVID-19 Vaccine Moderna",
+    "marketingAuthorizationHolder": "Moderna Biotech"
+  }
+},
+"proof": {
+  "type": "BbsBlsSignature2020",
+  "created": "2021-03-15T18:22:20Z",
+  "proofPurpose": "assertionMethod",
+  "proofValue": "teftp5epKE+C8IHuEnZhcffQQpnFkhYx2XTHs/B5VcQiiFJV8UMoI9JV7Q2MO4g5cScXYhnCf1lRnw31KwBSFaZJZOhARvVxwLJz/z5TX7UromVsjI330XKnS8lwj80RwcJQc/9ve9rJhvnFkgG7mw==",
+  "verificationMethod": "did:key:zUC7Jg5oPHrf5ctdesmufk7pVLEPL9Z6zbrbtND9LDb6RrHRqSNt3Xfg3W9fHYAQPYkTdN1AMxWF2EwSiwLPpmEcEz6QqnNpihQ5FqGiAbCH2j3iM4ywVMAgYdccaEXpAK67AGm#zUC7Jg5oPHrf5ctdesmufk7pVLEPL9Z6zbrbtND9LDb6RrHRqSNt3Xfg3W9fHYAQPYkTdN1AMxWF2EwSiwLPpmEcEz6QqnNpihQ5FqGiAbCH2j3iM4ywVMAgYdccaEXpAK67AGm"
+}
+}
+        </pre
+                >
+
+      <p>Here is the credential above encoded as an alphanumeric QRCode of Base32 of CBOR-LD of the JSON-LD.</p>
+
+      <img src="https://w3c-ccg.github.io/universal-wallet-interop-spec/images/cbor-ld-base32-qr-code.png" style="max-width: 256px; max-height: 256px;"/>
+
+
+      <p>Here is an example of an JWT Credential.</p>
+
+      <pre class="example highlight" title="An example of a JWT Credential">
+{
+"protected": {
+  "kid": "did:web:identity.foundation#_Qq0UL2Fq651Q0Fjd6TvnYE-faHiOpRlPVQcY_-tA4A",
+  "alg": "EdDSA"
+},
+"payload": {
+  "sub": "did:web:identity.foundation",
+  "iss": "did:web:identity.foundation",
+  "nbf": 1586814292,
+  "exp": 1589406292,
+  "vc": {
+    "@context": [
+      "https://www.w3.org/2018/credentials/v1",
+      "https://identity.foundation/.well-known/contexts/did-configuration-v0.0.jsonld"
+    ],
+    "issuer": "did:web:identity.foundation",
+    "issuanceDate": "2020-04-13T16:44:52-05:00",
+    "expirationDate": "2020-05-13T16:44:52-05:00",
+    "type": [
+      "VerifiableCredential",
+      "DomainLinkageCredential"
+    ],
+    "credentialSubject": {
+      "id": "did:web:identity.foundation",
+      "domain": "identity.foundation"
+    }
+  }
+},
+"signature": "qEV-lat1Wc8qKU_OLbTd07fx7tkW12QhkyiB912OsHi4FmkTWr_qMAFyW8IZxaQAsXg1E4yCRe8VsfGYaePfCg"
+}
+</pre
+      >
+
+      <p>Here is an example of an Indy Credential.</p>
+
+      <p>
+        Proposing to wrap Hyperledger Indy Credentials with useful meta data,
+        and provide a JSON-LD context for them.
+      </p>
+
+      <pre
+        class="example highlight"
+        title="An example of a Hyperledger Indy Credential Request"
+      >
+{
+"@context": [
+  "https://www.w3.org/2018/credentials/v1",
+  "https://example.com/hyperledger/indy/v1"
+],
+"id": "urn:uui:5e2a2cfc-ddee-4b6e-b1df-b25d5c381dd6",
+"type": ["HyperledgerIndyCredentialRequest"],
+"name": "Request for ZKP of PII",
+"image": "https://via.placeholder.com/150",
+"description": "Some hyperledger indy request",
+"tags": ["personal"],
+"controller": "did:example:123",
+"correlation": ["4058a72a-9523-11ea-bb37-0242ac130002"],
+"request": {
+  "blinded_ms": {
+    "committed_attributes": {},
+    "hidden_attributes": ["master_secret"],
+    "u": "65831452313882581230262709313640398502180121409437456701285942297697220273020651832867867646867694104285264882901784486060003798041322783654882887801338491262118680258721202637330550769869214264954742835710055875494951347903964659726990419477041411071293939395959337387632115898651722739118077413287212136124581126858655228247591827039715635869509104285523508350517189259095099031335038010813127434575838122472539671883003577935935805849721520698913035313700463716817299972399222663463531626690265819737278764702201558856023597942255295546958215228209847949123140888705477748125028989834201043317313234794999670960309",
+    "ur": null
+  },
+  "blinded_ms_correctness_proof": {
+    "c": "109860678073076085235251415455172114757447490048716300713084480862613855161594",
+    "m_caps": {
+      "master_secret": "26283368873168710647823575287384506775329371134097934071944480688608740447086822076157945371978097759120680279871932367038315961209475528490588458124513336494442045082962002632630"
+    },
+    "r_caps": {},
+    "v_dash_cap": "2280251997303109215440229941746203124645437910879700880787994443943315426654016847375797993806524993944624797926394628097776282593677641139413080324847861793144967254410329241135241448735975536630491881499127637586742389241597839730305081627234920106253837671010874865272721731993787096927927219667907076510252353984721949818101724187470187212834753509683017877231098388634684162763868165666439930098806964029632419913797905735247261174021083829716744013146112407108188748399721262104236090674581750516219214189074147796588753301588559493169281419642497122075637138527711629397854490786655717000499533957790924731039896458915259618414177079172716906654070782024546965289973737179244936586584621455129955294625933138084"
+  },
+  "cred_def_id": "97RDzn8aDviHUQQKPXg96e:3:CL:1:cred_def_tag",
+  "nonce": "787732518675896939298806",
+  "prover_did": "VsKV7grR1BUE29mG2Fm2kX"
+}
+}
+</pre
+      >
+
+      <p>Here is an example of an Indy Credential Response.</p>
+
+      <pre
+        class="example highlight"
+        title="An example of a Hyperledger Indy Credential Response"
+      >
+{
+"@context": [
+  "https://www.w3.org/2018/credentials/v1",
+  "https://example.com/hyperledger/indy/v1"
+],
+"id": "urn:uui:5e2a2cfc-ddee-4b6e-b1df-b25d5c381dd6",
+"type": ["HyperledgerIndyCredentialResponse"],
+"name": "Response with ZKP of PII",
+"image": "https://via.placeholder.com/150",
+"description": "Some hyperledger indy response",
+"tags": ["personal"],
+"controller": "did:example:123",
+"correlation": ["4058a72a-9523-11ea-bb37-0242ac130002"],
+"response": {
+  "cred_def_id": "97RDzn8aDviHUQQKPXg96e:3:CL:1:cred_def_tag",
+  "rev_reg": null,
+  "rev_reg_id": null,
+  "schema_id": "1",
+  "signature": {
+  "p_credential": {
+    "a": "95353830375173330011563360059148264672898064240769511250683274343595259814385881580652435846242305610602775955153225949828351822615582300818164568659759210654812158114909671116500854641792747538502940562299939329775539393907208674840307912497761924491759626001631051978385141797844740405389371307810867892266393402889311183432317570029074621797181653694420095514029762818719468632709966063515795023890061161695773247748450608404761004379958193940141773792823139355492617241722063652768459827450028875759363009052805727635793672494079344330863114982873831106116041797167251966936936806424711883143669500689657231135606",
+    "e": "259344723055062059907025491480697571938277889515152306249728583105665800713306759149981690559193987143012367913206299323899696942213235956742930148508371517214363847909185411372253",
+    "m_2": "87933324484247736755432182254530234578539725681347360397600269871642228431291",
+    "v": "9980048782698213650029707306155459223351306678221752614666406496131317042580709639463968555501635926971838913872812808348795802668959822338264694189410327519660902443001438239011481179716268316444260971946516885083303128874909099593395255544689704182390571217148562533306555613083811625224310294070840596291508202160863034924955239229626686346699964038203572055526536874808785883442434204203578065957249420787817929622802282705534703609382585731044976967091334711355681718119910796427448184020435027328010716618250816760780193851507746646202423419420085349209268468391222040632949331381277174716781756370851681892517534221307517998851557466372447869765146986972380453630642444945932431258454568836958535197445982382692900624253982717831288480544351529597240580788825685640983253528750762130639934973110889811748482529784"
+  },
+  "r_credential": null
+  },
+  "signature_correctness_proof": {
+    "c": "111039946245998422293228198882690698427961176580797991507430891006675146356597",
+    "se": "22605964272161668401729392750124222261476956426739374858535661640179592757898860024832882984205300374191737843804934686452004477429402832292629718216663316164939570354876583921389754652453753209439712424429741656877542117083074742649581822964695267610947419213636358675100501109665802628234428907141311421109128613552987278370127477282566942966334173257609909151324991747736857761765991353008203982871999513346493415736923977797669183887730008747615226061509085005490533206472742385316192550536165419027378783950304188984918698568811667562161240994301427542320560168961460242425150722543163690905028839780636297387853"
+  },
+  "values": {
+    "age": { "encoded": "28", "raw": "28" },
+    "height": { "encoded": "175", "raw": "175" },
+    "name": {
+      "encoded": "1139481716457488690172217916278103335",
+      "raw": "Alex"
+    },
+    "sex": {
+      "encoded": "5944657099558967239210949258394887428692050081607692519917050011144233115103",
+      "raw": "male"
+    }
+  },
+  "witness": null
+}
+}
+</pre
+      >
+    </section>
+
+    <section>
+      <h3 id="Key">Key</h3>
+
+      <p>A cryptographic key. Used for signing, encrypting or hashing.</p>
+
+      <p>Here is an example of storing an Ed25519 key using JWK.</p>
+
+      <pre class="example highlight" title="A jwk key example">
+{
+"@context": ["https://w3id.org/wallet/v1"],
+"id": "urn:uuid:53d846c8-9525-11ea-bb37-0242ac130002",
+"name": "My Test Key 1",
+"image": "https://via.placeholder.com/150",
+"description" : "For testing only, totally compromised.",
+"tags": ["professional", "organization", "compromised"],
+"correlation": ["4058a72a-9523-11ea-bb37-0242ac130002"],
+"controller": "did:example:123",
+"type": "Ed25519VerificationKey2018",
+"publicKeyJwk": {
+  "crv": "Ed25519",
+  "x": "VCpo2LMLhn6iWku8MKvSLg2ZAoC-nlOyPVQaO3FxVeQ",
+  "kty": "OKP",
+  "kid": "_Qq0UL2Fq651Q0Fjd6TvnYE-faHiOpRlPVQcY_-tA4A"
+},
+"privateKeyJwk": {
+  "crv": "Ed25519",
+  "x": "VCpo2LMLhn6iWku8MKvSLg2ZAoC-nlOyPVQaO3FxVeQ",
+  "d": "tP7VWE16yMQWUO2G250yvoevfbfxY25GjHglTP3ZOyU",
+  "kty": "OKP",
+  "kid": "_Qq0UL2Fq651Q0Fjd6TvnYE-faHiOpRlPVQcY_-tA4A"
+}
+}
+</pre
+      >
+
+      <p>Here is an example of storing an Ed25519 key using base58.</p>
+
+      <pre class="example highlight" title="A base58 key example">
+{
+"@context": ["https://w3id.org/wallet/v1"],
+"id": "urn:uuid:e8fc7810-9524-11ea-bb37-0242ac130002",
+"name": "My Test Key 2",
+"image": "https://via.placeholder.com/150",
+"description" : "For testing only, totally compromised.",
+"tags": ["professional", "organization", "compromised"],
+"correlation": ["4058a72a-9523-11ea-bb37-0242ac130002"],
+"controller": "did:key:z6MkjjCpsoQrwnEmqHzLdxWowXk5gjbwor4urC1RPDmGeV8r",
+"type": "Ed25519VerificationKey2018",
+"privateKeyBase58": "3CQCBKF3Mf1tU5q1FLpHpbxYrNYxLiZk4adDtfyPEfc39Wk6gsTb2qoc1ZtpqzJYdM1rG4gpaD3ZVKdkiDrkLF1p",
+"publicKeyBase58": "6GwnHZARcEkJio9dxPYy6SC5sAL6PxpZAB6VYwoFjGMU"
+}
+</pre
+      >
+
+      <p>Here is an example of a key which is stored in a remote kms.</p>
+
+      <pre class="example highlight" title="A remote key example">
+{
+"@context": ["https://w3id.org/wallet/v1"],
+"id": "urn:uuid:e8fc7810-9524-11ea-bb37-0242ac130006",
+"name": "My Test Key 3",
+"image": "https://via.placeholder.com/150",
+"description" : "For testing only, totally compromised.",
+"tags": ["professional", "organization", "compromised"],
+"correlation": ["4058a72a-9523-11ea-bb37-0242ac130002"],
+"controller": "did:key:z6MkjjCpsoQrwnEmqHzLdxWowXk5gjbwor4urC1RPDmGeV8r",
+"type": "Ed25519VerificationKey2018",
+"publicKeyJwk": {
+  "crv": "Ed25519",
+  "x": "VCpo2LMLhn6iWku8MKvSLg2ZAoC-nlOyPVQaO3FxVeQ",
+  "kty": "OKP",
+  "kid": "_Qq0UL2Fq651Q0Fjd6TvnYE-faHiOpRlPVQcY_-tA4A"
+},
+"privateKeyWebKms": "http://example.com/kms/keystores/0/keys/0"
+}
+</pre
+      >
+
+      <p>Here is an example of a local, hardware isolated key.</p>
+
+      <pre class="example highlight" title="A remote key example">
+{
+"@context": ["https://w3id.org/wallet/v1"],
+"id": "urn:uuid:e8fc7810-9524-11ea-bb37-0242ac130006",
+"name": "My Test Key 3",
+"image": "https://via.placeholder.com/150",
+"description" : "For testing only, totally compromised.",
+"tags": ["professional", "organization", "compromised"],
+"correlation": ["4058a72a-9523-11ea-bb37-0242ac130002"],
+"controller": "did:key:z6MkjjCpsoQrwnEmqHzLdxWowXk5gjbwor4urC1RPDmGeV8r",
+"type": "Ed25519VerificationKey2018",
+"publicKeyJwk": {
+  "crv": "Ed25519",
+  "x": "VCpo2LMLhn6iWku8MKvSLg2ZAoC-nlOyPVQaO3FxVeQ",
+  "kty": "OKP",
+  "kid": "_Qq0UL2Fq651Q0Fjd6TvnYE-faHiOpRlPVQcY_-tA4A"
+},
+"privateKeySecureEnclave": "urn:ios:enclave:uuid:e8fc7810-9524-11ea-bb37-0242ac130789"
+}
+</pre
+      >
+    </section>
+
+    <section>
+      <h3 id="Address">Address</h3>
+
+      <p>
+        An identifier, frequently derived from a key. Used for verifying
+        signatures or sending currency.
+      </p>
+
+      <p>Here is an example of storing an EthereumAddress.</p>
+
+      <pre class="example highlight" title="An ethereum address example">
+{
+"@context": [
+  "https://w3id.org/wallet/v1"
+],
+"id": "did:ethr:0x774477c4cd54718d32d4df393415796b9bfcb63c",
+"type": "EthereumAddress",
+"controller": "did:ethr:0x774477c4cd54718d32d4df393415796b9bfcb63c",
+"name": "MetaMask Account",
+"image": "https://metamask.io/images/webclip.png",
+"description": "My ropsten testnet account.",
+"privateKeyBrowser": "urn:metamask:0x774477c4cd54718d32d4df393415796b9bfcb63c"
+}
+</pre
+      >
+    </section>
+
+    <section>
+      <h3 id="Mnemonic">Mnemonic</h3>
+      <p>An ordered list of memorable words.</p>
+
+      <p>MAY be used as a source of memorable <a>Entropy</a>.</p>
+      <p>
+        MAY be used as input to a
+        <a href="https://en.wikipedia.org/wiki/Key_derivation_function">KDF</a
+        >.
+      </p>
+
+      <p>Here is an example of storing a mnemonic as a <a>Secret</a>.</p>
+
+      <pre class="example highlight" title="A mnemonic example">
+{
+"@context": ["https://w3id.org/wallet/v1"],
+"id": "urn:uuid:c410e44a-9525-11ea-bb37-0242ac130002",
+"name": "My Ropsten Mnemonic 1",
+"image": "https://via.placeholder.com/150",
+"description" : "For testing only, totally compromised.",
+"tags": ["professional", "organization", "compromised"],
+"correlation": ["4058a72a-9523-11ea-bb37-0242ac130002"],
+"type": "Mnemonic",
+"value": "humble piece toy mimic miss hurdle smile awkward patch drama hurry mixture"
+}
+</pre
+      >
+    </section>
+
+    <section>
+      <h3 id="Entropy">Entropy</h3>
+
+      <p>
+        MAY be used as input to a
+        <a href="https://en.wikipedia.org/wiki/Key_derivation_function">KDF</a
+        >.
+      </p>
+
+      <p>Here is an example of storing entropy as a <a>Secret</a>.</p>
+
+      <pre class="example highlight" title="An entropy example">
+{
+"@context": ["https://w3id.org/wallet/v1"],
+"id": "urn:uuid:c410e44a-9525-11ea-bb37-0242ac130002",
+"name": "My Test Entropy 1",
+"image": "https://via.placeholder.com/150",
+"description" : "For testing only, totally compromised.",
+"tags": ["professional", "organization", "compromised"],
+"correlation": ["4058a72a-9523-11ea-bb37-0242ac130002"],
+"type": "Entropy",
+"multibase": "z6MkuVZVSKLUNHRjXBXcEwvG5yiNHLhzBeXRjAkwmgSYensE"
+}
+</pre
+      >
+    </section>
+
+    <section>
+      <h3>Connection</h3>
+
+      <p>Information about a relationship between identifiers.</p>
+
+      <div class="issue" data-number="4">
+        Need to capture how connections are represented today.
+      </div>
+
+      <pre class="example highlight" title="A connection example">
+{
+"@context": ["https://w3id.org/wallet/v1"],
+"id": "urn:uuid:c410e44a-9525-11ea-bb37-0242ac130006",
+"name": "My Health Record Certifier",
+"image": "https://via.placeholder.com/150",
+"description" : "The identifier that issues health record credentials.",
+"tags": ["professional"],
+"correlation": ["4058a72a-9523-11ea-bb37-0242ac130002"],
+"type": "Connection",
+"connection": {
+  "created_at": "2020-06-01 14:05:54.150111Z",
+  "their_did": "SkL2sdiv3RrPk3QtjT3Mjs",
+  "routing_state": "none",
+  "invitation_key": "EGsWeE95ANRp9GRNR3fjaWyB1tRqhaBuc69iMg7zBFij",
+  "accept": "auto",
+  "their_label": "Alice.Agent",
+  "my_did": "4zRzv8DtEaZqSreoNb2dpJ",
+  "state": "active",
+  "initiator": "self",
+  "connection_id": "3b6e568d-1cee-4327-915c-0e9d39ef2e88",
+  "invitation_mode": "once",
+  "updated_at": "2020-06-01 14:06:58.610756Z"
+},
+}
+</pre
+      >
+    </section>
+
+    <section>
+      <h3>Meta Data</h3>
+
+      <p>Information about wallet data.</p>
+      
+      <p>
+        Implementors may use Meta Data to reference non-standard data formats, stored locally or externally. The following recommendations apply:
+       
+        <ul>
+          <li>Implementors MAY define custom types for their non-standard data formats</li>
+          <li>Implementors SHOULD register their custom types if they want other wallets to support them</li>
+          <li>Implementors MAY use hashlinks to reference external (non-local) data with content integrity checks</li>
+        </ul>   
+      </p>
+
+      <div class="issue" data-number="6">
+        Mostly an EDV integration question...Should authorization be
+        remembered in the wallet as meta data?
+      </div>
+
+      <p>
+        Here is an example where meta data is used to remind the wallet
+        controller that a credential has likely be exposed because of a breach
+        notification.
+      </p>
+
+      <pre class="example highlight" title="A credential meta data example">
+{
+"@context": ["https://w3id.org/wallet/v1"],
+"id": "urn:uuid:2905324a-9524-11ea-bb37-0242ac130002",
+"type": "MetaData",
+"name": "Degree Notes",
+"image": "https://via.placeholder.com/150",
+"description" : "Personal notes about this degree.",
+"tags": ["professional", "organization"],
+"correlation": ["urn:uuid:4058a72a-9523-11ea-bb37-0242ac130002"],
+"note": "I've shared this degree, with many websites that have been breached. It should be considered public information at this point :("
+}
+</pre
+      >
+
+      <p>
+        Here is an example where meta data is used to remind the wallet
+        controller that they use a mnemonic for manage their ethereum accounts
+        and funds for testing.
+      </p>
+
+      <pre class="example highlight" title="A secret meta data example">
+{
+"@context": ["https://w3id.org/wallet/v1"],
+"id": "urn:uuid:2905324a-9524-11ea-bb37-0242ac130002",
+"type": "MetaData",
+"name": "Ropsten Testnet HD Accounts",
+"image": "https://via.placeholder.com/150",
+"description" : "My Ethereum TestNet Accounts",
+"tags": ["professional", "organization"],
+"correlation": ["urn:uuid:4058a72a-9523-11ea-bb37-0242ac130002"],
+"hdPath": "m’/44’/60’/0’",
+"target": ["urn:uuid:c410e44a-9525-11ea-bb37-0242ac130002"]
+}
+</pre
+      >
+    
+      <p>
+Here is an example of using Meta Data to reference non-standard data: 
+      </p>
+      <pre class="example highlight" title="An example of meta data referencing non-standard data">
+{
+"@context": ["https://w3id.org/wallet/v1"],
+"id": "urn:uuid:1d52bc38-c336-455a-8227-2c1e635df2d7",
+"type": "MyCustomDataType",
+"name": "Quantum Computing 101",
+"image": "https://via.placeholder.com/150",
+"description" : "Certificate of completion from an online quantum computing course",
+"tags": ["professional", "education"],
+"correlation": ["urn:uuid:d36fd219-bccd-4ebd-a84a-65ed5751ddd2"],
+"hashlink": "hl:zm9YZpCjPLPJ4Epc"
+}
+      </pre> 
+    
+    </section>
+
+    <section>
+      <h2>Locked Wallet</h2>
+
+      <p>Also known as a signed encrypted wallet.</p>
+
+      <p>
+        An integrity protected, authenticated and privacy preserving
+        representation of a wallet.
+      </p>
+
+      <pre class="example highlight" title="An encrypted wallet example">
+{
+"@context": [
+  "https://www.w3.org/2018/credentials/v1",
+  "https://w3id.org/wallet/v1",
+],
+"id": "http://example.gov/wallet/3732",
+"type": ["VerifiableCredential", "EncryptedWallet"],
+"issuer": "did:example:123",
+"issuanceDate": "2020-05-22T17:38:21.910Z",
+"credentialSubject": {
+  "id": "did:example:123",
+  "contents": [
+    {
+      "id": "urn:uuid:e8fc7810-9524-11ea-bb37-0242ac130002",
+      "jwe": {
+        "protected": "eyJlbmMiOiJYQzIwUCJ9",
+        "recipients": [
+          {
+            "header": {
+              "kid": "did:key:z6MkjMSYauuMgx9azEyUnTW5o5jFRkbBu5T83f39uNwnsGmm#z6LSoGtZSrUMZudAagzEfYf7k8jHZcGD79Sox7v4wCkDKNSw",
+              "alg": "ECDH-ES+A256KW",
+              "epk": {
+                "kty": "OKP",
+                "crv": "X25519",
+                "x": "RfXdxTfIzilWBzWWX3ovHBDzgDcLNy0BFJWSxa0dqnw"
+              },
+              "apu": "RfXdxTfIzilWBzWWX3ovHBDzgDcLNy0BFJWSxa0dqnw",
+              "apv": "ZGlkOmtleTp6Nk1rak1TWWF1dU1neDlhekV5VW5UVzVvNWpGUmtiQnU1VDgzZjM5dU53bnNHbW0jejZMU29HdFpTclVNWnVkQWFnekVmWWY3azhqSFpjR0Q3OVNveDd2NHdDa0RLTlN3"
+            },
+            "encrypted_key": "-ABaawsVfTxJKmYVMhC0UWGQRZaYaLr8WdTBlugLOADXxrlOP-5M-A"
+          }
+        ],
+        "iv": "zjJPRrj0TGez9JYkChTrB3iqKoDkiBhn",
+        "ciphertext": "pPqPLiMuJLygwKbsDh-QWw0y5CHmQMINXPc1-qgsKLCFDTJ6ytqoTF35rM5KxSfeVCk74HLtIUIbDvNx53xr2YGqOi9-yDHrT3KurY8CIiBDTYCHkW50wgJq-Ac_gE3lSEEOYT1ZF4izf6GoA1jnI7alxD8ScgOGv2OuWLKEhV5HNEBLUpNz8Di7LDmRLSvAroiWE0rBu-xl7dRrLRH3ZKUzc-R6vrG_X56o-ivjUCfcvrjTnh2pgmVFo27BA34edYbLHIbKcWjMoSBEgmeY30ZuQt_KXK0vDQ6pFmMW5n8oISjPYv8rdicwNPfpCR89x11Vgrde419guqIwEsuOyvCAWidzgFeUu7jeyxjyYcNaIM1r2mq7OXnTODAFBzK4lWqniiDYWy2CLcPTHIXHnhq9YvPOhjqFz6aBbf_XqiFdIQZgOX2oDX6zGHg9fvw4AZc3_N3bCHRbZzKkf-AyvvHxPb9dphU1OdQmnRefYg-xtEQnlwk704J26xZU2qBn7YIJh_nrh9u41KqA0FSlYQsGiyW7SvOf2_LaA9qr17eA7HqY7Lst53_kiYhgWCd7g8hTWiT5G7QVLS_wx89DUpNfz_bxqQU0f17W2L0rLSLCWwaqUjxlLbPlFnpWgokbnxOMOETDvt_8DGUbczRou7Z4NyQ6ZFCOV4TD0AFRCM-RTj-YR6UC_UAAIvEPJep3Uz8elJzkf7xevnWKRSGyFLIUie0tSwZ7hCtjdvP3tOKidwy56jHtOQ_R6wx_9taVc3_5IeoP-4wZ4DNOm_IS9jb6csWmRvyW5GoRx-robqraPCM64SKg9EM",
+        "tag": "h6mJqHn33oCsDd5X57MI-g"
+      }
+    }
+  ]
+}
+}
+</pre
+      >
+    </section>
+
+    <section>
+      <h2>Unlocked Wallet</h2>
+
+      <p>Also known as plaintext wallet.</p>
+
+      <p>
+        This representation may be used without ever having a locked
+        representation.
+      </p>
+      <p>
+        Implementations may choose to construct this representation from
+        database entities.
+      </p>
+
+      <pre class="example highlight" title="An unlocked wallet example">
+{
+"@context": [
+  "https://www.w3.org/2018/credentials/v1",
+  "https://w3id.org/wallet/v1",
+],
+"id": "http://example.gov/wallet/3732",
+"type": [
+  "UniversalWallet2020"
+],
+"status": "UNLOCKED",
+"contents": [
+  // other wallet content types, ...
+  {
+    "id": "urn:uuid:e8fc7810-9524-11ea-bb37-0242ac130002",
+    "title": "My Test Key 2",
+    "image": "https://via.placeholder.com/150",
+    "description": "For testing only, totally compromised.",
+    "tags": ["professional", "organization", "compromised"],
+    "correlation": ["4058a72a-9523-11ea-bb37-0242ac130002"],
+    "controller": "did:key:z6MkjjCpsoQrwnEmqHzLdxWowXk5gjbwor4urC1RPDmGeV8r",
+    "type": "Ed25519VerificationKey2018",
+    "privateKeyBase58": "3CQCBKF3Mf1tU5q1FLpHpbxYrNYxLiZk4adDtfyPEfc39Wk6gsTb2qoc1ZtpqzJYdM1rG4gpaD3ZVKdkiDrkLF1p",
+    "publicKeyBase58": "6GwnHZARcEkJio9dxPYy6SC5sAL6PxpZAB6VYwoFjGMU"
+  }
+]
+}
+</pre
+      >
+    </section>
+  </section>
