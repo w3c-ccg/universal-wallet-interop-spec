@@ -221,6 +221,89 @@ out in the same tree and use relative links so that they'll work offline,
       </p>
     </section>
 
+    <section class="informative">
+      <h2>Wallet Types</h2>
+      <p>
+        There are many different kinds of digital wallet. 
+        This section describes a few distinguishable categories.
+      </p>
+
+      <section>
+        <h3>Progressive Web Applications</h3>
+        <p>
+          Progressive web applications (PWAs) are a kind of offline capable website.
+        </p>
+
+        <p>
+          You can read more about them 
+          <a href="https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps">here</a>.
+        </p>
+
+        <p>
+          PWA's don't require users to install an app throught an app store, 
+          but are limited by browser API support in ways that native mobile applications are not.
+        </p>
+
+        <p>
+          PWA's can access camera, webrtc, nfc, bluetooth and other browser apis. 
+          They can connect to remote api's to facilitate discovery and messaging.
+        </p>
+      </section>
+
+      <section>
+        <h3>Native Mobile Applications</h3>
+        <p>
+          Native Mobile Applications are software a user installs on a mobile OS, like Android or iOS.
+        </p>
+
+        <p>
+          Native mobile applications have accesss to APIs supported by the mobile OS, 
+          which might include filesystem, networking, phone, or camera APIs.
+        </p>
+
+        <p>
+          Native mobile applications might implement support for hardware backed secret or key management via the OS.
+          This and better biometric authentication support make them attractive to high security applications.
+        </p>
+      </section>
+
+      <section>
+        <h3>Cloud Wallets</h3>
+        <p>
+          Cloud Wallets are software services hosted on the internet, typically exposed over HTTP or gRPC.
+        </p>
+
+        <p>
+          Cloud Wallets offer some of the security benefits of centralization, such as logging and dynamic scaling.
+        </p>
+
+        <p>
+          Cloud wallets can also be "always online", in cases where a mobile wallet might loose connectivity.
+        </p>
+
+        <p>
+          Cloud wallets and message based APIs are generally an easier integration target with legacy systems.
+        </p>
+      </section>
+
+      <section>
+        <h3>Cold Storage Wallets</h3>
+        <p>
+          Cold storage wallets are non networked long term storage for digital assets.
+        </p>
+
+        <p>
+          Cold storage is typcially reserved for very sensitive information, 
+          such as keys that control large amounts of crypto currency, or root certificate signing keys.
+        </p>
+
+        <p>
+          Cold storage wallets may be implemented as either isolated hardware or physical paper.
+        </p>
+
+      </section>
+    </section>
+
     <section id="terms" class="normative">
       <h2>Terminology</h2>
 
@@ -1602,6 +1685,29 @@ Here is an example of using Meta Data to reference non-standard data:
         <h3>Microsoft Wallet</h3>
         <a href="http://wallet.microsoft.com/">wallet.microsoft.com</a>
       </section>
+
+      <section>
+        <h3>Cloud Secret Managers</h3>
+
+        <p>Software services that support secret or key management are useful building blocks for cloud wallets.</p>
+
+        <p class="note">Some services combine secret and key operations under the ombrella term "Key Management Service". 
+          Wallet's may use both managed asymmetric or symmetric key operations as well as managed and versioned secrets.
+        </p>
+
+        <ul>
+          <li>
+            <a href="https://cloud.google.com/secret-manager">Google Secret Manager</a>
+          </li>
+          <li>
+            <a href="https://aws.amazon.com/secrets-manager/">AWS Secrets Manager</a>
+          </li>
+          <li>
+            <a href="https://azure.microsoft.com/en-us/services/key-vault/">Azure Key Vault</a>
+          </li>
+        </ul>
+      </section>
+
     </section>
 
     <section id="conformance" class="normative"></section>
