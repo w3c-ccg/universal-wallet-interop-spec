@@ -1005,6 +1005,19 @@ out in the same tree and use relative links so that they'll work offline,
           >.
         </p>
 
+        <p>Here is an example of seed entropy as a <a>Secret</a>.</p>
+
+<pre class="example highlight" title="A hex encoded seed stored in google cloud">
+{
+  "@context": [ "https://w3id.org/wallet/v1" ],
+  "id": "urn:google:projects/555555555555/secrets/seed/versions/1",
+  "type": "GoogleCloudSecret",
+  "tags": [ "google" ],
+  "value": "7052adea8f9823817065456ecad5bf24dcd31a698f7bc9a0b5fc170849af4226"
+}
+</pre
+                  >
+
         <p>Here is an example of storing entropy as a <a>Secret</a>.</p>
 
         <pre class="example highlight" title="An entropy example">
@@ -1022,6 +1035,7 @@ out in the same tree and use relative links so that they'll work offline,
 </pre
         >
       </section>
+      
 
       <section>
         <h3>Connection</h3>
