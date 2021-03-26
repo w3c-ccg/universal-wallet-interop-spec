@@ -449,7 +449,7 @@
     <section>
       <h3 id="Key">Key</h3>
 
-      <p>A cryptographic key. Used for signing, encrypting or hashing.</p>
+      <p>A cryptographic key. Used for signing, encrypting, or hashing.</p>
 
       <p>Here is an example of storing an Ed25519 key using JWK.</p>
 
@@ -554,7 +554,7 @@
 
       <p>
         An identifier, frequently derived from a key. Used for verifying
-        signatures or sending currency.
+        signatures, sending currency, etc.
       </p>
 
       <p>Here is an example of storing an EthereumAddress.</p>
@@ -685,12 +685,13 @@
     </section>
 
     <section>
-      <h3>Meta Data</h3>
+      <h3>Metadata</h3>
 
       <p>Information about wallet data.</p>
       
       <p>
-        Implementors may use Meta Data to reference non-standard data formats, stored locally or externally. The following recommendations apply:
+        Implementors may use Metadata to reference non-standard data formats, 
+        stored locally or externally. The following recommendations apply:
        
         <ul>
           <li>Implementors MAY define custom types for their non-standard data formats</li>
@@ -701,41 +702,41 @@
 
       <div class="issue" data-number="6">
         Mostly an EDV integration question...Should authorization be
-        remembered in the wallet as meta data?
+        remembered in the wallet as metadata?
       </div>
 
       <p>
-        Here is an example where meta data is used to remind the wallet
-        controller that a credential has likely be exposed because of a breach
+        Here is an example where metadata is used to remind the wallet
+        controller that a credential has likely been exposed because of a breach
         notification.
       </p>
 
-      <pre class="example highlight" title="A credential meta data example">
+      <pre class="example highlight" title="A credential metadata example">
 {
 "@context": ["https://w3id.org/wallet/v1"],
 "id": "urn:uuid:2905324a-9524-11ea-bb37-0242ac130002",
-"type": "MetaData",
+"type": "Metadata",
 "name": "Degree Notes",
 "image": "https://via.placeholder.com/150",
 "description" : "Personal notes about this degree.",
 "tags": ["professional", "organization"],
 "correlation": ["urn:uuid:4058a72a-9523-11ea-bb37-0242ac130002"],
-"note": "I've shared this degree, with many websites that have been breached. It should be considered public information at this point :("
+"note": "I've shared this degree with many websites that have been breached. It should be considered public information at this point :("
 }
 </pre
       >
 
       <p>
-        Here is an example where meta data is used to remind the wallet
-        controller that they use a mnemonic for manage their ethereum accounts
+        Here is an example where metadata is used to remind the wallet
+        controller that they use a mnemonic to manage their Ethereum accounts
         and funds for testing.
       </p>
 
-      <pre class="example highlight" title="A secret meta data example">
+      <pre class="example highlight" title="A secret metadata example">
 {
 "@context": ["https://w3id.org/wallet/v1"],
 "id": "urn:uuid:2905324a-9524-11ea-bb37-0242ac130002",
-"type": "MetaData",
+"type": "Metadata",
 "name": "Ropsten Testnet HD Accounts",
 "image": "https://via.placeholder.com/150",
 "description" : "My Ethereum TestNet Accounts",
@@ -748,9 +749,9 @@
       >
     
       <p>
-Here is an example of using Meta Data to reference non-standard data: 
+Here is an example of using Metadata to reference non-standard data: 
       </p>
-      <pre class="example highlight" title="An example of meta data referencing non-standard data">
+      <pre class="example highlight" title="An example of metadata referencing non-standard data">
 {
 "@context": ["https://w3id.org/wallet/v1"],
 "id": "urn:uuid:1d52bc38-c336-455a-8227-2c1e635df2d7",
@@ -772,7 +773,7 @@ Here is an example of using Meta Data to reference non-standard data:
       <p>Also known as a signed encrypted wallet.</p>
 
       <p>
-        An integrity protected, authenticated and privacy preserving
+        An integrity-protected, authenticated, and privacy-preserving
         representation of a wallet.
       </p>
 
