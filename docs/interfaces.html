@@ -3,13 +3,13 @@
     <h2>Interface</h2>
 
     <p>
-        Interface functions are abstract, they take wallet contents and options
+        Interface functions are abstract. They take wallet contents and options
         as input, and they produce wallet contents and side effects as output.
     </p>
 
     <p>
         In order to ensure portability, wallet interfaces MUST be functions of
-        JSON, and not take complex instances of classes, functions or other
+        JSON, and MUST NOT take complex instances of classes, functions or other
         types of object.
     </p>
 
@@ -18,9 +18,14 @@
 
         For example:
     <ul>
-        <li>A verifiable credential wallet might not implement the <code>Transfer</code> interface.
-        Also, the <code>Query</code> interface of a verifiable credential wallet might be specific to credential search.</li>
-        <li>Similarly, a wallet implementation which relies on an external storage, such as encrypted data vaults, might choose not to implement <code>Export</code>, <code>Import</code>, <code>Lock</code>, and/or <code>Unlock</code> interfaces.</li>
+        <li>A verifiable credential wallet might not implement the 
+        <code>Transfer</code> interface.</li>
+        <li>The <code>Query</code> interface of a verifiable credential wallet 
+        might be specific to credential search.</li>
+        <li>A wallet implementation which relies on an external storage, 
+        such as encrypted data vaults, might choose not to implement 
+        <code>Export</code>, <code>Import</code>, <code>Lock</code>, and/or 
+        <code>Unlock</code> interfaces.</li>
     </ul>
 
     </p>
@@ -87,7 +92,7 @@
         <h3>SignRaw</h3>
         <p>
         Takes a Buffer as input, and an <code>options</code> object, which
-        contains at least a <code>verificationMethod</code>, and may content
+        contains at least a <code>verificationMethod</code>, and may contain
         additonal details such as <code>alg</code> or other JOSE related
         terms.
         </p>
@@ -96,9 +101,11 @@
 
         <p>
             This method may not be necessary for implementations that rely on
-            other dedicated interface function to perform signing.
+            other dedicated interface functions to perform signing.
 
-            For example, a verifiable credential wallet that adds proofs using <code>Issue</code>, <code>Prove</code> interfaces might not implement this interface.
+            For example, a verifiable credential wallet that adds proofs 
+            using <code>Issue</code> or <code>Prove</code> interfaces might 
+            not implement this interface.
         </p>
     </section>
 
@@ -106,7 +113,7 @@
         <h3>VerifyRaw</h3>
         <p>
         Takes a Buffer as input, and an <code>options</code> object, which
-        contains at least a <code>verificationMethod</code>, and may content
+        contains at least a <code>verificationMethod</code>, and may contain
         additonal details such as <code>alg</code> or other JOSE related
         terms.
         </p>
@@ -117,7 +124,9 @@
             This method may not be necessary for implementations that rely on
             other dedicated interface functions to verify signatures.
 
-            For example, a verifiable credential wallet that can verify credential proofs using <code>Verify</code> interface might not implement this interface.
+            For example, a verifiable credential wallet that can verify 
+            credential proofs using <code>Verify</code> interface might 
+            not implement this interface.
         </p>
     </section>
 
@@ -172,7 +181,7 @@
     <section>
         <h3>Prove</h3>
         <p>
-        Takes a list of Verifiable Credentials ids, and an
+        Takes a list of Verifiable Credential IDs, and an
         <code>options</code> object.
         </p>
 
@@ -208,7 +217,7 @@
 
     <section>
         <h3>Transfer</h3>
-        <p>Takes a Currency, Key or Address and recipient options as input.</p>
+        <p>Takes a Currency, Key, or Address, and recipient options as input.</p>
 
         <p>Produces a Connection, and transaction side effect.</p>
     </section>
@@ -219,10 +228,10 @@
 
         <p>Type input can be wallet implementation specific.</p>
 
-        <p>Since all universal wallet data models are JSON object types, here are the query types that can be supported:</p>
+        <p>Since all universal wallet data models are JSON object types, the following query types can be supported:</p>
         <ul>
-            <li><a href="https://www.w3.org/TR/json-ld11-framing/">QueryByFrame:</a> Can be supported by all data models.</li>
-            <li><a href="https://identity.foundation/presentation-exchange/">PresentationExchange:</a> Can be supported by verifiable credential data model only.</li>
+            <li><a href="https://www.w3.org/TR/json-ld11-framing/">QueryByFrame</a>: Can be supported by all data models.</li>
+            <li><a href="https://identity.foundation/presentation-exchange/">PresentationExchange</a>: Can be supported by verifiable credential data model only.</li>
         </ul>
 
         <pre class="example highlight" title="QueryByFrame example">
