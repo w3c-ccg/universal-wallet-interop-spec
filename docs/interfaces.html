@@ -1,0 +1,281 @@
+
+<section id="interface" class="normative">
+    <h2>Interface</h2>
+
+    <p>
+        Interface functions are abstract. They take wallet contents and options
+        as input, and they produce wallet contents and side effects as output.
+    </p>
+
+    <p>
+        In order to ensure portability, wallet interfaces MUST be functions of
+        JSON, and MUST NOT take complex instances of classes, functions or other
+        types of object.
+    </p>
+
+    <p>
+        A wallet implementation MAY implement a subset of the interfaces defined below.
+
+        For example:
+    <ul>
+        <li>A verifiable credential wallet might not implement the 
+        <code>Transfer</code> interface.</li>
+        <li>The <code>Query</code> interface of a verifiable credential wallet 
+        might be specific to credential search.</li>
+        <li>A wallet implementation which relies on an external storage, 
+        such as encrypted data vaults, might choose not to implement 
+        <code>Export</code>, <code>Import</code>, <code>Lock</code>, and/or 
+        <code>Unlock</code> interfaces.</li>
+    </ul>
+
+    </p>
+
+    <section>
+        <h3>Import</h3>
+        <p>
+        Takes a serialized exported wallet representation as input. Loads the
+        representation into wallet software.
+        </p>
+        <p>
+        This method may not be necessary for implementations that rely on
+        external storage, such as Encrypted Data Vaults.
+        </p>
+    </section>
+
+    <section>
+        <h3>Export</h3>
+
+        <p>Only ciphertext wallet contents can be exported.</p>
+
+        <p>Produces a serialized exported wallet representation.</p>
+
+        <p>
+            This method may not be necessary for implementations that rely on
+            external storage, such as Encrypted Data Vaults.
+        </p>
+    </section>
+
+
+    <section>
+        <h3>Unlock</h3>
+        <p>
+        Transforms one or more wallet contents from ciphertext to plaintext.
+        </p>
+
+        <p>Requires knowledge of the password used to lock the wallet.</p>
+
+        <p>
+        This method may not be necessary for implementations that rely on
+        external storage, such as Encrypted Data Vaults.
+        </p>
+    </section>
+
+    <section>
+        <h3>Lock</h3>
+        <p>
+        Transforms one or more wallet contents from plaintext to ciphertext.
+        </p>
+        <p>Requires knowledge of the password used to lock the wallet.</p>
+
+        <p>
+        This method may not be necessary for implementations that rely on
+        external storage, such as Encrypted Data Vaults.
+        </p>
+
+        <div class="issue" data-number="5">
+        Mostly a reference implementation issue. Locked representation should
+        indicate a best practice.
+        </div>
+    </section>
+
+    <section>
+        <h3>SignRaw</h3>
+        <p>
+        Takes a Buffer as input, and an <code>options</code> object, which
+        contains at least a <code>verificationMethod</code>, and may contain
+        additonal details such as <code>alg</code> or other JOSE related
+        terms.
+        </p>
+
+        <p>Must support detached signatures.</p>
+
+        <p>
+            This method may not be necessary for implementations that rely on
+            other dedicated interface functions to perform signing.
+
+            For example, a verifiable credential wallet that adds proofs 
+            using <code>Issue</code> or <code>Prove</code> interfaces might 
+            not implement this interface.
+        </p>
+    </section>
+
+    <section>
+        <h3>VerifyRaw</h3>
+        <p>
+        Takes a Buffer as input, and an <code>options</code> object, which
+        contains at least a <code>verificationMethod</code>, and may contain
+        additonal details such as <code>alg</code> or other JOSE related
+        terms.
+        </p>
+
+        <p>Must support detached signatures.</p>
+
+        <p>
+            This method may not be necessary for implementations that rely on
+            other dedicated interface functions to verify signatures.
+
+            For example, a verifiable credential wallet that can verify 
+            credential proofs using <code>Verify</code> interface might 
+            not implement this interface.
+        </p>
+    </section>
+
+    <section>
+        <h3>Verify</h3>
+
+        <p>
+        Takes a Verifiable Credential or Verifiable Presentation as input;
+        returns a boolean <code>verified</code>, and an error object
+        <code>error</code> if <code>verified</code> if false.
+        </p>
+    </section>
+
+    <section>
+        <h3>Issue</h3>
+
+        <p>
+        Takes a Verifiable Credential without a <code>proof</code>, and an
+        <code>options</code> object.
+        </p>
+
+        <p>Produces a Verifiable Credential.</p>
+
+        <p>
+            Here are the options that can be used to produce a verifiable credential:
+        <ul>
+            <li><a href="https://w3c-ccg.github.io/ld-proofs/#dfn-verification-method">verificationMethod</a> </li>
+            <li><a href="https://w3c-ccg.github.io/ld-proofs/#dfn-proofpurpose">proofPurpose </a> </li>
+            <li><a href="https://w3c-ccg.github.io/ld-proofs/#dfn-created">created </a> </li>
+            <li><a href="https://w3c-ccg.github.io/ld-proofs/#dfn-controller">controller </a> </li>
+            <li><a href="https://w3c-ccg.github.io/ld-proofs/#dfn-domain">domain </a> </li>
+            <li><a href="https://w3c-ccg.github.io/ld-proofs/#dfn-challenge">challenge </a> </li>
+            <li><a href="https://w3c-ccg.github.io/ld-proofs/#dfn-proof-type">proofType </a> </li>
+        </ul>
+        </p>
+
+        <pre class="example highlight" title="Issue credential example">
+            let credential = {...} // a verifiable credential without proof
+            let options = {
+            verificationMethod: "did:example:1234#key-1",
+            proofPurpose: "assertionMethod",
+            created: "2017-06-18T21:19:10Z"
+            controller: "did:example:1234",
+            domain: "https://www.example.com",
+            challenge: "0b4e419a-1410-4739-a58d-b37f4db10181",
+            proofType: "Ed25519Signature2018"
+            }
+            let verifiableCredential = wallet.Issue(credential, options)
+        </pre>
+    </section>
+
+    <section>
+        <h3>Prove</h3>
+        <p>
+        Takes a list of Verifiable Credential IDs, and an
+        <code>options</code> object.
+        </p>
+
+        <p>Produces a Verifiable Presentation.</p>
+
+        <p>
+            Here are the options that can be used to produce a verifiable presentation:
+        <ul>
+            <li><a href="https://w3c-ccg.github.io/ld-proofs/#dfn-verification-method">verificationMethod</a> </li>
+            <li><a href="https://w3c-ccg.github.io/ld-proofs/#dfn-proofpurpose">proofPurpose </a> </li>
+            <li><a href="https://w3c-ccg.github.io/ld-proofs/#dfn-created">created </a> </li>
+            <li><a href="https://w3c-ccg.github.io/ld-proofs/#dfn-controller">controller </a> </li>
+            <li><a href="https://w3c-ccg.github.io/ld-proofs/#dfn-domain">domain </a> </li>
+            <li><a href="https://w3c-ccg.github.io/ld-proofs/#dfn-challenge">challenge </a> </li>
+            <li><a href="https://w3c-ccg.github.io/ld-proofs/#dfn-proof-type">proofType </a> </li>
+        </ul>
+        </p>
+
+        <pre class="example highlight" title="Prove credential example">
+            let ids = [...] // ids of verifiable credentials
+            let options = {
+            verificationMethod: "did:example:1234#key-1",
+            proofPurpose: "assertionMethod",
+            created: "2017-06-18T21:19:10Z"
+            controller: "did:example:1234",
+            domain: "https://www.example.com",
+            challenge: "0b4e419a-1410-4739-a58d-b37f4db10181",
+            proofType: "Ed25519Signature2018"
+            }
+            let verifiableCredential = wallet.Prove(ids, options)
+        </pre>
+    </section>
+
+    <section>
+        <h3>Transfer</h3>
+        <p>Takes a Currency, Key, or Address, and recipient options as input.</p>
+
+        <p>Produces a Connection, and transaction side effect.</p>
+    </section>
+
+    <section>
+        <h3>Query</h3>
+        <p>Takes a Query and Type as input, and returns a collection of results based on current wallet contents.</p>
+
+        <p>Type input can be wallet implementation specific.</p>
+
+        <p>Since all universal wallet data models are JSON object types, the following query types can be supported:</p>
+        <ul>
+            <li><a href="https://www.w3.org/TR/json-ld11-framing/">QueryByFrame</a>: Can be supported by all data models.</li>
+            <li><a href="https://identity.foundation/presentation-exchange/">PresentationExchange</a>: Can be supported by verifiable credential data model only.</li>
+        </ul>
+
+        <pre class="example highlight" title="QueryByFrame example">
+            let search = {
+            "type": "QueryByFrame",
+            "query": {
+                "@context": {
+                    "@vocab": "http://example.org/"
+                },
+                "@type": "Library",
+                "contains": {
+                    "@type": "Book",
+                    "contains": {
+                    "@type": "Chapter"
+                    }
+                }
+                }
+            }
+            let results = wallet.Query(search)
+        </pre>
+
+        <pre class="example highlight" title="PresentationExchange example">
+            let search = {
+            "type": "PresentationExchange",
+            "query": {
+                "presentation_definition": {
+                    "id": "32f54163-7166-48f1-93d8-ff217bdb0653",
+                    "locale": "en-US",
+                    "input_descriptors": [{
+                    "id": "name_input",
+                    "name": "Full Legal Name",
+                    "purpose": "We need your full legal name.",
+                    "schema": [
+                        {
+                        "uri": "https://name-standards.com/name.json",
+                        "required": true
+                        }
+                    ]
+                    }]
+                }
+                }
+            }
+            let results = vcWallet.Query(search)
+        </pre>
+    </section>
+
+</section>
