@@ -18,13 +18,13 @@
 
         For example:
     <ul>
-        <li>A verifiable credential wallet might not implement the 
+        <li>A verifiable credential wallet might not implement the
         <code>Transfer</code> interface.</li>
-        <li>The <code>Query</code> interface of a verifiable credential wallet 
+        <li>The <code>Query</code> interface of a verifiable credential wallet
         might be specific to credential search.</li>
-        <li>A wallet implementation which relies on an external storage, 
-        such as encrypted data vaults, might choose not to implement 
-        <code>Export</code>, <code>Import</code>, <code>Lock</code>, and/or 
+        <li>A wallet implementation which relies on an external storage,
+        such as encrypted data vaults, might choose not to implement
+        <code>Export</code>, <code>Import</code>, <code>Lock</code>, and/or
         <code>Unlock</code> interfaces.</li>
     </ul>
 
@@ -103,8 +103,8 @@
             This method may not be necessary for implementations that rely on
             other dedicated interface functions to perform signing.
 
-            For example, a verifiable credential wallet that adds proofs 
-            using <code>Issue</code> or <code>Prove</code> interfaces might 
+            For example, a verifiable credential wallet that adds proofs
+            using <code>Issue</code> or <code>Prove</code> interfaces might
             not implement this interface.
         </p>
     </section>
@@ -124,8 +124,8 @@
             This method may not be necessary for implementations that rely on
             other dedicated interface functions to verify signatures.
 
-            For example, a verifiable credential wallet that can verify 
-            credential proofs using <code>Verify</code> interface might 
+            For example, a verifiable credential wallet that can verify
+            credential proofs using <code>Verify</code> interface might
             not implement this interface.
         </p>
     </section>
@@ -174,7 +174,7 @@
             challenge: "0b4e419a-1410-4739-a58d-b37f4db10181",
             proofType: "Ed25519Signature2018"
             }
-            let verifiableCredential = wallet.Issue(credential, options)
+            let verifiableCredential = wallet.issue(credential, options)
         </pre>
     </section>
 
@@ -211,7 +211,33 @@
             challenge: "0b4e419a-1410-4739-a58d-b37f4db10181",
             proofType: "Ed25519Signature2018"
             }
-            let verifiableCredential = wallet.Prove(ids, options)
+            let verifiableCredential = wallet.prove(ids, options)
+        </pre>
+    </section>
+
+    <section>
+        <h3>Derive</h3>
+        <p>
+            Takes a Verifiable Credentials `id`, a JSON-LD <a href="https://w3c-ccg.github.io/ldp-bbs2020/#dfn-frame">`frame`</a> for selective disclosure, and an
+            <code>options</code> object.
+        </p>
+
+        <p>Produces a Derived Verifiable Credential.</p>
+
+        <p>
+            Here are the options that can be used to derive a verifiable credential:
+        <ul>
+            <li><a href="https://w3c-ccg.github.io/ldp-bbs2020/#nonce">nonce</a></li>
+        </ul>
+        </p>
+
+        <pre class="example highlight" title="Derive credential example">
+let id = "http://example.edu/credentials/1872" // id of the verifiable credential
+let frame = {...} // a JSON-LD frame
+let options = {
+  nonce: "0b4e419a-1410-4739-a58d-b37f4db10181"
+}
+let derivedCredential = wallet.derive(id, frame, options)
         </pre>
     </section>
 
@@ -250,7 +276,7 @@
                 }
                 }
             }
-            let results = wallet.Query(search)
+            let results = wallet.query(search)
         </pre>
 
         <pre class="example highlight" title="PresentationExchange example">
@@ -274,7 +300,7 @@
                 }
                 }
             }
-            let results = vcWallet.Query(search)
+            let results = vcWallet.query(search)
         </pre>
     </section>
 
