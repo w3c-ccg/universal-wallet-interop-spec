@@ -154,7 +154,6 @@
             Here are the options that can be used to produce a verifiable credential:
         <ul>
             <li><a href="https://w3c-ccg.github.io/ld-proofs/#dfn-verification-method">verificationMethod</a> </li>
-            <li><a href="https://w3c-ccg.github.io/ld-proofs/#dfn-proofpurpose">proofPurpose </a> </li>
             <li><a href="https://w3c-ccg.github.io/ld-proofs/#dfn-created">created </a> </li>
             <li><a href="https://w3c-ccg.github.io/ld-proofs/#dfn-controller">controller </a> </li>
             <li><a href="https://w3c-ccg.github.io/ld-proofs/#dfn-domain">domain </a> </li>
@@ -167,7 +166,6 @@
             let credential = {...} // a verifiable credential without proof
             let options = {
             verificationMethod: "did:example:1234#key-1",
-            proofPurpose: "assertionMethod",
             created: "2017-06-18T21:19:10Z"
             controller: "did:example:1234",
             domain: "https://www.example.com",
@@ -191,7 +189,6 @@
             Here are the options that can be used to produce a verifiable presentation:
         <ul>
             <li><a href="https://w3c-ccg.github.io/ld-proofs/#dfn-verification-method">verificationMethod</a> </li>
-            <li><a href="https://w3c-ccg.github.io/ld-proofs/#dfn-proofpurpose">proofPurpose </a> </li>
             <li><a href="https://w3c-ccg.github.io/ld-proofs/#dfn-created">created </a> </li>
             <li><a href="https://w3c-ccg.github.io/ld-proofs/#dfn-controller">controller </a> </li>
             <li><a href="https://w3c-ccg.github.io/ld-proofs/#dfn-domain">domain </a> </li>
@@ -204,7 +201,6 @@
             let ids = [...] // ids of verifiable credentials
             let options = {
             verificationMethod: "did:example:1234#key-1",
-            proofPurpose: "assertionMethod",
             created: "2017-06-18T21:19:10Z"
             controller: "did:example:1234",
             domain: "https://www.example.com",
@@ -250,57 +246,95 @@ let derivedCredential = wallet.derive(id, frame, options)
 
     <section>
         <h3>Query</h3>
-        <p>Takes a Query and Type as input, and returns a collection of results based on current wallet contents.</p>
+        <p>Takes single or multiple inputs containing Query and Type, and returns a collection of results based on current wallet contents.</p>
 
-        <p>Type input can be wallet implementation specific.</p>
+        <p>Type in each input can be wallet implementation specific.</p>
 
-        <p>Since all universal wallet data models are JSON object types, the following query types can be supported:</p>
-        <ul>
-            <li><a href="https://www.w3.org/TR/json-ld11-framing/">QueryByFrame</a>: Can be supported by all data models.</li>
-            <li><a href="https://identity.foundation/presentation-exchange/">PresentationExchange</a>: Can be supported by verifiable credential data model only.</li>
-        </ul>
+        <p>In case of verifiable credential wallet, query types from <a href="https://w3c-ccg.github.io/vp-request-spec/">verifiable presentation request spec</a> can be supported.</p>
+
+        Here is an example of querying credentials from a verifiable credential wallet using QueryByFrame type.
 
         <pre class="example highlight" title="QueryByFrame example">
-            let search = {
-            "type": "QueryByFrame",
-            "query": {
-                "@context": {
-                    "@vocab": "http://example.org/"
-                },
-                "@type": "Library",
-                "contains": {
-                    "@type": "Book",
-                    "contains": {
-                    "@type": "Chapter"
-                    }
+let search = [{
+    "type": "QueryByFrame",
+    "credentialQuery": [
+        {
+            "reason": "Please provide your Passport details.",
+            "frame": {
+                "@context": [
+                    "https://www.w3.org/2018/credentials/v1",
+                    "https://schema.org",
+                    "https://w3c-ccg.github.io/ldp-bbs2020/context/v1"
+                ],
+                "type": [
+                    "VerifiableCredential",
+                    "PassportCredential"
+                ],
+                "credentialSubject": {
+                    "@explicit": true,
+                    "givenName": {},
+                    "birthDate": {}
                 }
+            },
+            "trustedIssuer": [
+                {
+                    "issuer": "did:key:zUC7FLNC876WXsNTYP5FaWssvNWpiB5unYwVEXuZgcWCWzUHUCamoVwD7q3MSM84JqEANV5RnjzXsfLx77b4vCV3uEBQbaob1dYk2NtUGhguY7JP64BmvWCfNJ1h9wUgaZtLMNN",
+                    "required": true
                 }
-            }
-            let results = wallet.query(search)
+            ],
+            "required": true
+        }
+    ]
+}]
+
+let presentation = wallet.query(search)
         </pre>
 
-        <pre class="example highlight" title="PresentationExchange example">
-            let search = {
-            "type": "PresentationExchange",
-            "query": {
-                "presentation_definition": {
-                    "id": "32f54163-7166-48f1-93d8-ff217bdb0653",
-                    "locale": "en-US",
-                    "input_descriptors": [{
-                    "id": "name_input",
-                    "name": "Full Legal Name",
-                    "purpose": "We need your full legal name.",
-                    "schema": [
-                        {
-                        "uri": "https://name-standards.com/name.json",
-                        "required": true
-                        }
-                    ]
-                    }]
-                }
+        Here is an example of querying credentials from a verifiable credential wallet using multiple query types.
+        <pre class="example highlight" title="Multiple query example">
+let search = [
+    {
+        "type": "QueryByExample",
+        "credentialQuery": [
+            {
+                "reason": "We need you to prove your eligibility to work.",
+                "example": {
+                    "@context": [
+                        "https://www.w3.org/2018/credentials/v1",
+                        "https://w3id.org/citizenship/v1"
+                    ],
+                    "type": "PermanentResidentCard",
                 }
             }
-            let results = vcWallet.query(search)
+        ]
+    },
+    {
+        "type": "QueryByFrame",
+        "credentialQuery": [
+            {
+                "reason": "Please provide your Passport details.",
+                "frame": {
+                    "@context": [
+                        "https://www.w3.org/2018/credentials/v1",
+                        "https://schema.org",
+                        "https://w3c-ccg.github.io/ldp-bbs2020/context/v1"
+                    ],
+                    "type": [
+                        "VerifiableCredential",
+                        "PassportCredential"
+                    ],
+                    "credentialSubject": {
+                        "@explicit": true,
+                        "givenName": {},
+                        "birthDate": {}
+                    }
+                }
+            }
+        ]
+    }
+]
+
+let presentation = wallet.query(search)
         </pre>
     </section>
 
