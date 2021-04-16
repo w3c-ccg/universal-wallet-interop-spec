@@ -11,7 +11,7 @@
     "publish:stable:patch": "lerna publish patch --force-publish",
     "publish:stable:minor": "lerna publish minor",
     "publish:stable:major": "lerna publish major",
-    "publish:unstable": "lerna publish prerelease --preid unstable --yes"
+    "publish:unstable": "lerna publish prerelease --no-verify-access --preid unstable --yes"
   },
   "husky": {
     "hooks": {
