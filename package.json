@@ -8,7 +8,10 @@
     "test": "lerna run test --stream",
     "build": "lerna run build --stream",
     "shove": "git add -A; git commit -m 'chore(ci): test'; git push origin master",
-    "release": "lerna publish"
+    "publish:stable:patch": "lerna publish patch --force-publish",
+    "publish:stable:minor": "lerna publish minor",
+    "publish:stable:major": "lerna publish major",
+    "publish:unstable": "lerna publish prerelease --preid unstable --yes"
   },
   "husky": {
     "hooks": {
