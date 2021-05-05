@@ -52,8 +52,8 @@
     "typescript": "^3.9.9"
   },
   "dependencies": {
-    "@did-core/data-model": "^0.1.1-unstable.1",
-    "@did-core/did-ld-json": "^0.1.1-unstable.1",
+    "@did-core/data-model": "^0.1.1-unstable.9",
+    "@did-core/did-ld-json": "^0.1.1-unstable.9",
     "@transmute/did-key-bls12381": "^0.2.1-unstable.35",
     "@transmute/did-key-ed25519": "^0.2.1-unstable.35",
     "@transmute/did-key-secp256k1": "^0.2.1-unstable.35",

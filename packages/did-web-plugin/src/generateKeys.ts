@@ -23,11 +23,12 @@ export const generateKeys = async (type: string): Promise<any[]> => {
       return [keypairs.g1KeyPair, keypairs.g2KeyPair];
     }
     case 'p-256': {
+      const k = await didKeyWeb.KeyPair.generate({
+        kty: 'EC',
+        crvOrSize: 'P-256',
+      })
       return [
-        await didKeyWeb.KeyPair.generate({
-          kty: 'EC',
-          crvOrSize: 'P-256',
-        }),
+        k
       ];
     }
     case 'secp256k1': {
