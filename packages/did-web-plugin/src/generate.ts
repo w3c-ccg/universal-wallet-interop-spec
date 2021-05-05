@@ -24,18 +24,18 @@ const allVerificationMethodCurveTypes = Array.from(
 );
 
 const getKeys = async (did: string) => {
-  return [
+  return Promise.all([
     ...(await generateKeys('ed25519')),
     ...(await generateKeys('x25519')),
     ...(await generateKeys('bls12381')),
     ...(await generateKeys('p-256')),
     ...(await generateKeys('secp256k1')),
-  ].map((k: any, i: number) => {
-    let k1 = k.toJsonWebKeyPair(true);
+  ].map(async (k: any, i: number) => {
+    let k1 = await k.toJsonWebKeyPair(true);
     k1.id = `${did}#key-${i}`;
     k1.controller = did;
     return k1;
-  });
+  }));
 };
 
 export const getVerificationRelationship = (
@@ -61,7 +61,13 @@ export const generate = async (endpoint: string) => {
   const did = convertEndpointToDid(endpoint);
   const keys = await getKeys(did);
   const didDocument = {
-    '@context': 'https://www.w3.org/ns/did/v1',
+    // did core context is stale... more narrow contexts for all suites must be added here..
+    // work in progress here:
+    // https://github.com/transmute-industries/did-core/issues/17
+    // ^ this will align with the approach digital bazaar has started with did key 2020.
+    // for example: https://digitalbazaar.github.io/ed25519-signature-2020-context/contexts/ed25519-signature-2020-v1.jsonld
+    '@context': ['https://www.w3.org/ns/did/v1'], // this is obviously wrong... 
+    // did core does not define suites anymore.
     id: did,
     verificationMethod: getVerificationRelationship(
       allVerificationMethodCurveTypes,
@@ -83,5 +89,6 @@ export const generate = async (endpoint: string) => {
     ),
     keyAgreement: getVerificationRelationship(keyAgreementCurveTypes, keys),
   };
+
   return { keys, didDocument };
 };
