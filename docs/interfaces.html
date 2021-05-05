@@ -181,12 +181,12 @@
         <pre class="example highlight" title="Issue credential example">
             let credential = {...} // a verifiable credential without proof
             let options = {
-            verificationMethod: "did:example:1234#key-1",
-            created: "2017-06-18T21:19:10Z"
-            controller: "did:example:1234",
-            domain: "https://www.example.com",
-            challenge: "0b4e419a-1410-4739-a58d-b37f4db10181",
-            proofType: "Ed25519Signature2018"
+                verificationMethod: "did:example:1234#key-1",
+                created: "2017-06-18T21:19:10Z"
+                controller: "did:example:1234",
+                domain: "https://www.example.com",
+                challenge: "0b4e419a-1410-4739-a58d-b37f4db10181",
+                proofType: "Ed25519Signature2018"
             }
             let verifiableCredential = wallet.issue(credential, options)
         </pre>
@@ -216,12 +216,12 @@
         <pre class="example highlight" title="Prove credential example">
             let ids = [...] // ids of verifiable credentials
             let options = {
-            verificationMethod: "did:example:1234#key-1",
-            created: "2017-06-18T21:19:10Z"
-            controller: "did:example:1234",
-            domain: "https://www.example.com",
-            challenge: "0b4e419a-1410-4739-a58d-b37f4db10181",
-            proofType: "Ed25519Signature2018"
+                verificationMethod: "did:example:1234#key-1",
+                created: "2017-06-18T21:19:10Z"
+                controller: "did:example:1234",
+                domain: "https://www.example.com",
+                challenge: "0b4e419a-1410-4739-a58d-b37f4db10181",
+                proofType: "Ed25519Signature2018"
             }
             let verifiableCredential = wallet.prove(ids, options)
         </pre>
@@ -279,8 +279,8 @@ let search = [{
             "frame": {
                 "@context": [
                     "https://www.w3.org/2018/credentials/v1",
-                    "https://schema.org",
-                    "https://w3c-ccg.github.io/ldp-bbs2020/context/v1"
+                    "https://w3id.org/citizenship/v1",
+                    "https://w3id.org/security/bbs/v1"
                 ],
                 "type": [
                     "VerifiableCredential",
@@ -332,8 +332,8 @@ let search = [
                 "frame": {
                     "@context": [
                         "https://www.w3.org/2018/credentials/v1",
-                        "https://schema.org",
-                        "https://w3c-ccg.github.io/ldp-bbs2020/context/v1"
+                        "https://w3id.org/citizenship/v1",
+                        "https://w3id.org/security/bbs/v1"
                     ],
                     "type": [
                         "VerifiableCredential",
