@@ -61,7 +61,12 @@ export const generate = async (endpoint: string) => {
   const did = convertEndpointToDid(endpoint);
   const keys = await getKeys(did);
   const didDocument = {
-    '@context': 'https://www.w3.org/ns/did/v1',
+    // transmute context is required until more narrow contexts for all suites can be used.
+    // work in progress here:
+    // https://github.com/transmute-industries/ns.did.ai/tree/master/suites
+    // ^ this will align with the approach digital bazaar has started with did key 2020.
+    // for example: https://digitalbazaar.github.io/ed25519-signature-2020-context/contexts/ed25519-signature-2020-v1.jsonld
+    '@context': ['https://www.w3.org/ns/did/v1', 'https://ns.did.ai/transmute/v1'],
     id: did,
     verificationMethod: getVerificationRelationship(
       allVerificationMethodCurveTypes,
