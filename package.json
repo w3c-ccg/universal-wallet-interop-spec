@@ -28,10 +28,5 @@
     "lerna": "^3.20.2",
     "prettier": "^2.0.5",
     "typescript": "^3.8.3"
-  },
-  "dependencies": {
-    "@transmute/did-key-ed25519": "^0.2.1-unstable.24",
-    "@transmute/did-key-x25519": "^0.2.1-unstable.24",
-    "@transmute/universal-wallet": "^0.4.1"
   }
 }
