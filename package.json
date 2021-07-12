@@ -11,13 +11,8 @@
     "publish:stable:patch": "lerna publish patch --force-publish",
     "publish:stable:minor": "lerna publish minor",
     "publish:stable:major": "lerna publish major",
-    "publish:unstable": "lerna publish prerelease --no-verify-access --preid unstable --yes"
-  },
-  "husky": {
-    "hooks": {
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
-      "pre-push": "lerna run lint --since origin/master --exclude-dependents"
-    }
+    "publish:unstable": "lerna publish prerelease --no-verify-access --preid unstable --yes",
+    "prepare": "husky install"
   },
   "devDependencies": {
     "@commitlint/cli": "^9.0.1",
@@ -29,14 +24,9 @@
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-jest": "^23.13.2",
     "eslint-plugin-prettier": "^3.1.3",
-    "husky": "^4.2.5",
+    "husky": "^7.0.1",
     "lerna": "^3.20.2",
     "prettier": "^2.0.5",
     "typescript": "^3.8.3"
-  },
-  "dependencies": {
-    "@transmute/did-key-ed25519": "^0.2.1-unstable.24",
-    "@transmute/did-key-x25519": "^0.2.1-unstable.24",
-    "@transmute/universal-wallet": "^0.4.1"
   }
 }

@@ -1,5 +1,7 @@
 name: CI
+
 on: [push]
+
 jobs:
   ci:
     runs-on: ubuntu-latest
@@ -10,15 +12,20 @@ jobs:
       # https://github.com/actions/checkout/issues/118
       - run: |
           git fetch --no-tags --prune --depth=1 origin +refs/heads/master:refs/remotes/origin/master
-      - name: Use Node 12
+
+      - name: Use Node 14
         uses: actions/setup-node@v1
         with:
-          node-version: 12.x
+          node-version: 14.x
+
       - name: Install
         run: npm run install:ci
+
       - name: Lint
         run: npm run lint -- --since origin/master
+
       - name: Test
         run: npm run test -- --since origin/master
+
       - name: Build
         run: npm run build -- --since origin/master

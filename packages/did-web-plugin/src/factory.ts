@@ -19,9 +19,9 @@ export interface DidWebWallet {
 export const factoryDefaults: DidWebWallet = {
   didDocuments: {},
   verificationMethods: {},
-  generate: async function (endpoint: string): Promise<DidWebWallet> {
+  generate: async function(endpoint: string): Promise<DidWebWallet> {
     const { keys, didDocument } = await generate(endpoint);
-    keys.forEach((k) => {
+    keys.forEach(k => {
       this.addVerificationMethod(k);
     });
     this.addDidDocument(
@@ -35,11 +35,11 @@ export const factoryDefaults: DidWebWallet = {
     );
     return this;
   },
-  addDidDocument: function (didDocument: DidDocument): DidWebWallet {
+  addDidDocument: function(didDocument: DidDocument): DidWebWallet {
     this.didDocuments[(didDocument.entries as any).id] = didDocument;
     return this;
   },
-  addVerificationMethod: function (keypair: any): DidWebWallet {
+  addVerificationMethod: function(keypair: any): DidWebWallet {
     this.verificationMethods[keypair.id] = keypair;
     return this;
   },
