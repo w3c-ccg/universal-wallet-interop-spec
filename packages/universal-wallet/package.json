@@ -22,11 +22,6 @@
     "size": "size-limit",
     "analyze": "size-limit --why"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run lint"
-    }
-  },
   "prettier": {
     "printWidth": 80,
     "semi": true,
@@ -45,7 +40,6 @@
   ],
   "devDependencies": {
     "@size-limit/preset-small-lib": "^4.9.1",
-    "husky": "^4.3.8",
     "size-limit": "^4.9.1",
     "ts-jest": "^26.5.6",
     "tsdx": "^0.14.1",

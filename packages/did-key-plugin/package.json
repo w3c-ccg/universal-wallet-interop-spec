@@ -27,11 +27,6 @@
     "lint": "tsdx lint src --fix",
     "prepare": "tsdx build"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run lint"
-    }
-  },
   "prettier": {
     "printWidth": 80,
     "semi": true,
@@ -44,7 +39,6 @@
   },
   "devDependencies": {
     "@transmute/universal-wallet-test-vectors": "^0.5.0",
-    "husky": "^4.2.5",
     "serialize-javascript": ">=3.1.0",
     "tsdx": "^0.13.3",
     "tslib": "^2.0.0",
@@ -54,7 +48,8 @@
   "dependencies": {
     "@transmute/did-key-ed25519": "^0.2.1-unstable.31",
     "core-js": "^3.8.3",
-    "factory.ts": "^0.5.1"
+    "factory.ts": "^0.5.1",
+    "isomorphic-webcrypto": "^2.3.8"
   },
   "gitHead": "f987b871245fcf117da477bac5cb2fd99adf70be"
 }
