@@ -1,4 +1,3 @@
-
 <section id="protocol" class="informative">
     <h2>Protocol</h2>
     <p class="advisement">The following protocol specifications are unstable.</p>
@@ -7,28 +6,41 @@
         <h3>CHAPI</h3>
         <p>
             See the <a href="https://w3c-ccg.github.io/credential-handler-api/">
-             latest editors draft
-             </a>.
-         </p>
+                latest editors draft
+            </a>.
+        </p>
     </section>
 
     <section>
         <h3>WACI</h3>
         <p>
-           See the <a href="https://github.com/decentralized-identity/waci-presentation-exchange">
-            latest editors draft
+            See the <a href="https://identity.foundation/waci-presentation-exchange/">
+                latest editors draft
             </a>.
         </p>
+
+        <p>
+            A wallet can participate in <a href="https://identity.foundation/waci-presentation-exchange/">WACI Credential Share Flow</a> and
+            <a href="https://identity.foundation/waci-presentation-exchange/">WACI Credential Issuance Flow</a> using the interfaces given in section below.
+        </p>
+
         <section>
-            <h3>ProposePresentation</h3>
-            <p>Accepts an out of band invitation and initiates share interaction from wallet by sending message proposing presentation.</p>
-            <p>Takes <code>invitation</code> from relying party, optional <code>fromDID</code> to customize the DID to be used for sending message, optional <code>timeout</code>
-             to wait for request presentation message from relying party and returns request presentation message from relying party.</p>
-            <p>
-                Refer <a href="https://identity.foundation/waci-presentation-exchange/#step-2-send-message-proposing-presentation">
-                WACI Send Message Proposing Presentation</a> for more details.
-            </p>
-            <pre class="example highlight" title="Propose presentation from wallet example">
+            <h3>Interface</h3>
+
+            <section>
+                <h3>ProposePresentation</h3>
+                <p>Accepts an out of band invitation and initiates share interaction from wallet by sending message
+                    proposing presentation.</p>
+                <p>Takes <code>invitation</code> from relying party, optional <code>fromDID</code> to customize the DID
+                    to be used for sending message, optional <code>timeout</code>
+                    to wait for request presentation message from relying party and returns request presentation message
+                    from relying party.</p>
+                <p>
+                    Refer <a
+                            href="https://identity.foundation/waci-presentation-exchange/#step-2-send-message-proposing-presentation">
+                        WACI Send Message Proposing Presentation</a> for more details.
+                </p>
+                <pre class="example highlight" title="Propose presentation from wallet example">
                 // out of band invitation from relying party.
                 let invitation = {
                       "type": "https://didcomm.org/out-of-band/2.0/invitation",
@@ -44,7 +56,7 @@
                 let requestPresentation = await wallet.proposePresentation(invitation, "did:example:wallet", someTimeout)
             </pre>
 
-            <pre class="example highlight" title="Sample of propose presentation message sent from wallet">
+                <pre class="example highlight" title="Sample of propose presentation message sent from wallet">
                 {
                     "type": "https://didcomm.org/present-proof/3.0/propose-presentation",
                     "id": "95e63a5f-73e1-46ac-b269-48bb22591bfa",
@@ -54,7 +66,7 @@
                 }
             </pre>
 
-            <pre class="example highlight" title="Sample of request presentation message from relying party">
+                <pre class="example highlight" title="Sample of request presentation message from relying party">
                 {
                   "type": "https://didcomm.org/present-proof/3.0/request-presentation",
                   "id": "0ac534c8-98ed-4fe3-8a41-3600775e1e92",
@@ -133,19 +145,21 @@
                 }
             </pre>
 
-        </section>
+            </section>
 
-        <section>
-            <h3>PresentProof</h3>
-            <p>Takes <code>ThreadID</code> of the presentation request from ongoing credential interaction, <code>presentation</code> to be sent to relying party
-                and optional <code>timeout</code> to wait for acknowledgement message from relying party.</p>
-            <p>
-                Refer <a href="https://identity.foundation/waci-presentation-exchange/#step-4-present-proof">
-                    WACI Present Proof</a> for more details.
-            </p>
-            <pre class="example highlight" title="Present proof example">
+            <section>
+                <h3>PresentProof</h3>
+                <p>Takes <code>ThreadID</code> of the presentation request from ongoing share credential interaction,
+                    <code>presentation</code> to be sent to relying party
+                    and optional optional <code>waitForAck</code> and <code>timeout</code> to wait for acknowledgement
+                    message from relying party.</p>
+                <p>
+                    Refer <a href="https://identity.foundation/waci-presentation-exchange/#step-4-present-proof">
+                        WACI Present Proof</a> for more details.
+                </p>
+                <pre class="example highlight" title="Present proof example">
                 // presentation to be sent to relying party.
-                let presentation = {
+                const presentation = {
                                     "@context": [
                                       "https://www.w3.org/2018/credentials/v1",
                                       "https://identity.foundation/presentation-exchange/submission/v1"
@@ -210,13 +224,14 @@
                                   }
 
                 // thread ID of the credential interaction.
-                let threadID = "95e63a5f-73e1-46ac-b269-48bb22591bfa" // requestPresentation.thID
+                const threadID = "95e63a5f-73e1-46ac-b269-48bb22591bfa" // requestPresentation.thID
+                const waitForAck = true // wait for acknowledgement from relying party regarding protocol execution completion.
 
                 // send present proof message and wait for acknowledgement message.
-                let ack = await wallet.presentProof(threadID, presentation, someTimeout)
+                let ack = await wallet.presentProof(threadID, presentation, waitForAck, someTimeout)
             </pre>
 
-            <pre class="example highlight" title="Example of present proof message sent from wallet">
+                <pre class="example highlight" title="Example of present proof message sent from wallet">
                 {
                   "type": "https://didcomm.org/present-proof/3.0/presentation",
                   "id": "f1ca8245-ab2d-4d9c-8d7d-94bf310314ef",
@@ -297,7 +312,7 @@
                 }
             </pre>
 
-            <pre class="example highlight" title="Example of acknowledgement message from relying party">
+                <pre class="example highlight" title="Example of acknowledgement message from relying party">
                 {
                   "type":"https://didcomm.org/present-proof/3.0/ack",
                   "id":"e2f3747b-41e8-4e46-abab-ba51472ab1c3",
@@ -311,14 +326,620 @@
                 }
             </pre>
 
-        </section>
+            </section>
 
+            <section>
+                <h3>ProposeCredential</h3>
+                <p>Accepts an out of band invitation and initiates <a
+                            href="https://identity.foundation/waci-presentation-exchange/#step-2-issue-credential-propose-credential">credential
+                        issuance interaction</a> from wallet by sending message proposing credential.</p>
+                <p>Takes <code>invitation</code> from issuer, optional <code>fromDID</code> to customize the DID to be
+                    used for sending message, optional <code>timeout</code>
+                    to wait for offer credential message from issuer and return.</p>
+                <p>
+                    Refer <a
+                            href="https://identity.foundation/waci-presentation-exchange/#step-2-issue-credential-propose-credential">
+                        WACI Issuance - Send Propose Credential Message</a> for more details.
+                </p>
+                <pre class="example highlight" title="Propose credential from wallet example">
+                // out of band invitation from issuer.
+                 let invitation = {
+                       "type":"https://didcomm.org/out-of-band/2.0/invitation",
+                       "id":"f137e0db-db7b-4776-9530-83c808a34a42",
+                       "from":"did:example:issuer",
+                       "body":{
+                          "goal_code":"streamlined-vc",
+                          "accept":[
+                             "didcomm/v2"
+                          ]
+                       }
+                    }
+
+                // accept invitation, send propose credential message and wait for offer presentation.
+                let offer = await wallet.proposeCredential(invitation, "did:example:holder", someTimeout)
+            </pre>
+
+                <pre class="example highlight" title="Sample of propose credential message sent from wallet">
+               {
+                   "type":"https://didcomm.org/issue-credential/3.0/propose-credential",
+                   "id":"7f62f655-9cac-4728-854a-775ba6944593",
+                   "pthid":"f137e0db-db7b-4776-9530-83c808a34a42",
+                   "from":"did:example:holder",
+                   "to":[
+                      "did:example:issuer"
+                   ]
+                }
+            </pre>
+
+                <pre class="example highlight" title="Sample of offer credential message from wallet">
+               {
+                   "type":"https://didcomm.org/issue-credential/3.0/offer-credential",
+                   "id":"07c44208-06a9-4f8a-a5ce-8ce953270d4b",
+                   "pthid":"f137e0db-db7b-4776-9530-83c808a34a42",
+                   "from":"did:example:issuer",
+                   "to":[
+                      "did:example:holder"
+                   ],
+                   "body":{
+
+                   },
+                   "attachments":[
+                      {
+                         "id":"e00e11d4-906d-4c88-ba72-7c66c7113a78",
+                         "media_type":"application/json",
+                         "format":"dif/credential-manifest/manifest@v1.0",
+                         "data":{
+                            "json":{
+                               "options":{
+                                  "challenge":"508adef4-b8e0-4edf-a53d-a260371c1423",
+                                  "domain":"9rf25a28rs96"
+                               },
+                               "id":"dcc75a16-19f5-4273-84ce-4da69ee2b7fe",
+                               "version":"0.1.0",
+                               "issuer":{
+                                  "id":"did:example:123?linked-domains=3",
+                                  "name":"Washington State Government",
+                                  "styles":{
+
+                                  }
+                               },
+                               "presentation_definition":{
+                                  "id":"8246867e-fdce-48de-a825-9d84ec16c6c9",
+                                  "frame":{
+                                     "@context":[
+                                        "https://www.w3.org/2018/credentials/v1",
+                                        "https://w3id.org/citizenship/v1",
+                                        "https://w3id.org/security/suites/bls12381-2020/v1"
+                                     ],
+                                     "type":[
+                                        "VerifiableCredential",
+                                        "PermanentResidentCard"
+                                     ],
+                                     "credentialSubject":{
+                                        "@explicit":true,
+                                        "type":[
+                                           "PermanentResident"
+                                        ],
+                                        "givenName":{
+
+                                        },
+                                        "familyName":{
+
+                                        },
+                                        "birthCountry":{
+
+                                        },
+                                        "birthDate":{
+
+                                        }
+                                     }
+                                  },
+                                  "input_descriptors":[
+                                     {
+                                        "id":"prc_input",
+                                        "name":"Permanent Resident Card",
+                                        "purpose":"We need PRC to verify your status.",
+                                        "schema":"https://w3id.org/citizenship#PermanentResidentCard",
+                                        "constraints":{
+                                           "fields":[
+                                              {
+                                                 "path":[
+                                                    "$.credentialSubject.givenName"
+                                                 ],
+                                                 "filter":{
+                                                    "type":"string"
+                                                 }
+                                              },
+                                              {
+                                                 "path":[
+                                                    "$.credentialSubject.familyName"
+                                                 ],
+                                                 "filter":{
+                                                    "type":"string"
+                                                 }
+                                              },
+                                              {
+                                                 "path":[
+                                                    "$.credentialSubject.birthCountry"
+                                                 ],
+                                                 "filter":{
+                                                    "type":"string"
+                                                 }
+                                              },
+                                              {
+                                                 "path":[
+                                                    "$.credentialSubject.birthDate"
+                                                 ],
+                                                 "filter":{
+                                                    "type":"string"
+                                                 }
+                                              }
+                                           ]
+                                        }
+                                     }
+                                  ]
+                               },
+                               "output_descriptors":[
+                                  {
+                                     "id":"driver_license_output",
+                                     "schema":"https://schema.org/EducationalOccupationalCredential",
+                                     "display":{
+                                        "title":{
+                                           "path":[
+                                              "$.name",
+                                              "$.vc.name"
+                                           ],
+                                           "fallback":"Washington State Driver License"
+                                        },
+                                        "subtitle":{
+                                           "path":[
+                                              "$.class",
+                                              "$.vc.class"
+                                           ],
+                                           "fallback":"Class A, Commercial"
+                                        },
+                                        "description":{
+                                           "text":"License to operate a vehicle with a gross combined weight rating (GCWR) of 26,001 or more pounds, as long as the GVWR of the vehicle(s) being towed is over 10,000 pounds."
+                                        },
+                                        "properties":[
+                                           {
+                                              "path":[
+                                                 "$.donor",
+                                                 "$.vc.donor"
+                                              ],
+                                              "fallback":"Unknown",
+                                              "label":"Organ Donor"
+                                           }
+                                        ]
+                                     },
+                                     "styles":{
+                                        "thumbnail":{
+                                           "uri":"https://dol.wa.com/logo.png",
+                                           "alt":"Washington State Seal"
+                                        },
+                                        "hero":{
+                                           "uri":"https://dol.wa.com/happy-people-driving.png",
+                                           "alt":"Happy people driving"
+                                        },
+                                        "background":{
+                                           "color":"#ff0000"
+                                        },
+                                        "text":{
+                                           "color":"#d4d400"
+                                        }
+                                     }
+                                  }
+                               ]
+                            }
+                         }
+                      },
+                      {
+                         "id":"b55f39c1-a7e5-4d4f-8ba0-716a19ec013a",
+                         "media_type":"application/json",
+                        "format":"dif/credential-manifest/fulfillment@v1.0",
+                         "data":{
+                            "json":{
+                               "@context":[
+                                  "https://www.w3.org/2018/credentials/v1",
+                                  "https://identity.foundation/credential-manifest/fulfillment/v1"
+                               ],
+                               "type":[
+                                  "VerifiablePresentation",
+                                  "CredentialFulfillment"
+                               ],
+                               "credential_fulfillment":{
+                                  "id":"a30e3b91-fb77-4d22-95fa-871689c322e2",
+                                  "manifest_id":"dcc75a16-19f5-4273-84ce-4da69ee2b7fe",
+                                  "descriptor_map":[
+                                     {
+                                        "id":"driver_license_output",
+                                        "format":"ldp_vc",
+                                        "path":"$.verifiableCredential[0]"
+                                     }
+                                  ]
+                               },
+                               "verifiableCredential":[
+                                  {
+                                     "@context":"https://www.w3.org/2018/credentials/v1",
+                                     "id":"https://eu.com/claims/DriversLicense",
+                                     "type":[
+                                        "EUDriversLicense"
+                                     ],
+                                     "issuer":"did:foo:123",
+                                     "issuanceDate":"2010-01-01T19:73:24Z",
+                                     "credentialSubject":{
+                                        "id":"did:example:ebfeb1f712ebc6f1c276e12ec21",
+                                        "license":{
+                                           "number":"34DGE352",
+                                           "dob":"07/13/80"
+                                        }
+                                     }
+                                  }
+                               ]
+                            }
+                         }
+                      }
+                   ]
+                }
+            </pre>
+
+            </section>
+
+            <section>
+                <h3>RequestCredential</h3>
+                <p>Takes <code>ThreadID</code> of the offer credential message from ongoing issue credential
+                    interaction, <code>presentation</code> to be sent to issuer
+                    and optional <code>waitForAck</code> and <code>timeout</code> to wait for acknowledgement message
+                    from relying party.</p>
+                <p>
+                    Refer <a
+                            href="https://identity.foundation/waci-presentation-exchange/#step-4-issue-credential-request-credential-credential-application">
+                        WACI Issuance - Send Request Credential</a> for more details.
+                </p>
+                <pre class="example highlight" title="Request credential example">
+                // sample presentation to be sent to issuer if requested. It might contain credentials issuer requested as part of offer credential message or DID Auth response.
+                const presentation = {
+                                  "@context": [
+                                    "https://www.w3.org/2018/credentials/v1",
+                                    "https://identity.foundation/credential-manifest/application/v1"
+                                  ],
+                                  "type": [
+                                    "VerifiablePresentation",
+                                    "CredentialApplication"
+                                  ],
+                                  "credential_application": {
+                                    "id": "9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d",
+                                    "manifest_id": "dcc75a16-19f5-4273-84ce-4da69ee2b7fe",
+                                    "format": {
+                                      "ldp_vc": {
+                                        "proof_type": [
+                                          "JsonWebSignature2020",
+                                          "EcdsaSecp256k1Signature2019"
+                                        ]
+                                      }
+                                    }
+                                  },
+                                  "presentation_submission": {
+                                    "id": "2e161b2c-606b-416f-b04f-7f06edac55a1",
+                                    "definition_id": "8246867e-fdce-48de-a825-9d84ec16c6c9",
+                                    "descriptor_map": [
+                                      {
+                                        "id": "prc_input",
+                                        "format": "ldp_vp",
+                                        "path": "$.verifiableCredential[0]"
+                                      }
+                                    ]
+                                  },
+                                  "verifiableCredential": [
+                                    {
+                                      "@context": [
+                                        "https://www.w3.org/2018/credentials/v1",
+                                        "https://w3id.org/citizenship/v1",
+                                        "https://w3id.org/security/bbs/v1"
+                                      ],
+                                      "id": "urn:uvci:af5vshde843jf831j128fj",
+                                      "type": [
+                                        "VaccinationCertificate",
+                                        "PermanentResidentCard"
+                                      ],
+                                      "name": "Permanent Resident Card",
+                                      "description": "Permanent Resident Card of Mr.Louis Pasteu",
+                                      "expirationDate": "2029-12-03T12:19:52Z",
+                                      "issuanceDate": "2019-12-03T12:19:52Z",
+                                      "issuer": "did:example:456",
+                                      "credentialSubject": {
+                                        "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+                                        "givenName": "Louis",
+                                        "familyName": "Pasteur",
+                                        "birthCountry": "Bahamas",
+                                        "birthDate": "1958-07-17"
+                                      },
+                                      "proof": {
+                                        "type": "BbsBlsSignatureProof2020",
+                                        "created": "2021-02-18T23:04:28Z",
+                                        "nonce": "JNGovx4GGoi341v/YCTcZq7aLWtBtz8UhoxEeCxZFevEGzfh94WUSg8Ly/q+2jLqzzY=",
+                                        "proofPurpose": "assertionMethod",
+                                        "proofValue": "AB0GQA//jbDwMgaIIJeqP3fRyMYi6WDGhk0JlGJc/sk4ycuYGmyN7CbO4bA7yhIW/YQbHEkOgeMy0QM+usBgZad8x5FRePxfo4v1dSzAbJwWjx87G9F1lAIRgijlD4sYni1LhSo6svptDUmIrCAOwS2raV3G02mVejbwltMOo4+cyKcGlj9CzfjCgCuS1SqAxveDiMKGAAAAdJJF1pO6hBUGkebu/SMmiFafVdLvFgpMFUFEHTvElUQhwNSp6vxJp6Rs7pOVc9zHqAAAAAI7TJuDCf7ramzTo+syb7Njf6ExD11UKNcChaeblzegRBIkg3HoWgwR0hhd4z4D5/obSjGPKpGuD+1DoyTZhC/wqOjUZ03J1EtryZrC+y1DD14b4+khQVLgOBJ9+uvshrGDbu8+7anGezOa+qWT0FopAAAAEG6p07ghODpi8DVeDQyPwMY/iu2Lh7x3JShWniQrewY2GbsACBYOPlkNNm/qSExPRMe2X7UPpdsxpUDwqbObye4EXfAabgKd9gCmj2PNdvcOQAi5rIuJSGa4Vj7AtKoW/2vpmboPoOu4IEM1YviupomCKOzhjEuOof2/y5Adfb8JUVidWqf9Ye/HtxnzTu0HbaXL7jbwsMNn5wYfZuzpmVQgEXss2KePMSkHcfScAQNglnI90YgugHGuU+/DQcfMoA0+JviFcJy13yERAueVuzrDemzc+wJaEuNDn8UiTjAdVhLcgnHqUai+4F6ONbCfH2B3ohB3hSiGB6C7hDnEyXFOO9BijCTHrxPv3yKWNkks+3JfY28m+3NO0e2tlyH71yDX0+F6U388/bvWod/u5s3MpaCibTZEYoAc4sm4jW03HFYMmvYBuWOY6rGGOgIrXxQjx98D0macJJR7Hkh7KJhMkwvtyI4MaTPJsdJGfv8I+RFROxtRM7RcFpa4J5wF/wQnpyorqchwo6xAOKYFqCqKvI9B6Y7Da7/0iOiWsjs8a4zDiYynfYavnz6SdxCMpHLgplEQlnntqCb8C3qly2s5Ko3PGWu4M8Dlfcn4TT8YenkJDJicA91nlLaE8TJbBgsvgyT+zlTsRSXlFzQc+3KfWoODKZIZqTBaRZMft3S/",
+                                        "verificationMethod": "did:example:123#key-1"
+                                      }
+                                    }
+                                  ],
+                                  "proof": {
+                                    "type": "Ed25519Signature2018",
+                                    "verificationMethod": "did:example:123#key-0",
+                                    "created": "2021-05-14T20:16:29.565377",
+                                    "proofPurpose": "authentication",
+                                    "challenge": "3fa85f64-5717-4562-b3fc-2c963f66afa7",
+                                    "jws": "eyJhbGciOiAiRWREU0EiLCAiYjY0IjogZmFsc2UsICJjcml0IjogWyJiNjQiXX0..7M9LwdJR1_SQayHIWVHF5eSSRhbVsrjQHKUrfRhRRrlbuKlggm8mm_4EI_kTPeBpalQWiGiyCb_0OWFPtn2wAQ"
+                                  }
+                                }
+
+                // thread ID of the credential interaction.
+                const thID = "84e63a5f-73e1-46ac-b269-48bb22591bxb" // offer.thID
+
+                const waitForAck = true // wait for acknowledgement from issuer regarding protocol execution completion.
+
+                // send request credential message, wait for ack and return credential fulfillment.
+                let fulfilment = await wallet.requestCredential(thID, presentation, waitForAck, someTimeout)
+            </pre>
+
+                <pre class="example highlight" title="Example of request credential message sent from wallet">
+                {
+                  "type":"https://didcomm.org/issue-credential/3.0/request-credential",
+                  "id":"c6686159-ef49-45b2-938f-51818da14723",
+                  "pthid":"f137e0db-db7b-4776-9530-83c808a34a42",
+                  "from":"did:example:holder",
+                  "to":[
+                    "did:example:issuer"
+                  ],
+                  "body":{
+
+                  },
+                  "attachments":[
+                    {
+                      "id":"e00e11d4-906d-4c88-ba72-7c66c7113a78",
+                      "media_type":"application/json",
+                      "format":"dif/credential-manifest/application@v1.0",
+                      "data":{
+                        "json":{
+                          "@context":[
+                            "https://www.w3.org/2018/credentials/v1",
+                            "https://identity.foundation/credential-manifest/application/v1"
+                          ],
+                          "type":[
+                            "VerifiablePresentation",
+                            "CredentialApplication"
+                          ],
+                          "credential_application":{
+                            "id":"9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d",
+                            "manifest_id":"dcc75a16-19f5-4273-84ce-4da69ee2b7fe",
+                            "format":{
+                              "ldp_vc":{
+                                "proof_type":[
+                                  "JsonWebSignature2020",
+                                  "EcdsaSecp256k1Signature2019"
+                                ]
+                              }
+                            }
+                          },
+                          "presentation_submission":{
+                            "id":"2e161b2c-606b-416f-b04f-7f06edac55a1",
+                            "definition_id":"8246867e-fdce-48de-a825-9d84ec16c6c9",
+                            "descriptor_map":[
+                              {
+                                "id":"prc_input",
+                                "format":"ldp_vp",
+                                "path":"$.verifiableCredential[0]"
+                              }
+                            ]
+                          },
+                          "verifiableCredential":[
+                            {
+                              "@context":[
+                                "https://www.w3.org/2018/credentials/v1",
+                                "https://w3id.org/citizenship/v1",
+                                "https://w3id.org/security/bbs/v1"
+                              ],
+                              "id":"urn:uvci:af5vshde843jf831j128fj",
+                              "type":[
+                                "VaccinationCertificate",
+                                "PermanentResidentCard"
+                              ],
+                              "name":"Permanent Resident Card",
+                              "description":"Permanent Resident Card of Mr.Louis Pasteu",
+                              "expirationDate":"2029-12-03T12:19:52Z",
+                              "issuanceDate":"2019-12-03T12:19:52Z",
+                              "issuer":"did:example:456",
+                              "credentialSubject":{
+                                "id":"did:example:ebfeb1f712ebc6f1c276e12ec21",
+                                "givenName":"Louis",
+                                "familyName":"Pasteur",
+                                "birthCountry":"Bahamas",
+                                "birthDate":"1958-07-17"
+                              },
+                              "proof":{
+                                "type":"BbsBlsSignatureProof2020",
+                                "created":"2021-02-18T23:04:28Z",
+                                "nonce":"JNGovx4GGoi341v/YCTcZq7aLWtBtz8UhoxEeCxZFevEGzfh94WUSg8Ly/q+2jLqzzY=",
+                                "proofPurpose":"assertionMethod",
+                                "proofValue":"AB0GQA//jbDwMgaIIJeqP3fRyMYi6WDGhk0JlGJc/sk4ycuYGmyN7CbO4bA7yhIW/YQbHEkOgeMy0QM+usBgZad8x5FRePxfo4v1dSzAbJwWjx87G9F1lAIRgijlD4sYni1LhSo6svptDUmIrCAOwS2raV3G02mVejbwltMOo4+cyKcGlj9CzfjCgCuS1SqAxveDiMKGAAAAdJJF1pO6hBUGkebu/SMmiFafVdLvFgpMFUFEHTvElUQhwNSp6vxJp6Rs7pOVc9zHqAAAAAI7TJuDCf7ramzTo+syb7Njf6ExD11UKNcChaeblzegRBIkg3HoWgwR0hhd4z4D5/obSjGPKpGuD+1DoyTZhC/wqOjUZ03J1EtryZrC+y1DD14b4+khQVLgOBJ9+uvshrGDbu8+7anGezOa+qWT0FopAAAAEG6p07ghODpi8DVeDQyPwMY/iu2Lh7x3JShWniQrewY2GbsACBYOPlkNNm/qSExPRMe2X7UPpdsxpUDwqbObye4EXfAabgKd9gCmj2PNdvcOQAi5rIuJSGa4Vj7AtKoW/2vpmboPoOu4IEM1YviupomCKOzhjEuOof2/y5Adfb8JUVidWqf9Ye/HtxnzTu0HbaXL7jbwsMNn5wYfZuzpmVQgEXss2KePMSkHcfScAQNglnI90YgugHGuU+/DQcfMoA0+JviFcJy13yERAueVuzrDemzc+wJaEuNDn8UiTjAdVhLcgnHqUai+4F6ONbCfH2B3ohB3hSiGB6C7hDnEyXFOO9BijCTHrxPv3yKWNkks+3JfY28m+3NO0e2tlyH71yDX0+F6U388/bvWod/u5s3MpaCibTZEYoAc4sm4jW03HFYMmvYBuWOY6rGGOgIrXxQjx98D0macJJR7Hkh7KJhMkwvtyI4MaTPJsdJGfv8I+RFROxtRM7RcFpa4J5wF/wQnpyorqchwo6xAOKYFqCqKvI9B6Y7Da7/0iOiWsjs8a4zDiYynfYavnz6SdxCMpHLgplEQlnntqCb8C3qly2s5Ko3PGWu4M8Dlfcn4TT8YenkJDJicA91nlLaE8TJbBgsvgyT+zlTsRSXlFzQc+3KfWoODKZIZqTBaRZMft3S/",
+                                "verificationMethod":"did:example:123#key-1"
+                              }
+                            }
+                          ],
+                          "proof":{
+                            "type":"Ed25519Signature2018",
+                            "verificationMethod":"did:example:123#key-0",
+                            "created":"2021-05-14T20:16:29.565377",
+                            "proofPurpose":"authentication",
+                            "challenge":"3fa85f64-5717-4562-b3fc-2c963f66afa7",
+                            "jws":"eyJhbGciOiAiRWREU0EiLCAiYjY0IjogZmFsc2UsICJjcml0IjogWyJiNjQiXX0..7M9LwdJR1_SQayHIWVHF5eSSRhbVsrjQHKUrfRhRRrlbuKlggm8mm_4EI_kTPeBpalQWiGiyCb_0OWFPtn2wAQ"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+            </pre>
+
+                <pre class="example highlight" title="Example of credential fulfillment message from issuer">
+               {
+                   "type":"https://didcomm.org/issue-credential/3.0/issue-credential",
+                   "id":"7a476bd8-cc3f-4d80-b784-caeb2ff265da",
+                   "pthid":"f137e0db-db7b-4776-9530-83c808a34a42",
+                   "from":"did:example:issuer",
+                   "to":[
+                      "did:example:holder"
+                   ],
+                   "body":{
+
+                   },
+                   "attachments":[
+                      {
+                         "id":"e00e11d4-906d-4c88-ba72-7c66c7113a78",
+                         "media_type":"application/json",
+                         "format":"dif/credential-manifest/fulfillment@v1.0",
+                         "data":{
+                            "json":{
+                               "@context":[
+                                  "https://www.w3.org/2018/credentials/v1",
+                                  "https://identity.foundation/credential-manifest/fulfillment/v1"
+                               ],
+                               "type":[
+                                  "VerifiablePresentation",
+                                  "CredentialFulfillment"
+                               ],
+                               "credential_fulfillment":{
+                                  "id":"a30e3b91-fb77-4d22-95fa-871689c322e2",
+                                  "manifest_id":"dcc75a16-19f5-4273-84ce-4da69ee2b7fe",
+                                  "descriptor_map":[
+                                     {
+                                        "id":"driver_license_output",
+                                        "format":"ldp_vc",
+                                        "path":"$.verifiableCredential[0]"
+                                     }
+                                  ]
+                               },
+                               "verifiableCredential":[
+                                  {
+                                     "@context":"https://www.w3.org/2018/credentials/v1",
+                                     "id":"https://eu.com/claims/DriversLicense",
+                                     "type":[
+                                        "EUDriversLicense"
+                                     ],
+                                     "issuer":"did:foo:123",
+                                     "issuanceDate":"2010-01-01T19:73:24Z",
+                                     "credentialSubject":{
+                                        "id":"did:example:ebfeb1f712ebc6f1c276e12ec21",
+                                        "license":{
+                                           "number":"34DGE352",
+                                           "dob":"07/13/80"
+                                        }
+                                     },
+                                     "proof":{
+                                        "created":"2021-06-07T20:02:44.730614315Z",
+                                        "jws":"eyJhbGciOiJFZERTQSIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19..NVum9BeYkhzwslZXm2cDOveQB9njlrCRSrdMZgwV3zZfLRXmZQ1AXdKLLmo4ClTYXFX_TWNyB8aFt9cN6sSvCg",
+                                        "proofPurpose":"assertionMethod",
+                                        "type":"Ed25519Signature2018",
+                                        "verificationMethod":"did:orb:EiA3Xmv8A8vUH5lRRZeKakd-cjAxGC2A4aoPDjLysjghow#tMIstfHSzXfBUF7O0m2FiBEfTb93_j_4ron47IXPgEo"
+                                     }
+                                  }
+                               ],
+                               "proof":{
+                                  "created":"2021-06-07T20:02:44.730614315Z",
+                                  "jws":"eyJhbGciOiJFZERTQSIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19..NVum9BeYkhzwslZXm2cDOveQB9njlrCRSrdMZgwV3zZfLRXmZQ1AXdKLLmo4ClTYXFX_TWNyB8aFt9cN6sSvCg",
+                                  "proofPurpose":"authentication",
+                                  "type":"Ed25519Signature2018",
+                                  "verificationMethod":"did:orb:EiA3Xmv8A8vUH5lRRZeKakd-cjAxGC2A4aoPDjLysjghow#tMIstfHSzXfBUF7O0m2FiBEfTb93_j_4ron47IXPgEo"
+                               }
+                            }
+                         }
+                      }
+                   ]
+                }
+            </pre>
+
+            </section>
+
+        </section>
+        <section>
+            <h3>Examples</h3>
+            <p>
+            <pre class="example highlight" title="WACI credential share interaction">
+                // accept invitation, send propose presentation message and presentation request
+                let request = await wallet.proposePresentation(invitation, from, someTimeout)
+
+                // extract presentation definition(s) from request
+                let presentationDef = extractPresentationDef(request)
+
+                // perform query in wallet  (existing interface)
+                let presentation = await wallet.query([
+                    {
+                        type: "PresentationExchange",
+                        credentialQuery: presentationDef
+                    }
+                ])
+
+                /*
+                 show credential results to wallet user and get consent.
+                */
+
+                // add proof to presentation.
+                let vp = await wallet.prove(presentation, proofOptions)
+
+                // send present proof message to verifier and get acknowledgement.
+                let ack = await wallet.presentProof(request.thid, presentation, true, someTimeout)
+            </pre>
+
+            <pre class="example highlight" title="WACI credential issuance interaction">
+                // accept invitation and initiate issuance interaction by proposing credential.
+                let offer = await wallet.proposeCredential(invitation, from, timeout)
+
+                const {thID, manifest, vc, domain, challenge, presentationDefinition} = offer
+
+                // perform presentation exchange or DID Auth based on offer credential message received.
+                let query
+                if (presentationDefinition) {
+                    query = {
+                        type: "PresentationExchange",
+                        credentialQuery: presentationDefinition
+                    }
+                } else if (domain || challenge) {
+                    query = {
+                        type: 'DIDAuth'
+                    }
+                }
+
+                let presentation
+                if (query) {
+                    presentation = await wallet.query([query])
+                }
+
+                /*
+                 display credential being issued using manifest and unsigned VC to wallet user and get consent from user.
+                */
+
+                // add proof to presentation using domain and challenge from offer.
+                let vp
+                if (presentation) {
+                    vp = await wallet.prove(presentation, {
+                        controller: "did:example:1234",
+                        domain,
+                        challenge,
+                    })
+                }
+
+                // send request credential message and wait for ack.
+                let fulfilment = await wallet.requestCredential(thID, vp, true, someTimeout)
+            </pre>
+            </p>
+        </section>
     </section>
 
     <section>
         <h3>SIOP</h3>
         <p class="issue">
-           This protocol is not currently stable.
+            This protocol is not currently stable.
         </p>
     </section>
 
