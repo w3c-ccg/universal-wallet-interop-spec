@@ -1,4 +1,4 @@
-## Universal Wallet Interoperability Spec
+## Universal Wallet Interoperability
 
 ![CI](https://github.com/w3c-ccg/universal-wallet-interop-spec/workflows/CI/badge.svg)
 
@@ -6,11 +6,25 @@ A portable, extensible, JSON-LD wallet supporting digital currencies and credent
 
 ## Links
 
-### [Latest Specification](https://w3c-ccg.github.io/universal-wallet-interop-spec/)
+### Latest Specification
 
-### [Experimental Implementation](./packages/universal-wallet)
+- [https://w3id.org/wallet](https://w3id.org/wallet)
 
-### [Experimental Demo](https://w3c-ccg.github.io/universal-wallet-interop-spec/storybook/?path=/story/cards-wallet--unlocked)
+### Latest Context
+
+- [https://w3id.org/wallet/v1](https://w3id.org/wallet/v1)
+
+### Experimental Implementations
+
+#### JavaScript
+
+- [@transmute/universal-wallet](https://github.com/transmute-industries/verifiable-data/tree/main/packages/universal-wallet)
+- [hyperledger:aries-framework-go](https://github.com/hyperledger/aries-framework-go/blob/main/docs/vc_wallet.md)
+
+#### Go Lang
+
+- [hyperledger:aries-framework-go](https://github.com/hyperledger/aries-framework-go/blob/main/docs/vc_wallet.md)
+
 
 ### Contributing
 
