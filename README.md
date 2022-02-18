@@ -1,7 +1,5 @@
 ## Universal Wallet Interoperability
 
-![CI](https://github.com/w3c-ccg/universal-wallet-interop-spec/workflows/CI/badge.svg)
-
 A portable, extensible, JSON-LD wallet supporting digital currencies and credentials.
 
 ## Links
