@@ -516,6 +516,31 @@ data-include-replace="true"
           See <a href="https://github.com/ethereum/EIPs/issues/84">EIP84</a>
           for examples of how this is done in the ethereum community.
         </p>
+
+        <p>
+          Because HD Wallet arose from blockchain applications, 
+          there is some ambiguity regarding their applications to DIDs.
+        </p>
+
+        <p>
+          We recommend using the Bitcoin HD path by default when generating key 
+          material for a DID Method that does not provide a specific recommendation for working with HD Paths.
+        </p>
+
+
+        <pre
+        class="example highlight"
+        title="Generating a did:key from a mnemonic and HD path"
+      >
+      mnemonic "sell antenna drama rule twenty cement mad deliver you push derive hybrid"
+      hd path "m/44'/0'/0'/0/0" 
+      key type "Ed25519" 
+      yields 'did:key:z6MktiSzqF9kqwdU8VkdBKx56EYzXfpgnNPUAGznpicNiWfn'.
+      </pre>
+      <p>
+        It is not recommended to use the same root key for multiple key types, so a different mnemonic and/or HD path 
+        combination should be used when generating a secp256k1 "did:key".
+      </p>
       </section>
 
       <section>
