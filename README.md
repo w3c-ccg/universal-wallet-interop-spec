@@ -17,7 +17,7 @@ A portable, extensible, JSON-LD wallet supporting digital currencies and credent
 #### JavaScript
 
 - [@transmute/universal-wallet](https://github.com/transmute-industries/verifiable-data/tree/main/packages/universal-wallet)
-- [hyperledger:aries-framework-go](https://github.com/hyperledger/aries-framework-go/blob/main/docs/vc_wallet.md)
+- [hyperledger:aries-framework-javascript](https://github.com/hyperledger/aries-framework-javascript/blob/main/docs/vc_wallet.md)
 
 #### Go Lang
 
