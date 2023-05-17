@@ -778,6 +778,11 @@ Here is an example of using Metadata to reference non-standard data:
         representation of a wallet.
       </p>
 
+      <p>For password based encryption, it is recommended to use PBES2-HS512+A256KW. <strong>p2s</strong> represents the seed that was used during key deriviation and <strong>p2c</strong> represents the iteration count.</p>
+
+      <p>The ciphertext should be an encrypted version of the unlocked wallet representation described below.</p>
+
+
       <pre class="example highlight" title="An encrypted wallet example">
 {
   "@context": [
@@ -794,33 +799,26 @@ Here is an example of using Metadata to reference non-standard data:
       {
         "id": "urn:uuid:e8fc7810-9524-11ea-bb37-0242ac130002",
         "jwe": {
-          "protected": "eyJlbmMiOiJYQzIwUCJ9",
           "recipients": [
-            {
-              "header": {
-                "kid": "did:key:z6MkjMSYauuMgx9azEyUnTW5o5jFRkbBu5T83f39uNwnsGmm#z6LSoGtZSrUMZudAagzEfYf7k8jHZcGD79Sox7v4wCkDKNSw",
-                "alg": "ECDH-ES+A256KW",
-                "epk": {
-                  "kty": "OKP",
-                  "crv": "X25519",
-                  "x": "RfXdxTfIzilWBzWWX3ovHBDzgDcLNy0BFJWSxa0dqnw"
-                },
-                "apu": "RfXdxTfIzilWBzWWX3ovHBDzgDcLNy0BFJWSxa0dqnw",
-                "apv": "ZGlkOmtleTp6Nk1rak1TWWF1dU1neDlhekV5VW5UVzVvNWpGUmtiQnU1VDgzZjM5dU53bnNHbW0jejZMU29HdFpTclVNWnVkQWFnekVmWWY3azhqSFpjR0Q3OVNveDd2NHdDa0RLTlN3"
-              },
-              "encrypted_key": "-ABaawsVfTxJKmYVMhC0UWGQRZaYaLr8WdTBlugLOADXxrlOP-5M-A"
-            }
-          ],
-          "iv": "zjJPRrj0TGez9JYkChTrB3iqKoDkiBhn",
-          "ciphertext": "pPqPLiMuJLygwKbsDh-QWw0y5CHmQMINXPc1-qgsKLCFDTJ6ytqoTF35rM5KxSfeVCk74HLtIUIbDvNx53xr2YGqOi9-yDHrT3KurY8CIiBDTYCHkW50wgJq-Ac_gE3lSEEOYT1ZF4izf6GoA1jnI7alxD8ScgOGv2OuWLKEhV5HNEBLUpNz8Di7LDmRLSvAroiWE0rBu-xl7dRrLRH3ZKUzc-R6vrG_X56o-ivjUCfcvrjTnh2pgmVFo27BA34edYbLHIbKcWjMoSBEgmeY30ZuQt_KXK0vDQ6pFmMW5n8oISjPYv8rdicwNPfpCR89x11Vgrde419guqIwEsuOyvCAWidzgFeUu7jeyxjyYcNaIM1r2mq7OXnTODAFBzK4lWqniiDYWy2CLcPTHIXHnhq9YvPOhjqFz6aBbf_XqiFdIQZgOX2oDX6zGHg9fvw4AZc3_N3bCHRbZzKkf-AyvvHxPb9dphU1OdQmnRefYg-xtEQnlwk704J26xZU2qBn7YIJh_nrh9u41KqA0FSlYQsGiyW7SvOf2_LaA9qr17eA7HqY7Lst53_kiYhgWCd7g8hTWiT5G7QVLS_wx89DUpNfz_bxqQU0f17W2L0rLSLCWwaqUjxlLbPlFnpWgokbnxOMOETDvt_8DGUbczRou7Z4NyQ6ZFCOV4TD0AFRCM-RTj-YR6UC_UAAIvEPJep3Uz8elJzkf7xevnWKRSGyFLIUie0tSwZ7hCtjdvP3tOKidwy56jHtOQ_R6wx_9taVc3_5IeoP-4wZ4DNOm_IS9jb6csWmRvyW5GoRx-robqraPCM64SKg9EM",
-          "tag": "h6mJqHn33oCsDd5X57MI-g"
+          {
+            "header": {
+              "alg": "PBES2-HS512+A256KW",
+              "p2s": "lS7S/7QzQMNBApQzjsfnYA==",
+              "p2c": 120000,
+              "enc": "A256GCM"
+            },
+            "encrypted_key": "H8COfQhinpDVqxx8Kl6EJ8U/295UZ7/v9xxxe2t24oGiTw5RfCX4gA=="
+          }
+        ],
+        "iv": "wJ8Mol+iVntgZU6/",
+        "ciphertext": "gxUYD0f/WORxXF1s6VTRn+3mF/5zips2qZtUUUjTuW/L5sO5dcCGtPwmRjuatDgk2A7f... ",
+        "tag": "pxbfT0lDBU/RZjGlTmO+1w=="
         }
       }
     ]
   }
 }
-</pre
-      >
+</pre>
     </section>
 
     <section>
